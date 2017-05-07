@@ -2157,6 +2157,9 @@
         "build": {
           "build/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20/Xamarin.Forms.targets": {}
         }
+      },
+      "EasyLayout.Forms/1.0.0": {
+        "type": "project"
       }
     },
     "UAP,Version=v10.0/win10-arm": {
@@ -4423,6 +4426,9 @@
         "build": {
           "build/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20/Xamarin.Forms.targets": {}
         }
+      },
+      "EasyLayout.Forms/1.0.0": {
+        "type": "project"
       }
     },
     "UAP,Version=v10.0/win10-arm-aot": {
@@ -6728,6 +6734,9 @@
         "build": {
           "build/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20/Xamarin.Forms.targets": {}
         }
+      },
+      "EasyLayout.Forms/1.0.0": {
+        "type": "project"
       }
     },
     "UAP,Version=v10.0/win10-x64": {
@@ -9003,6 +9012,9 @@
         "build": {
           "build/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20/Xamarin.Forms.targets": {}
         }
+      },
+      "EasyLayout.Forms/1.0.0": {
+        "type": "project"
       }
     },
     "UAP,Version=v10.0/win10-x64-aot": {
@@ -11317,6 +11329,9 @@
         "build": {
           "build/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20/Xamarin.Forms.targets": {}
         }
+      },
+      "EasyLayout.Forms/1.0.0": {
+        "type": "project"
       }
     },
     "UAP,Version=v10.0/win10-x86": {
@@ -13592,6 +13607,9 @@
         "build": {
           "build/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20/Xamarin.Forms.targets": {}
         }
+      },
+      "EasyLayout.Forms/1.0.0": {
+        "type": "project"
       }
     },
     "UAP,Version=v10.0/win10-x86-aot": {
@@ -15906,6 +15924,9 @@
         "build": {
           "build/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20/Xamarin.Forms.targets": {}
         }
+      },
+      "EasyLayout.Forms/1.0.0": {
+        "type": "project"
       }
     }
   },
@@ -22232,6 +22253,11 @@
         "xamarin.forms.2.3.4.224.nupkg.sha512",
         "xamarin.forms.nuspec"
       ]
+    },
+    "EasyLayout.Forms/1.0.0": {
+      "type": "project",
+      "path": "../../EasyLayout.Forms/EasyLayout.Forms.csproj",
+      "msbuildProject": "../../EasyLayout.Forms/EasyLayout.Forms.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -22250,7 +22276,16 @@
       "projectName": "EasyLayout.Sample.UWP",
       "projectPath": "C:\\dev\\EasyLayout.Forms\\EasyLayout.Sample\\EasyLayout.Sample.UWP\\EasyLayout.Sample.UWP.csproj",
       "projectJsonPath": "C:\\dev\\EasyLayout.Forms\\EasyLayout.Sample\\EasyLayout.Sample.UWP\\project.json",
-      "projectStyle": "ProjectJson"
+      "projectStyle": "ProjectJson",
+      "frameworks": {
+        "uap10.0": {
+          "projectReferences": {
+            "C:\\dev\\EasyLayout.Forms\\EasyLayout.Forms\\EasyLayout.Forms.csproj": {
+              "projectPath": "C:\\dev\\EasyLayout.Forms\\EasyLayout.Forms\\EasyLayout.Forms.csproj"
+            }
+          }
+        }
+      }
     },
     "dependencies": {
       "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",

@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using EasyLayout.Forms;
+using Xamarin.Forms;
 
 namespace EasyLayout.Sample
 {
@@ -20,6 +21,12 @@ namespace EasyLayout.Sample
                 Constraint.RelativeToParent(parent => (parent.Width * .5) - GetSize(label, parent).Width * .5),
                 Constraint.RelativeToParent(parent => (parent.Height * .5) - GetSize(label, parent).Height * .5)
                 );
+
+            relativeLayout.ConstrainLayout(() =>
+                label.X == relativeLayout.X * .5f &&
+                label.Y == relativeLayout.Y * .5f
+            );
+
 
             Content = relativeLayout;
         }
