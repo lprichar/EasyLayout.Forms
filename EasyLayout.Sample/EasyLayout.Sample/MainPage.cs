@@ -24,7 +24,9 @@ namespace EasyLayout.Sample
 
             relativeLayout.ConstrainLayout(() =>
                 label.Bounds.Left == relativeLayout.Bounds.Left &&
-                label.Bounds.Top == relativeLayout.Bounds.Top
+                label.Bounds.Top == relativeLayout.Bounds.Top &&
+                label.Bounds.Width == 300 &&
+                label.Bounds.Height == 100
             );
 
 

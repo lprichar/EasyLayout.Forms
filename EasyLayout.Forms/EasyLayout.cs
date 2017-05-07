@@ -33,10 +33,10 @@ namespace EasyLayout.Forms
     {
         private struct Margin
         {
-            public int? Right { get; set; }
-            public int? Left { get; set; }
-            public int? Top { get; set; }
-            public int? Bottom { get; set; }
+            public double? Right { get; set; }
+            public double? Left { get; set; }
+            public double? Top { get; set; }
+            public double? Bottom { get; set; }
         }
 
         private enum ConstraintType
@@ -58,8 +58,8 @@ namespace EasyLayout.Forms
             public Constraint Constraint { get; private set; }
             public Guid? RelativeToViewId { get; private set; }
             public Margin Margin { get; private set; }
-            public int? Width { get; private set; }
-            public int? Height { get; private set; }
+            public double? Width { get; private set; }
+            public double? Height { get; private set; }
             public ConstraintType ConstraintType { get; set; }
 
             public void Initialize(LeftExpression leftExpression, RightExpression rightExpression)
@@ -97,7 +97,13 @@ namespace EasyLayout.Forms
             {
                 if (rightExpression.IsConstant)
                 {
-                    return null;
+                    if (rightExpression.Constant == null)
+                    {
+                        throw new ArgumentException("Right-hand expression looks like a constant but isn't?");
+                    }
+                    var constraint = Constraint.Constant(rightExpression.Constant.Value);
+                    var constraintType = GetConstantConstraintType(leftExpression);
+                    return new Tuple<ConstraintType, Constraint>(constraintType, constraint);
                 }
                 if (rightExpression.IsParent)
                 {
@@ -105,6 +111,15 @@ namespace EasyLayout.Forms
                 }
                 return GetLayoutRuleForSibling(leftExpression.Position, rightExpression.Position,
                     leftExpression.Name, rightExpression.Name);
+            }
+
+            private static ConstraintType GetConstantConstraintType(LeftExpression leftExpression)
+            {
+                if (leftExpression.Position == Position.Width)
+                    return ConstraintType.Width;
+                if (leftExpression.Position == Position.Height)
+                    return ConstraintType.Height;
+                throw new Exception("Only width and height constraint types are supported");
             }
 
             private static Tuple<ConstraintType, Constraint> GetLayoutRuleForParent(Position childPosition, Position parentPosition, string childName)
@@ -225,7 +240,7 @@ namespace EasyLayout.Forms
             public Guid? Id { get; set; }
             public string Name { get; set; }
             public Position Position { get; set; }
-            public int? Constant { get; set; }
+            public double? Constant { get; set; }
             public bool IsConstant => !IsParent && Id == null && Constant != null;
         }
 
