@@ -22246,10 +22246,10 @@
   },
   "project": {
     "restore": {
-      "projectUniqueName": "c:\\dev\\EasyLayout.Forms\\EasyLayout.Sample\\EasyLayout.Sample.UWP\\EasyLayout.Sample.UWP.csproj",
+      "projectUniqueName": "C:\\dev\\EasyLayout.Forms\\EasyLayout.Sample\\EasyLayout.Sample.UWP\\EasyLayout.Sample.UWP.csproj",
       "projectName": "EasyLayout.Sample.UWP",
-      "projectPath": "c:\\dev\\EasyLayout.Forms\\EasyLayout.Sample\\EasyLayout.Sample.UWP\\EasyLayout.Sample.UWP.csproj",
-      "projectJsonPath": "c:\\dev\\EasyLayout.Forms\\EasyLayout.Sample\\EasyLayout.Sample.UWP\\project.json",
+      "projectPath": "C:\\dev\\EasyLayout.Forms\\EasyLayout.Sample\\EasyLayout.Sample.UWP\\EasyLayout.Sample.UWP.csproj",
+      "projectJsonPath": "C:\\dev\\EasyLayout.Forms\\EasyLayout.Sample\\EasyLayout.Sample.UWP\\project.json",
       "projectStyle": "ProjectJson"
     },
     "dependencies": {
