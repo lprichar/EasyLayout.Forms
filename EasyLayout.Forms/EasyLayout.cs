@@ -26,6 +26,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Xamarin.Forms;
+// ReSharper disable CompareOfFloatsByEqualityOperator
 
 namespace EasyLayout.Forms
 {
@@ -39,28 +40,19 @@ namespace EasyLayout.Forms
             public double? Bottom { get; set; }
         }
 
-        private enum ConstraintType
+        private class Assertion
         {
-            X,
-            Y,
-            Height,
-            Width,
-        }
-
-        private class Rule
-        {
-            public Rule(View view)
+            public Assertion(View view)
             {
                 View = view;
             }
 
             public View View { get; }
-            public Constraint Constraint { get; private set; }
             public Guid? RelativeToViewId { get; private set; }
             public Margin Margin { get; private set; }
-            public double? Width { get; private set; }
-            public double? Height { get; private set; }
-            public ConstraintType ConstraintType { get; set; }
+            private LeftExpression LeftExpression { get; set; }
+            private RightExpression RightExpression { get; set; }
+            public string LeftName => LeftExpression.Name;
 
             public void Initialize(LeftExpression leftExpression, RightExpression rightExpression)
             {
@@ -69,72 +61,71 @@ namespace EasyLayout.Forms
                     RelativeToViewId = rightExpression.Id;
                 }
                 SetMargin(leftExpression, rightExpression);
-                SetLayoutRule(leftExpression, rightExpression);
-                SetHeightWidth(leftExpression, rightExpression);
+                LeftExpression = leftExpression;
+                RightExpression = rightExpression;
             }
 
-            private void SetHeightWidth(LeftExpression leftExpression, RightExpression rightExpression)
+            public Constraint GetConstraint(Assertion widthHeightAssertion = null)
             {
-                // todo: support height/width constraints
-                if (leftExpression.Position == Position.Width && rightExpression.IsConstant && rightExpression.Constant.HasValue)
-                    Width = rightExpression.Constant.Value;
-                if (leftExpression.Position == Position.Height && rightExpression.IsConstant && rightExpression.Constant.HasValue)
-                    Height = rightExpression.Constant.Value;
-                //if (leftExpression.Position == Position.Width && rightExpression.IsParent && rightExpression.Constant == null)
-                //    Width = ViewGroup.LayoutParams.MatchParent;
-                //if (leftExpression.Position == Position.Height && rightExpression.IsParent && rightExpression.Constant == null)
-                //    Height = ViewGroup.LayoutParams.MatchParent;
-            }
-
-            private void SetLayoutRule(LeftExpression leftExpression, RightExpression rightExpression)
-            {
-                var layoutRule = GetLayoutRule(leftExpression, rightExpression);
-                ConstraintType = layoutRule.Item1;
-                Constraint = layoutRule.Item2;
-            }
-
-            private static Tuple<ConstraintType, Constraint> GetLayoutRule(LeftExpression leftExpression, RightExpression rightExpression)
-            {
-                if (rightExpression.IsConstant)
+                if (RightExpression.IsConstant && RightExpression.Constant.HasValue)
                 {
-                    if (rightExpression.Constant == null)
-                    {
-                        throw new ArgumentException("Right-hand expression looks like a constant but isn't?");
-                    }
-                    var constraint = Constraint.Constant(rightExpression.Constant.Value);
-                    var constraintType = GetConstantConstraintType(leftExpression);
-                    return new Tuple<ConstraintType, Constraint>(constraintType, constraint);
+                    var constraint = Constraint.Constant(RightExpression.Constant.Value);
+                    return constraint;
                 }
-                if (rightExpression.IsParent)
+                if (RightExpression.IsParent)
                 {
-                    return GetLayoutRuleForParent(leftExpression.Position, rightExpression.Position, leftExpression.Name, leftExpression.View.Id);
+                    return GetLayoutRuleForParent(widthHeightAssertion);
                 }
-                return GetLayoutRuleForSibling(leftExpression.Position, rightExpression.Position,
-                    leftExpression.Name, rightExpression.Name);
+                return GetLayoutRuleForSibling(LeftExpression.Position, RightExpression.Position,
+                    LeftExpression.Name, RightExpression.Name);
             }
 
-            private static ConstraintType GetConstantConstraintType(LeftExpression leftExpression)
+            private static double GetWidth(RelativeLayout relativeLayout, Guid id, double? widthAssertion)
             {
-                if (leftExpression.Position == Position.Width)
-                    return ConstraintType.Width;
-                if (leftExpression.Position == Position.Height)
-                    return ConstraintType.Height;
-                throw new Exception("Only width and height constraint types are supported");
+                if (widthAssertion.HasValue && widthAssertion > 0) return widthAssertion.Value;
+                var child = GetChildById(relativeLayout, id);
+                if (child == null) return 0;
+                return child.Width != -1 ? child.Width : GetSize(relativeLayout, child).Width;
             }
 
-            private static Size GetSize(RelativeLayout rl, VisualElement ve) => ve.Measure(rl.Width, rl.Height).Request;
-            private static Size GetSize(RelativeLayout rl, Guid? id) => GetSize(rl, rl.Children.FirstOrDefault(i => i.Id == id));
-
-            private static Tuple<ConstraintType, Constraint> GetLayoutRuleForParent(Position childPosition, Position parentPosition, string childName, Guid childId)
+            private static double GetHeight(RelativeLayout relativeLayout, Guid id, double? heightAssertion)
             {
+                if (heightAssertion.HasValue && heightAssertion > 0) return heightAssertion.Value;
+                var child = GetChildById(relativeLayout, id);
+                if (child == null) return 0;
+                return child.Height != -1 ? child.Height : GetSize(relativeLayout, child).Height;
+            }
+
+            /// <summary>
+            /// Thought getting the height/width of an element in a constraint would be easy?  Hah.
+            /// http://stackoverflow.com/questions/40942691/xamarin-forms-how-to-center-views-using-relative-layout-width-and-height-r
+            /// </summary>
+            private static Size GetSize(RelativeLayout relativeLayout, View visualElement)
+            {
+                if (visualElement == null) return Size.Zero;
+                if (relativeLayout == null) return Size.Zero;
+                return visualElement.Measure(relativeLayout.Width, relativeLayout.Height).Request;
+            }
+
+            private static View GetChildById(RelativeLayout relativeLayout, Guid id) => relativeLayout.Children.FirstOrDefault(i => i.Id == id);
+
+            private Constraint GetLayoutRuleForParent(Assertion widthHeightAssertion)
+            {
+                Position childPosition = LeftExpression.Position;
+                Position parentPosition = RightExpression.Position;
+                string childName = LeftExpression.Name;
+                Guid childId = LeftExpression.View.Id;
+
+                var heightWidthConstant = widthHeightAssertion?.RightExpression.Constant;
+
                 if (childPosition == Position.Top && parentPosition == Position.Top)
-                    return new Tuple<ConstraintType, Constraint>(ConstraintType.Y, Constraint.RelativeToParent(rl => rl.Y));
+                    return Constraint.RelativeToParent(rl => rl.Y);
                 if (childPosition == Position.Right && parentPosition == Position.Right)
-                    return new Tuple<ConstraintType, Constraint>(ConstraintType.X, Constraint.RelativeToParent(rl => rl.Width - GetSize(rl, childId).Width));
+                    return Constraint.RelativeToParent(rl => rl.Width - GetWidth(rl, childId, heightWidthConstant));
                 if (childPosition == Position.Bottom && parentPosition == Position.Bottom)
-                    return new Tuple<ConstraintType, Constraint>(ConstraintType.Y, Constraint.RelativeToParent(rl => rl.Height));
+                    return Constraint.RelativeToParent(rl => rl.Height - GetHeight(rl, childId, heightWidthConstant));
                 if (childPosition == Position.Left && parentPosition == Position.Left)
-                    return new Tuple<ConstraintType, Constraint>(ConstraintType.X, Constraint.RelativeToParent(rl => rl.X));
+                    return Constraint.RelativeToParent(rl => rl.X);
                 // todo: support more parent layout constraints
                 //if (childPosition == Position.CenterX && parentPosition == Position.CenterX)
                 //    return LayoutRules.CenterHorizontal;
@@ -149,7 +140,7 @@ namespace EasyLayout.Forms
                 throw new Exception($"Unsupported parent positioning combination: {childName}.{childPosition} with parent.{parentPosition}");
             }
 
-            private static Tuple<ConstraintType, Constraint> GetLayoutRuleForSibling(Position leftPosition, Position rightPosition, string leftExpressionName, string rightExpressionName)
+            private static Constraint GetLayoutRuleForSibling(Position leftPosition, Position rightPosition, string leftExpressionName, string rightExpressionName)
             {
                 // todo: support sibling layout constraints
                 throw new NotImplementedException("Sibling layout in progress");
@@ -213,6 +204,27 @@ namespace EasyLayout.Forms
                 }
             }
 
+            public bool IsExplicitWidthAssertion()
+            {
+                return LeftExpression.Position == Position.Width;
+            }
+
+            public bool IsExplicitHeightAssertion()
+            {
+                return LeftExpression.Position == Position.Height;
+            }
+
+            public bool IsXConstraint()
+            {
+                return LeftExpression.Position == Position.Left ||
+                       LeftExpression.Position == Position.Right;
+            }
+
+            public bool IsYConstraint()
+            {
+                return LeftExpression.Position == Position.Top ||
+                       LeftExpression.Position == Position.Bottom;
+            }
         }
 
         private enum Position
@@ -264,7 +276,7 @@ namespace EasyLayout.Forms
             UpdateLayoutParamsWithRules(relativeLayout, viewAndRule);
         }
 
-        private static void UpdateLayoutParamsWithRules(RelativeLayout relativeLayout, IEnumerable<Rule> viewAndRule)
+        private static void UpdateLayoutParamsWithRules(RelativeLayout relativeLayout, IEnumerable<Assertion> viewAndRule)
         {
             var viewsGroupedByRule = viewAndRule.GroupBy(i => i.View);
 
@@ -272,35 +284,62 @@ namespace EasyLayout.Forms
             {
                 var view = viewAndRules.Key;
 
-                var xConstraint = GetConstraint(viewAndRules, ConstraintType.X);
-                var yConstraint = GetConstraint(viewAndRules, ConstraintType.Y);
-                var widthConstraint = GetConstraint(viewAndRules, ConstraintType.Width);
-                var heightConstraint = GetConstraint(viewAndRules, ConstraintType.Height);
+                var widthAssertion = GetExplicitWidthConstraint(viewAndRules);
+                var heightAssertion = GetExplicitHeightConstraint(viewAndRules);
+                var widthConstraint = widthAssertion?.GetConstraint();
+                var heightConstraint = heightAssertion?.GetConstraint();
+                var xConstraint = GetXConstraint(viewAndRules, widthAssertion);
+                var yConstraint = GetYConstraint(viewAndRules, heightAssertion);
 
                 relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
             }
         }
 
-        private static Constraint GetConstraint(IGrouping<View, Rule> viewsGroupedByRule, ConstraintType constraintType)
+        private static Constraint GetXConstraint(IGrouping<View, Assertion> assertions, Assertion widthAssertion)
         {
-            return viewsGroupedByRule.FirstOrDefault(i => i.ConstraintType == constraintType)?.Constraint;
+            var assertion = GetSingleAssertionOrDefault(assertions, i => i.IsXConstraint(), "Multiple assertions found affecting X");
+            return assertion?.GetConstraint(widthAssertion);
         }
 
-        private static IEnumerable<Rule> ConvertConstraintsToRules(RelativeLayout relativeLayout, List<BinaryExpression> constraintExpressions)
+        private static Constraint GetYConstraint(IGrouping<View, Assertion> assertions, Assertion heightAssertion)
+        {
+            var assertion = GetSingleAssertionOrDefault(assertions, i => i.IsYConstraint(), "Multiple assertions found affecting Y");
+            return assertion?.GetConstraint(heightAssertion);
+        }
+
+        private static Assertion GetExplicitHeightConstraint(IGrouping<View, Assertion> assertions)
+        {
+            return GetSingleAssertionOrDefault(assertions, i => i.IsExplicitHeightAssertion(), "Multiple height assertions found");
+        }
+
+        private static Assertion GetExplicitWidthConstraint(IGrouping<View, Assertion> assertions)
+        {
+            return GetSingleAssertionOrDefault(assertions, i => i.IsExplicitWidthAssertion(), "Multiple width assertions found");
+        }
+
+        private static Assertion GetSingleAssertionOrDefault(IGrouping<View, Assertion> viewsGroupedByRule, Func<Assertion, bool> func, string errorMessage)
+        {
+            var assertions = viewsGroupedByRule.Where(func).ToList();
+            if (assertions.Count > 1) throw new ArgumentException(".  Element name: " + viewsGroupedByRule.First().LeftName);
+            if (assertions.Count == 0) return null;
+            return assertions[0];
+        }
+
+        private static IEnumerable<Assertion> ConvertConstraintsToRules(RelativeLayout relativeLayout, List<BinaryExpression> constraintExpressions)
         {
             return constraintExpressions.Select(i => GetViewAndRule(i, relativeLayout));
         }
 
-        private static Rule GetViewAndRule(BinaryExpression expr, RelativeLayout relativeLayout)
+        private static Assertion GetViewAndRule(BinaryExpression expr, RelativeLayout relativeLayout)
         {
             var leftExpression = ParseLeftExpression(expr.Left);
             var rightExpression = ParseRightExpression(expr.Right, relativeLayout);
             return GetRule(leftExpression, rightExpression);
         }
 
-        private static Rule GetRule(LeftExpression leftExpression, RightExpression rightExpression)
+        private static Assertion GetRule(LeftExpression leftExpression, RightExpression rightExpression)
         {
-            var rule = new Rule(leftExpression.View);
+            var rule = new Assertion(leftExpression.View);
             rule.Initialize(leftExpression, rightExpression);
             return rule;
         }

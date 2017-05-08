@@ -15,7 +15,7 @@ namespace EasyLayout.Sample
                 BackgroundColor = Color.OrangeRed
             };
 
-            Size GetSize(VisualElement ve, RelativeLayout rl) => ve.Measure(rl.Width, rl.Height).Request;
+            //Size GetSize(VisualElement ve, RelativeLayout rl) => ve.Measure(rl.Width, rl.Height).Request;
 
             //relativeLayout.Children.Add(label,
             //    Constraint.RelativeToParent(parent => (parent.Width) - GetSize(label, parent).Width),
@@ -24,7 +24,7 @@ namespace EasyLayout.Sample
 
             relativeLayout.ConstrainLayout(() =>
                 label.Bounds.Right == relativeLayout.Bounds.Right &&
-                label.Bounds.Top == relativeLayout.Bounds.Top &&
+                label.Bounds.Bottom == relativeLayout.Bounds.Bottom &&
                 label.Bounds.Width == 300 &&
                 label.Bounds.Height == 100
             );
