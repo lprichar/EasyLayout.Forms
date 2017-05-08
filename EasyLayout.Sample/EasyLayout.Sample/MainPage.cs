@@ -23,8 +23,8 @@ namespace EasyLayout.Sample
             //    );
 
             relativeLayout.ConstrainLayout(() =>
-                label.Bounds.Right == relativeLayout.Bounds.Right &&
-                label.Bounds.Bottom == relativeLayout.Bounds.Bottom &&
+                label.Bounds.GetCenterX() == relativeLayout.Bounds.GetCenterX() &&
+                label.Bounds.GetCenterY() == relativeLayout.Bounds.GetCenterY() &&
                 label.Bounds.Width == 300 &&
                 label.Bounds.Height == 100
             );

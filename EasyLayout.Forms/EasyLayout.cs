@@ -118,17 +118,23 @@ namespace EasyLayout.Forms
 
                 var heightWidthConstant = widthHeightAssertion?.RightExpression.Constant;
 
-                if (childPosition == Position.Top && parentPosition == Position.Top)
-                    return Constraint.RelativeToParent(rl => rl.Y);
-                if (childPosition == Position.Right && parentPosition == Position.Right)
-                    return Constraint.RelativeToParent(rl => rl.Width - GetWidth(rl, childId, heightWidthConstant));
-                if (childPosition == Position.Bottom && parentPosition == Position.Bottom)
-                    return Constraint.RelativeToParent(rl => rl.Height - GetHeight(rl, childId, heightWidthConstant));
+                // X Constraints
                 if (childPosition == Position.Left && parentPosition == Position.Left)
                     return Constraint.RelativeToParent(rl => rl.X);
+                if (childPosition == Position.Right && parentPosition == Position.Right)
+                    return Constraint.RelativeToParent(rl => rl.Width - GetWidth(rl, childId, heightWidthConstant));
+                if (childPosition == Position.CenterX && parentPosition == Position.CenterX)
+                    return Constraint.RelativeToParent(rl => (rl.Width * .5f) - (GetWidth(rl, childId, heightWidthConstant) * .5f));
+
+                // Y Constraints
+                if (childPosition == Position.Top && parentPosition == Position.Top)
+                    return Constraint.RelativeToParent(rl => rl.Y);
+                if (childPosition == Position.Bottom && parentPosition == Position.Bottom)
+                    return Constraint.RelativeToParent(rl => rl.Height - GetHeight(rl, childId, heightWidthConstant));
+                if (childPosition == Position.CenterY && parentPosition == Position.CenterY)
+                    return Constraint.RelativeToParent(rl => (rl.Height * .5f) - (GetHeight(rl, childId, heightWidthConstant) * .5f));
+
                 // todo: support more parent layout constraints
-                //if (childPosition == Position.CenterX && parentPosition == Position.CenterX)
-                //    return LayoutRules.CenterHorizontal;
                 //if (childPosition == Position.CenterY && parentPosition == Position.CenterY)
                 //    return LayoutRules.CenterVertical;
                 //if (childPosition == Position.Center && parentPosition == Position.Center)
@@ -217,13 +223,15 @@ namespace EasyLayout.Forms
             public bool IsXConstraint()
             {
                 return LeftExpression.Position == Position.Left ||
-                       LeftExpression.Position == Position.Right;
+                       LeftExpression.Position == Position.Right ||
+                       LeftExpression.Position == Position.CenterX;
             }
 
             public bool IsYConstraint()
             {
                 return LeftExpression.Position == Position.Top ||
-                       LeftExpression.Position == Position.Bottom;
+                       LeftExpression.Position == Position.Bottom ||
+                       LeftExpression.Position == Position.CenterY;
             }
         }
 
@@ -257,6 +265,16 @@ namespace EasyLayout.Forms
             public Position Position { get; set; }
             public double? Constant { get; set; }
             public bool IsConstant => !IsParent && Id == null && Constant != null;
+        }
+
+        public static double GetCenterX(this Rectangle rectangle)
+        {
+            return rectangle.Left + (rectangle.Width / 2);
+        }
+
+        public static double GetCenterY(this Rectangle rectangle)
+        {
+            return rectangle.Top + (rectangle.Height / 2);
         }
 
         public static int ToConst(this int i)
@@ -379,13 +397,12 @@ namespace EasyLayout.Forms
             }
             else
             {
-                // todo: Do we want to support label.Right() instead of label.Bounds.Right?
-                //var fExpr = expr as MethodCallExpression;
-                //if (fExpr != null)
-                //{
-                //    position = GetPosition(fExpr);
-                //    memberExpression = fExpr.Arguments.FirstOrDefault() as MemberExpression;
-                //}
+                var fExpr = expr as MethodCallExpression;
+                if (fExpr != null)
+                {
+                    position = GetPosition(fExpr);
+                    memberExpression = fExpr.Arguments.FirstOrDefault() as MemberExpression;
+                }
             }
 
             if (position == null)
@@ -439,6 +456,11 @@ namespace EasyLayout.Forms
             if (memberExpression != null)
             {
                 var viewExpression = memberExpression.Expression as MemberExpression;
+                if (viewExpression == null)
+                {
+                    return Eval(memberExpression) as View;
+                }
+
                 var eval = Eval(viewExpression);
                 var view = eval as View;
                 if (view == null)
@@ -493,13 +515,12 @@ namespace EasyLayout.Forms
             Position? position = null;
             MemberExpression viewExpr = null;
 
-            // todo: Do we want extension methods like label.Right() instead of label.Bounds.Right?
-            //var fExpr = expr as MethodCallExpression;
-            //if (fExpr != null)
-            //{
-            //    position = GetPosition(fExpr);
-            //    viewExpr = fExpr.Arguments.FirstOrDefault() as MemberExpression;
-            //}
+            var fExpr = expr as MethodCallExpression;
+            if (fExpr != null)
+            {
+                position = GetPosition(fExpr);
+                viewExpr = fExpr.Arguments.FirstOrDefault() as MemberExpression;
+            }
 
             if (position == null)
             {
@@ -520,12 +541,7 @@ namespace EasyLayout.Forms
                 throw new NotSupportedException("Constraints should use views's Top, Bottom, etc properties, or extension methods like GetCenter().");
             }
 
-            var eval = Eval(viewExpr);
-            var view = eval as View;
-            if (view == null)
-            {
-                throw new NotSupportedException("Constraints only apply to views.");
-            }
+            var view = GetView(viewExpr);
 
             return new LeftExpression
             {
@@ -574,6 +590,19 @@ namespace EasyLayout.Forms
             return Expression.Lambda(expr).Compile().DynamicInvoke();
         }
 
+        private static Position GetPosition(MethodCallExpression fExpr)
+        {
+            switch (fExpr.Method.Name)
+            {
+                case nameof(GetCenterX):
+                    return Position.CenterX;
+                case nameof(GetCenterY):
+                    return Position.CenterY;
+                default:
+                    throw new NotSupportedException("Method " + fExpr.Method.Name + " is not recognized.");
+            }
+        }
+
         private static Position GetPosition(MemberExpression memExpr)
         {
             switch (memExpr.Member.Name)
@@ -594,6 +623,8 @@ namespace EasyLayout.Forms
                     return Position.Width;
                 case nameof(Rectangle.Height):
                     return Position.Height;
+                case nameof(Rectangle.Center):
+                    return Position.Center;
                 default:
                     throw new NotSupportedException("Property " + memExpr.Member.Name + " is not recognized.");
             }
