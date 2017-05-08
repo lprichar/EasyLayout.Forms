@@ -107,7 +107,7 @@ namespace EasyLayout.Forms
                 }
                 if (rightExpression.IsParent)
                 {
-                    return GetLayoutRuleForParent(leftExpression.Position, rightExpression.Position, leftExpression.Name);
+                    return GetLayoutRuleForParent(leftExpression.Position, rightExpression.Position, leftExpression.Name, leftExpression.View.Id);
                 }
                 return GetLayoutRuleForSibling(leftExpression.Position, rightExpression.Position,
                     leftExpression.Name, rightExpression.Name);
@@ -122,16 +122,19 @@ namespace EasyLayout.Forms
                 throw new Exception("Only width and height constraint types are supported");
             }
 
-            private static Tuple<ConstraintType, Constraint> GetLayoutRuleForParent(Position childPosition, Position parentPosition, string childName)
+            private static Size GetSize(RelativeLayout rl, VisualElement ve) => ve.Measure(rl.Width, rl.Height).Request;
+            private static Size GetSize(RelativeLayout rl, Guid? id) => GetSize(rl, rl.Children.FirstOrDefault(i => i.Id == id));
+
+            private static Tuple<ConstraintType, Constraint> GetLayoutRuleForParent(Position childPosition, Position parentPosition, string childName, Guid childId)
             {
                 if (childPosition == Position.Top && parentPosition == Position.Top)
-                    return new Tuple<ConstraintType, Constraint>(ConstraintType.Y, Constraint.RelativeToParent(p => p.Y));
+                    return new Tuple<ConstraintType, Constraint>(ConstraintType.Y, Constraint.RelativeToParent(rl => rl.Y));
                 if (childPosition == Position.Right && parentPosition == Position.Right)
-                    return new Tuple<ConstraintType, Constraint>(ConstraintType.X, Constraint.RelativeToParent(p => p.Width));
+                    return new Tuple<ConstraintType, Constraint>(ConstraintType.X, Constraint.RelativeToParent(rl => rl.Width - GetSize(rl, childId).Width));
                 if (childPosition == Position.Bottom && parentPosition == Position.Bottom)
-                    return new Tuple<ConstraintType, Constraint>(ConstraintType.Y, Constraint.RelativeToParent(p => p.Height));
+                    return new Tuple<ConstraintType, Constraint>(ConstraintType.Y, Constraint.RelativeToParent(rl => rl.Height));
                 if (childPosition == Position.Left && parentPosition == Position.Left)
-                    return new Tuple<ConstraintType, Constraint>(ConstraintType.X, Constraint.RelativeToParent(p => p.X));
+                    return new Tuple<ConstraintType, Constraint>(ConstraintType.X, Constraint.RelativeToParent(rl => rl.X));
                 // todo: support more parent layout constraints
                 //if (childPosition == Position.CenterX && parentPosition == Position.CenterX)
                 //    return LayoutRules.CenterHorizontal;
