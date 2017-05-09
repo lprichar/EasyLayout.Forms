@@ -61,7 +61,7 @@ namespace EasyLayout.Forms
                 {
                     return GetLayoutRuleForParent(widthHeightAssertion);
                 }
-                return GetLayoutRuleForSibling();
+                return GetLayoutRuleForSibling(widthHeightAssertion);
             }
 
             private static double GetWidth(RelativeLayout relativeLayout, Guid id, double? widthAssertion)
@@ -135,7 +135,7 @@ namespace EasyLayout.Forms
                 throw new Exception($"Unsupported parent positioning combination: {childName}.{childPosition} with parent.{parentPosition}");
             }
 
-            private Constraint GetLayoutRuleForSibling()
+            private Constraint GetLayoutRuleForSibling(Assertion widthHeightAssertion)
             {
                 Position leftPosition = LeftExpression.Position;
                 Position rightPosition = RightExpression.Position;
@@ -143,17 +143,20 @@ namespace EasyLayout.Forms
                 string rightExpressionName = RightExpression.Name;
                 View sibling = RightExpression.View;
                 var margin = GetMargin();
-                
+                var childId = LeftExpression.View.Id;
+
+                var heightWidthConstant = widthHeightAssertion?.RightExpression.Constant;
+
                 // X Constraints
                 if (leftPosition == Position.Left && rightPosition == Position.Left)
                     return Constraint.RelativeToView(sibling, (rl, v) => v.X + margin);
                 if (leftPosition == Position.Right && rightPosition == Position.Right)
-                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Right + margin);
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Right - GetWidth(rl, childId, heightWidthConstant) + margin);
 
                 if (leftPosition == Position.Top && rightPosition == Position.Top)
                     return Constraint.RelativeToView(sibling, (rl, v) => v.Y + margin);
                 if (leftPosition == Position.Bottom && rightPosition == Position.Bottom)
-                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Bottom + margin);
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Bottom - GetHeight(rl, childId, heightWidthConstant) + margin);
 
                 //if (leftPosition == Position.Top && rightPosition == Position.Bottom)
                 //    return LayoutRules.Below;
