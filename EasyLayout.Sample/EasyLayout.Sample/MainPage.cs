@@ -27,6 +27,16 @@ namespace EasyLayout.Sample
         {
             AddViews();
             ConstrainLayout();
+
+            //Size GetSize(VisualElement ve, RelativeLayout rl) => ve.Measure(rl.Width, rl.Height).Request;
+
+            //_relativeLayout.Children.Add(
+            //    _top,
+            //    Constraint.RelativeToView(_center, (rl, v) => v.X),
+            //    Constraint.RelativeToView(_center, (rl, v) => v.Y - GetSize(_top, rl).Height - 20),
+            //    Constraint.RelativeToView(_center, (rl, v) => v.Width)
+            //    );
+
             Content = _relativeLayout;
         }
 
@@ -38,17 +48,16 @@ namespace EasyLayout.Sample
 
                 _topTop.Bounds.GetCenterX() == _relativeLayout.Bounds.GetCenterX() &&
                 _topTop.Bounds.Top == _relativeLayout.Bounds.Top &&
-                _topTop.Bounds.Height == 40
+                _topTop.Bounds.Height == 40 &&
 
-                // todo: left & right assertions
-                //_top.Bounds.Left == _center.Bounds.Left &&
-                //_top.Bounds.Right == _center.Bounds.Right &&
-                //_top.Bounds.Bottom == _center.Bounds.Top - 20 &&
+                _top.Bounds.Left == _center.Bounds.Left &&
+                _top.Bounds.Right == _center.Bounds.Right &&
+                _top.Bounds.Bottom == _center.Bounds.Top - 20
 
-                // todo: top & bottom assertions
-                //_right.Bounds.Left == _center.Bounds.Right + 20 &&
-                //_right.Bounds.Top == _center.Bounds.Top &&
-                //_right.Bounds.Bottom == _center.Bounds.Bottom &&
+            // todo: top & bottom assertions
+            //_right.Bounds.Left == _center.Bounds.Right + 20 &&
+            //_right.Bounds.Top == _center.Bounds.Top &&
+            //_right.Bounds.Bottom == _center.Bounds.Bottom &&
 
             //_left.Bounds.Right == _center.Bounds.Left - 20 &&
             //_left.Bounds.Top == _center.Bounds.Top &&

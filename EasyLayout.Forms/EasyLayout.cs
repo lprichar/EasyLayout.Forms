@@ -254,6 +254,13 @@ namespace EasyLayout.Forms
                        LeftExpression.Position == Position.Bottom ||
                        LeftExpression.Position == Position.CenterY;
             }
+
+            public bool IsTopOrLeft()
+            {
+                if (LeftExpression.Position == Position.Top) return true;
+                if (LeftExpression.Position == Position.Left) return true;
+                return false;
+            }
         }
 
         private enum Position
@@ -335,8 +342,26 @@ namespace EasyLayout.Forms
 
         private static Constraint GetXConstraint(IGrouping<View, Assertion> assertions, Assertion widthAssertion)
         {
-            var assertion = GetSingleAssertionOrDefault(assertions, i => i.IsXConstraint(), "Multiple assertions found affecting X");
-            return assertion?.GetConstraint(widthAssertion);
+            var xAssertions = assertions.Where(i => i.IsXConstraint()).ToList();
+            if (xAssertions.Count == 0) return null;
+            if (xAssertions.Count == 1)
+            {
+                return xAssertions[0].GetConstraint(widthAssertion);
+            }
+            if (xAssertions.Count == 2)
+            {
+                var assertion = GetLeftOrTop(xAssertions[0], xAssertions[1]);
+                return assertion.GetConstraint(widthAssertion);
+            }
+
+            throw new ArgumentException("Multiple assertions found affecting X for " + xAssertions[0].LeftName);
+        }
+
+        private static Assertion GetLeftOrTop(Assertion assertion1, Assertion assertion2)
+        {
+            if (assertion1.IsTopOrLeft()) return assertion1;
+            if (assertion2.IsTopOrLeft()) return assertion2;
+            throw new ArgumentException("There are two statements for " + assertion1.LeftName + " affecting X or Y.  To make this work one of them must be Top or Left.");
         }
 
         private static Constraint GetYConstraint(IGrouping<View, Assertion> assertions, Assertion heightAssertion)
@@ -358,7 +383,10 @@ namespace EasyLayout.Forms
         private static Assertion GetSingleAssertionOrDefault(IGrouping<View, Assertion> viewsGroupedByRule, Func<Assertion, bool> func, string errorMessage)
         {
             var assertions = viewsGroupedByRule.Where(func).ToList();
-            if (assertions.Count > 1) throw new ArgumentException(errorMessage + ".  Element name: " + viewsGroupedByRule.First().LeftName);
+            if (assertions.Count > 1)
+            {
+                throw new ArgumentException(errorMessage + ".  Element name: " + viewsGroupedByRule.First().LeftName);
+            }
             if (assertions.Count == 0) return null;
             return assertions[0];
         }

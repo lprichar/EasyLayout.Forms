@@ -3,7 +3,7 @@ EasyLayout.Forms makes it easier to read, write, and maintain relative layouts i
 
 ## Sample Project
 
-The best place to get started is to take a look at the [sample project](https://github.com/lprichar/EasyLayout.Forms/blob/master/EasyLayout.Forms.Sample/MainPage.cs).
+The best place to get started is to take a look at the [sample project](https://github.com/lprichar/EasyLayout.Forms/blob/master/EasyLayout.Sample/EasyLayout.Sample/MainPage.cs).
 
 ![Sample Project Screenshot](SampleProject.PNG)
 
