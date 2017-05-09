@@ -13,6 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyLayout.Sample.iOS", "Ea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyLayout.Sample.UWP", "EasyLayout.Sample\EasyLayout.Sample.UWP\EasyLayout.Sample.UWP.csproj", "{B6AAEFE7-812C-4356-86E7-494040C1E7E4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E41DF2AA-38EC-4F2D-813F-7DB613E22176}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		EasyLayout.Sample\EasyLayout.Sample\EasyLayout.Sample.projitems*{28329813-d3a6-4bc3-a0f8-bce8518e3418}*SharedItemsImports = 4

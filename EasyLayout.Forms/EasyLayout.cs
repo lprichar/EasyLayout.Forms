@@ -197,6 +197,7 @@ namespace EasyLayout.Forms
                 if (leftPosition == Position.CenterX && rightPosition == Position.CenterX)
                     return Constraint.RelativeToView(sibling, (rl, v) => v.X  + (v.Bounds.Width * .5f) - (GetWidth(rl, childId, heightWidthConstant) * .5f) + margin);
 
+                // todo: constrain width's & height's
                 //if (leftPosition == Position.Width && rightPosition == Position.Width)
                 //    throw new ArgumentException("Unfortunatly Android's relative layout isn't sophisticated enough to allow constraining widths.  You might be able to achieve the same result by constraining Left's and Right's.");
                 //if (leftPosition == Position.Height && rightPosition == Position.Height)
