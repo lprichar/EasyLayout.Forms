@@ -108,24 +108,35 @@ namespace EasyLayout.Forms
                 var heightWidthConstant = widthHeightAssertion?.RightExpression.Constant;
 
                 // X Constraints
+
+                // aka LayoutRules.AlignParentLeft
                 if (childPosition == Position.Left && parentPosition == Position.Left)
                     return Constraint.RelativeToParent(rl => rl.X + margin);
+
+                // aka LayoutRules.AlignParentRight
                 if (childPosition == Position.Right && parentPosition == Position.Right)
                     return Constraint.RelativeToParent(rl => rl.Width - GetWidth(rl, childId, heightWidthConstant) + margin);
+
+                // aka LayoutRules.CenterHorizontal
                 if (childPosition == Position.CenterX && parentPosition == Position.CenterX)
                     return Constraint.RelativeToParent(rl => (rl.Width * .5f) - (GetWidth(rl, childId, heightWidthConstant) * .5f) + margin);
 
                 // Y Constraints
+
+                // aka LayoutRules.AlignParentTop
                 if (childPosition == Position.Top && parentPosition == Position.Top)
                     return Constraint.RelativeToParent(rl => rl.Y + margin);
+
+                // aka LayoutRules.AlignParentBottom
                 if (childPosition == Position.Bottom && parentPosition == Position.Bottom)
                     return Constraint.RelativeToParent(rl => rl.Height - GetHeight(rl, childId, heightWidthConstant) + margin);
+
+                // aka LayoutRules.CenterVertical
                 if (childPosition == Position.CenterY && parentPosition == Position.CenterY)
                     return Constraint.RelativeToParent(rl => (rl.Height * .5f) - (GetHeight(rl, childId, heightWidthConstant) * .5f) + margin);
 
                 // todo: support more parent layout constraints
-                //if (childPosition == Position.CenterY && parentPosition == Position.CenterY)
-                //    return LayoutRules.CenterVertical;
+                // aka LayoutRules.CenterInParent
                 //if (childPosition == Position.Center && parentPosition == Position.Center)
                 //    return LayoutRules.CenterInParent;
                 //if (childPosition == Position.Width && parentPosition == Position.Width)
@@ -148,26 +159,42 @@ namespace EasyLayout.Forms
                 var heightWidthConstant = widthHeightAssertion?.RightExpression.Constant;
 
                 // X Constraints
+
+                // aka LayoutRules.AlignLeft
                 if (leftPosition == Position.Left && rightPosition == Position.Left)
                     return Constraint.RelativeToView(sibling, (rl, v) => v.X + margin);
+
+                // aka LayoutRules.AlignRight
                 if (leftPosition == Position.Right && rightPosition == Position.Right)
                     return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Right - GetWidth(rl, childId, heightWidthConstant) + margin);
 
+                // aka LayoutRules.RightOf
+                if (leftPosition == Position.Left && rightPosition == Position.Right)
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Right + margin);
+
+                // Y Constraints
+
+                // aka LayoutRules.AlignTop
                 if (leftPosition == Position.Top && rightPosition == Position.Top)
                     return Constraint.RelativeToView(sibling, (rl, v) => v.Y + margin);
+
+                // aka LayoutRules.AlignBottom
                 if (leftPosition == Position.Bottom && rightPosition == Position.Bottom)
                     return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Bottom - GetHeight(rl, childId, heightWidthConstant) + margin);
+                
+                // aka LayoutRules.Below
+                if (leftPosition == Position.Top && rightPosition == Position.Bottom)
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Bottom);
 
-                //if (leftPosition == Position.Top && rightPosition == Position.Bottom)
-                //    return LayoutRules.Below;
+                // aka LayoutRules.Above
                 //if (leftPosition == Position.Bottom && rightPosition == Position.Top)
                 //    return LayoutRules.Above;
-                //if (leftPosition == Position.Left && rightPosition == Position.Right)
-                //    return LayoutRules.RightOf;
+
+                // aka LayoutRules.LeftOf
                 //if (leftPosition == Position.Right && rightPosition == Position.Left)
                 //    return LayoutRules.LeftOf;
-                //if (leftPosition == Position.Baseline && rightPosition == Position.Baseline)
-                //    return LayoutRules.AlignBaseline;
+                
+                
                 //if (leftPosition == Position.Width && rightPosition == Position.Width)
                 //    throw new ArgumentException("Unfortunatly Android's relative layout isn't sophisticated enough to allow constraining widths.  You might be able to achieve the same result by constraining Left's and Right's.");
                 //if (leftPosition == Position.Height && rightPosition == Position.Height)
