@@ -15,8 +15,8 @@ If you want to align a label centered horizontally and at the top of the screen 
 Size GetSize(VisualElement ve, RelativeLayout rl) => ve.Measure(rl.Width, rl.Height).Request;
 
 relativeLayout.Children.Add(label,
-    Constraint.RelativeToParent(parent => parent.Y + 10,
-    Constraint.RelativeToParent(parent => (parent.Height * .5) - GetSize(label, parent).Height * .5)
+    Constraint.RelativeToParent(rl => (rl.Width * .5) - (GetSize(label, rl).Width * .5))
+    Constraint.RelativeToParent(rl => rl.Y + 10,
     );
 ````
 Note the GetSize() helper.  That's because:
