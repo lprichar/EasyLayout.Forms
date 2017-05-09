@@ -172,6 +172,10 @@ namespace EasyLayout.Forms
                 if (leftPosition == Position.Left && rightPosition == Position.Right)
                     return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Right + margin);
 
+                // aka LayoutRules.LeftOf
+                if (leftPosition == Position.Right && rightPosition == Position.Left)
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Left - GetWidth(rl, childId, heightWidthConstant) + margin);
+
                 // Y Constraints
 
                 // aka LayoutRules.AlignTop
@@ -187,14 +191,9 @@ namespace EasyLayout.Forms
                     return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Bottom);
 
                 // aka LayoutRules.Above
-                //if (leftPosition == Position.Bottom && rightPosition == Position.Top)
-                //    return LayoutRules.Above;
+                if (leftPosition == Position.Bottom && rightPosition == Position.Top)
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Top - GetHeight(rl, childId, heightWidthConstant) + margin);
 
-                // aka LayoutRules.LeftOf
-                //if (leftPosition == Position.Right && rightPosition == Position.Left)
-                //    return LayoutRules.LeftOf;
-                
-                
                 //if (leftPosition == Position.Width && rightPosition == Position.Width)
                 //    throw new ArgumentException("Unfortunatly Android's relative layout isn't sophisticated enough to allow constraining widths.  You might be able to achieve the same result by constraining Left's and Right's.");
                 //if (leftPosition == Position.Height && rightPosition == Position.Height)
