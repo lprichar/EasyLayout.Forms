@@ -32,14 +32,6 @@ namespace EasyLayout.Forms
 {
     public static class EasyLayoutForms
     {
-        private struct Margin
-        {
-            public double? Right { get; set; }
-            public double? Left { get; set; }
-            public double? Top { get; set; }
-            public double? Bottom { get; set; }
-        }
-
         private class Assertion
         {
             public Assertion(View view)
@@ -48,14 +40,12 @@ namespace EasyLayout.Forms
             }
 
             public View View { get; }
-            public Margin Margin { get; private set; }
             private LeftExpression LeftExpression { get; set; }
             private RightExpression RightExpression { get; set; }
             public string LeftName => LeftExpression.Name;
 
             public void Initialize(LeftExpression leftExpression, RightExpression rightExpression)
             {
-                SetMargin(leftExpression, rightExpression);
                 LeftExpression = leftExpression;
                 RightExpression = rightExpression;
             }
@@ -113,24 +103,25 @@ namespace EasyLayout.Forms
                 Position parentPosition = RightExpression.Position;
                 string childName = LeftExpression.Name;
                 Guid childId = LeftExpression.View.Id;
+                var margin = GetMargin();
 
                 var heightWidthConstant = widthHeightAssertion?.RightExpression.Constant;
 
                 // X Constraints
                 if (childPosition == Position.Left && parentPosition == Position.Left)
-                    return Constraint.RelativeToParent(rl => rl.X);
+                    return Constraint.RelativeToParent(rl => rl.X + margin);
                 if (childPosition == Position.Right && parentPosition == Position.Right)
-                    return Constraint.RelativeToParent(rl => rl.Width - GetWidth(rl, childId, heightWidthConstant));
+                    return Constraint.RelativeToParent(rl => rl.Width - GetWidth(rl, childId, heightWidthConstant) + margin);
                 if (childPosition == Position.CenterX && parentPosition == Position.CenterX)
-                    return Constraint.RelativeToParent(rl => (rl.Width * .5f) - (GetWidth(rl, childId, heightWidthConstant) * .5f));
+                    return Constraint.RelativeToParent(rl => (rl.Width * .5f) - (GetWidth(rl, childId, heightWidthConstant) * .5f) + margin);
 
                 // Y Constraints
                 if (childPosition == Position.Top && parentPosition == Position.Top)
-                    return Constraint.RelativeToParent(rl => rl.Y);
+                    return Constraint.RelativeToParent(rl => rl.Y + margin);
                 if (childPosition == Position.Bottom && parentPosition == Position.Bottom)
-                    return Constraint.RelativeToParent(rl => rl.Height - GetHeight(rl, childId, heightWidthConstant));
+                    return Constraint.RelativeToParent(rl => rl.Height - GetHeight(rl, childId, heightWidthConstant) + margin);
                 if (childPosition == Position.CenterY && parentPosition == Position.CenterY)
-                    return Constraint.RelativeToParent(rl => (rl.Height * .5f) - (GetHeight(rl, childId, heightWidthConstant) * .5f));
+                    return Constraint.RelativeToParent(rl => (rl.Height * .5f) - (GetHeight(rl, childId, heightWidthConstant) * .5f) + margin);
 
                 // todo: support more parent layout constraints
                 //if (childPosition == Position.CenterY && parentPosition == Position.CenterY)
@@ -149,18 +140,18 @@ namespace EasyLayout.Forms
                 Position leftPosition = LeftExpression.Position;
                 Position rightPosition = RightExpression.Position;
                 string leftExpressionName = LeftExpression.Name;
-                Guid childId = LeftExpression.View.Id;
                 string rightExpressionName = RightExpression.Name;
                 View sibling = RightExpression.View;
-
+                var margin = GetMargin();
+                
                 //var heightWidthConstant = widthHeightAssertion?.RightExpression.Constant;
 
                 // X Constraints
                 if (leftPosition == Position.Left && rightPosition == Position.Left)
-                    return Constraint.RelativeToView(sibling, (rl, v) => v.X);
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.X + margin);
 
                 if (leftPosition == Position.Top && rightPosition == Position.Top)
-                    return Constraint.RelativeToView(sibling, (rl, v) => v.Y);
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.Y + margin);
 
                 //if (leftPosition == Position.Bottom && rightPosition == Position.Bottom)
                 //    return LayoutRules.AlignBottom;
@@ -183,38 +174,30 @@ namespace EasyLayout.Forms
                 throw new ArgumentException($"Unsupported relative positioning combination: {leftExpressionName}.{leftPosition} with {rightExpressionName}.{rightPosition}");
             }
 
-            private void SetMargin(LeftExpression leftExpression, RightExpression rightExpression)
+            private double GetMargin()
             {
-                Margin = GetMargin(leftExpression, rightExpression);
-            }
+                if (RightExpression.Constant == null) return 0;
+                var value = RightExpression.Constant.Value;
 
-            private Margin GetMargin(LeftExpression leftExpression, RightExpression rightExpression)
-            {
-                if (rightExpression.Constant == null) return new Margin();
-                var value = rightExpression.Constant.Value;
-
-                switch (leftExpression.Position)
+                switch (LeftExpression.Position)
                 {
                     case Position.Top:
-                        return new Margin { Top = value };
-                    case Position.Baseline:
-                        return new Margin { Top = value };
-                    case Position.Right:
-                        return new Margin { Right = -value };
-                    case Position.Bottom:
-                        return new Margin { Bottom = -value };
                     case Position.Left:
-                        return new Margin { Left = value };
+                        return value;
+                    case Position.Right:
+                    case Position.Bottom:
+                        return -value;
                     case Position.Width:
-                        return new Margin();
+                        throw new NotImplementedException("Width adjustments not currently supported");
                     case Position.Height:
-                        return new Margin();
+                        throw new NotImplementedException("Height adjustments not currently supported");
                     case Position.CenterX:
-                        return value > 0 ?
-                            new Margin { Left = value } :
-                            new Margin() { Right = -value };
+                        return value;
+                        //return value > 0 ?
+                        //    new Margin { Left = value } :
+                        //    new Margin() { Right = -value };
                     default:
-                        throw new ArgumentException($"Constant expressions with {rightExpression.Position} are currently unsupported.");
+                        throw new ArgumentException($"Constant expressions with {RightExpression.Position} are currently unsupported.");
                 }
             }
 
@@ -254,8 +237,7 @@ namespace EasyLayout.Forms
             Center,
             Constant,
             Width,
-            Height,
-            Baseline
+            Height
         }
 
         private struct LeftExpression
@@ -275,22 +257,22 @@ namespace EasyLayout.Forms
             public bool IsConstant => !IsParent && View == null && Constant != null;
         }
 
-        public static double GetCenterX(this Rectangle rectangle)
+        private static double GetCenterX(this Rectangle rectangle)
         {
             return rectangle.Left + (rectangle.Width / 2);
         }
 
-        public static double GetCenterY(this Rectangle rectangle)
+        private static double GetCenterY(this Rectangle rectangle)
         {
             return rectangle.Top + (rectangle.Height / 2);
         }
 
-        public static int ToConst(this int i)
+        private static int ToConst(this int i)
         {
             return i;
         }
 
-        public static int ToConst(this float i)
+        private static int ToConst(this float i)
         {
             return (int)i;
         }
@@ -318,30 +300,7 @@ namespace EasyLayout.Forms
                 var yConstraint = GetYConstraint(viewAndRules, heightAssertion);
 
                 relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
-
-                var thickness = CombineMargins(viewAndRules);
-                view.Margin = thickness;
             }
-        }
-
-        private static Thickness CombineMargins(IGrouping<View, Assertion> viewAndRules)
-        {
-            double left = 0, top = 0, right = 0, bottom = 0;
-
-            foreach (var rule in viewAndRules)
-            {
-                var margin = rule.Margin;
-                if (margin.Left.HasValue)
-                    left = margin.Left.Value;
-                if (margin.Right.HasValue)
-                    right = margin.Right.Value;
-                if (margin.Top.HasValue)
-                    top = margin.Top.Value;
-                if (margin.Bottom.HasValue)
-                    bottom = margin.Bottom.Value;
-            }
-
-            return new Thickness(left, top, right, bottom);
         }
 
         private static Constraint GetXConstraint(IGrouping<View, Assertion> assertions, Assertion widthAssertion)
@@ -369,7 +328,7 @@ namespace EasyLayout.Forms
         private static Assertion GetSingleAssertionOrDefault(IGrouping<View, Assertion> viewsGroupedByRule, Func<Assertion, bool> func, string errorMessage)
         {
             var assertions = viewsGroupedByRule.Where(func).ToList();
-            if (assertions.Count > 1) throw new ArgumentException(".  Element name: " + viewsGroupedByRule.First().LeftName);
+            if (assertions.Count > 1) throw new ArgumentException(errorMessage + ".  Element name: " + viewsGroupedByRule.First().LeftName);
             if (assertions.Count == 0) return null;
             return assertions[0];
         }

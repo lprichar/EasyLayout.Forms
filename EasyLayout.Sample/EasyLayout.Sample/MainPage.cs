@@ -33,8 +33,8 @@ namespace EasyLayout.Sample
             //    Constraint.RelativeToView(label1, (rl, l1) => l1.Y + l1.Height + 10));
 
             relativeLayout.ConstrainLayout(() =>
-                label1.Bounds.Left == relativeLayout.Bounds.Left &&
-                label1.Bounds.Top == relativeLayout.Bounds.Top &&
+                label1.Bounds.Left == relativeLayout.Bounds.Left + 100 &&
+                label1.Bounds.Top == relativeLayout.Bounds.Top + 100 &&
                 label1.Bounds.Width == 100 &&
                 label1.Bounds.Height == 100 &&
 
