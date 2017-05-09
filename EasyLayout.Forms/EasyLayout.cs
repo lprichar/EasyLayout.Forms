@@ -296,9 +296,9 @@ namespace EasyLayout.Forms
 
         private static void UpdateLayoutParamsWithRules(RelativeLayout relativeLayout, IEnumerable<Assertion> viewAndRule)
         {
-            var viewsGroupedByRule = viewAndRule.GroupBy(i => i.View);
+            var assertionsGroupedByView = viewAndRule.GroupBy(i => i.View);
 
-            foreach (var viewAndRules in viewsGroupedByRule)
+            foreach (var viewAndRules in assertionsGroupedByView)
             {
                 var view = viewAndRules.Key;
 
@@ -310,7 +310,30 @@ namespace EasyLayout.Forms
                 var yConstraint = GetYConstraint(viewAndRules, heightAssertion);
 
                 relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
+
+                var thickness = CombineMargins(viewAndRules);
+                view.Margin = thickness;
             }
+        }
+
+        private static Thickness CombineMargins(IGrouping<View, Assertion> viewAndRules)
+        {
+            double left = 0, top = 0, right = 0, bottom = 0;
+
+            foreach (var rule in viewAndRules)
+            {
+                var margin = rule.Margin;
+                if (margin.Left.HasValue)
+                    left = margin.Left.Value;
+                if (margin.Right.HasValue)
+                    right = margin.Right.Value;
+                if (margin.Top.HasValue)
+                    top = margin.Top.Value;
+                if (margin.Bottom.HasValue)
+                    bottom = margin.Bottom.Value;
+            }
+
+            return new Thickness(left, top, right, bottom);
         }
 
         private static Constraint GetXConstraint(IGrouping<View, Assertion> assertions, Assertion widthAssertion)

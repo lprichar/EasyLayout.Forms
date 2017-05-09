@@ -17,14 +17,16 @@ namespace EasyLayout.Sample
 
             //Size GetSize(VisualElement ve, RelativeLayout rl) => ve.Measure(rl.Width, rl.Height).Request;
 
+            //label.Margin = new Thickness(0, 50, 0, 0);
+
             //relativeLayout.Children.Add(label,
             //    Constraint.RelativeToParent(parent => (parent.Width) - GetSize(label, parent).Width),
-            //    Constraint.RelativeToParent(parent => (parent.Height * .5) - GetSize(label, parent).Height * .5)
+            //    Constraint.RelativeToParent(parent => (parent.Y))
             //    );
 
             relativeLayout.ConstrainLayout(() =>
-                label.Bounds.GetCenterX() == relativeLayout.Bounds.GetCenterX() &&
-                label.Bounds.GetCenterY() == relativeLayout.Bounds.GetCenterY() &&
+                label.Bounds.Right == relativeLayout.Bounds.Right - 50 &&
+                label.Bounds.Top == relativeLayout.Bounds.Top + 50 &&
                 label.Bounds.Width == 300 &&
                 label.Bounds.Height == 100
             );
