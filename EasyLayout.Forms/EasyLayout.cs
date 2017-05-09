@@ -144,19 +144,17 @@ namespace EasyLayout.Forms
                 View sibling = RightExpression.View;
                 var margin = GetMargin();
                 
-                //var heightWidthConstant = widthHeightAssertion?.RightExpression.Constant;
-
                 // X Constraints
                 if (leftPosition == Position.Left && rightPosition == Position.Left)
                     return Constraint.RelativeToView(sibling, (rl, v) => v.X + margin);
+                if (leftPosition == Position.Right && rightPosition == Position.Right)
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Right + margin);
 
                 if (leftPosition == Position.Top && rightPosition == Position.Top)
                     return Constraint.RelativeToView(sibling, (rl, v) => v.Y + margin);
+                if (leftPosition == Position.Bottom && rightPosition == Position.Bottom)
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Bottom + margin);
 
-                //if (leftPosition == Position.Bottom && rightPosition == Position.Bottom)
-                //    return LayoutRules.AlignBottom;
-                //if (leftPosition == Position.Right && rightPosition == Position.Right)
-                //    return LayoutRules.AlignRight;
                 //if (leftPosition == Position.Top && rightPosition == Position.Bottom)
                 //    return LayoutRules.Below;
                 //if (leftPosition == Position.Bottom && rightPosition == Position.Top)
@@ -183,10 +181,9 @@ namespace EasyLayout.Forms
                 {
                     case Position.Top:
                     case Position.Left:
-                        return value;
                     case Position.Right:
                     case Position.Bottom:
-                        return -value;
+                        return value;
                     case Position.Width:
                         throw new NotImplementedException("Width adjustments not currently supported");
                     case Position.Height:
