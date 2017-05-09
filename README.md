@@ -36,7 +36,7 @@ relativeLayout.ConstrainLayout(() =>
 
 You no longer need to do any math or worry about how to get the size of a non-rendered view.
 
-Incidentally, GetCenterX() a new extension method, along with GetCenterY().
+Incidentally, GetCenterX() a new extension method, along with GetCenterY() and ToConst().
 
 ## Example 2 - Relative Alignment and Constants
 

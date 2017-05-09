@@ -297,7 +297,7 @@ namespace EasyLayout.Forms
             return rectangle.Top + (rectangle.Height / 2);
         }
 
-        private static int ToConst(this int i)
+        public static int ToConst(this int i)
         {
             return i;
         }
@@ -552,7 +552,7 @@ namespace EasyLayout.Forms
 
             if (viewExpr == null)
             {
-                throw new NotSupportedException("Constraints should use views's Top, Bottom, etc properties, or extension methods like GetCenter().");
+                throw new NotSupportedException("Constraints should use views's Top, Bottom, etc properties, or extension methods like GetCenter().  Did you forget to include '.Bounds' in your clause?");
             }
 
             var view = GetView(viewExpr);
