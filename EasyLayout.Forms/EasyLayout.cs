@@ -48,7 +48,6 @@ namespace EasyLayout.Forms
             }
 
             public View View { get; }
-            public Guid? RelativeToViewId { get; private set; }
             public Margin Margin { get; private set; }
             private LeftExpression LeftExpression { get; set; }
             private RightExpression RightExpression { get; set; }
@@ -56,10 +55,6 @@ namespace EasyLayout.Forms
 
             public void Initialize(LeftExpression leftExpression, RightExpression rightExpression)
             {
-                if (!rightExpression.IsParent)
-                {
-                    RelativeToViewId = rightExpression.Id;
-                }
                 SetMargin(leftExpression, rightExpression);
                 LeftExpression = leftExpression;
                 RightExpression = rightExpression;
@@ -76,8 +71,7 @@ namespace EasyLayout.Forms
                 {
                     return GetLayoutRuleForParent(widthHeightAssertion);
                 }
-                return GetLayoutRuleForSibling(LeftExpression.Position, RightExpression.Position,
-                    LeftExpression.Name, RightExpression.Name);
+                return GetLayoutRuleForSibling();
             }
 
             private static double GetWidth(RelativeLayout relativeLayout, Guid id, double? widthAssertion)
@@ -85,7 +79,9 @@ namespace EasyLayout.Forms
                 if (widthAssertion.HasValue && widthAssertion > 0) return widthAssertion.Value;
                 var child = GetChildById(relativeLayout, id);
                 if (child == null) return 0;
-                return child.Width != -1 ? child.Width : GetSize(relativeLayout, child).Width;
+                // -1 = width hasn't been computed yet so we have to calculate it
+                if (child.Width != -1) return child.Width;
+                return GetSize(relativeLayout, child).Width;
             }
 
             private static double GetHeight(RelativeLayout relativeLayout, Guid id, double? heightAssertion)
@@ -93,7 +89,9 @@ namespace EasyLayout.Forms
                 if (heightAssertion.HasValue && heightAssertion > 0) return heightAssertion.Value;
                 var child = GetChildById(relativeLayout, id);
                 if (child == null) return 0;
-                return child.Height != -1 ? child.Height : GetSize(relativeLayout, child).Height;
+                // -1 = height hasn't been computed yet so we have to calculate it
+                if (child.Height != -1) return child.Height;
+                return GetSize(relativeLayout, child).Height;
             }
 
             /// <summary>
@@ -146,18 +144,28 @@ namespace EasyLayout.Forms
                 throw new Exception($"Unsupported parent positioning combination: {childName}.{childPosition} with parent.{parentPosition}");
             }
 
-            private static Constraint GetLayoutRuleForSibling(Position leftPosition, Position rightPosition, string leftExpressionName, string rightExpressionName)
+            private Constraint GetLayoutRuleForSibling()
             {
-                // todo: support sibling layout constraints
-                throw new NotImplementedException("Sibling layout in progress");
+                Position leftPosition = LeftExpression.Position;
+                Position rightPosition = RightExpression.Position;
+                string leftExpressionName = LeftExpression.Name;
+                Guid childId = LeftExpression.View.Id;
+                string rightExpressionName = RightExpression.Name;
+                View sibling = RightExpression.View;
+
+                //var heightWidthConstant = widthHeightAssertion?.RightExpression.Constant;
+
+                // X Constraints
+                if (leftPosition == Position.Left && rightPosition == Position.Left)
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.X);
+
+                if (leftPosition == Position.Top && rightPosition == Position.Top)
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.Y);
+
                 //if (leftPosition == Position.Bottom && rightPosition == Position.Bottom)
                 //    return LayoutRules.AlignBottom;
-                //if (leftPosition == Position.Top && rightPosition == Position.Top)
-                //    return LayoutRules.AlignTop;
                 //if (leftPosition == Position.Right && rightPosition == Position.Right)
                 //    return LayoutRules.AlignRight;
-                //if (leftPosition == Position.Left && rightPosition == Position.Left)
-                //    return LayoutRules.AlignLeft;
                 //if (leftPosition == Position.Top && rightPosition == Position.Bottom)
                 //    return LayoutRules.Below;
                 //if (leftPosition == Position.Bottom && rightPosition == Position.Top)
@@ -172,7 +180,7 @@ namespace EasyLayout.Forms
                 //    throw new ArgumentException("Unfortunatly Android's relative layout isn't sophisticated enough to allow constraining widths.  You might be able to achieve the same result by constraining Left's and Right's.");
                 //if (leftPosition == Position.Height && rightPosition == Position.Height)
                 //    throw new ArgumentException("Unfortunatly Android's relative layout isn't sophisticated enough to allow constraining heights.  You might be able to achieve the same result by constraining Top's and Bottom's.");
-                //throw new ArgumentException($"Unsupported relative positioning combination: {leftExpressionName}.{leftPosition} with {rightExpressionName}.{rightPosition}");
+                throw new ArgumentException($"Unsupported relative positioning combination: {leftExpressionName}.{leftPosition} with {rightExpressionName}.{rightPosition}");
             }
 
             private void SetMargin(LeftExpression leftExpression, RightExpression rightExpression)
@@ -260,11 +268,11 @@ namespace EasyLayout.Forms
         private struct RightExpression
         {
             public bool IsParent { get; set; }
-            public Guid? Id { get; set; }
+            public View View { get; set; }
             public string Name { get; set; }
             public Position Position { get; set; }
             public double? Constant { get; set; }
-            public bool IsConstant => !IsParent && Id == null && Constant != null;
+            public bool IsConstant => !IsParent && View == null && Constant != null;
         }
 
         public static double GetCenterX(this Rectangle rectangle)
@@ -449,19 +457,13 @@ namespace EasyLayout.Forms
             var memberName = GetName(memberExpression);
             var isParent = view == relativeLayout;
 
-            // todo: Do we need to add Id's for relative layout's between views to work?
-            //if (view != null && !isParent && view.Id == -1)
-            //{
-            //    view.Id = GenerateViewId();
-            //}
-
             return new RightExpression
             {
                 IsParent = isParent,
-                Id = view?.Id,
+                View = view,
                 Position = position.Value,
                 Name = memberName,
-                Constant = constant
+                Constant = constant,
             };
         }
 
