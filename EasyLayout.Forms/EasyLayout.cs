@@ -194,6 +194,9 @@ namespace EasyLayout.Forms
                 if (leftPosition == Position.Bottom && rightPosition == Position.Top)
                     return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Top - GetHeight(rl, childId, heightWidthConstant) + margin);
 
+                if (leftPosition == Position.CenterX && rightPosition == Position.CenterX)
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.X  + (v.Bounds.Width * .5f) - (GetWidth(rl, childId, heightWidthConstant) * .5f) + margin);
+
                 //if (leftPosition == Position.Width && rightPosition == Position.Width)
                 //    throw new ArgumentException("Unfortunatly Android's relative layout isn't sophisticated enough to allow constraining widths.  You might be able to achieve the same result by constraining Left's and Right's.");
                 //if (leftPosition == Position.Height && rightPosition == Position.Height)
@@ -283,12 +286,12 @@ namespace EasyLayout.Forms
             public bool IsConstant => !IsParent && View == null && Constant != null;
         }
 
-        private static double GetCenterX(this Rectangle rectangle)
+        public static double GetCenterX(this Rectangle rectangle)
         {
             return rectangle.Left + (rectangle.Width / 2);
         }
 
-        private static double GetCenterY(this Rectangle rectangle)
+        public static double GetCenterY(this Rectangle rectangle)
         {
             return rectangle.Top + (rectangle.Height / 2);
         }

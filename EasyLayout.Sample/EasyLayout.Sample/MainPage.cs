@@ -38,8 +38,8 @@ namespace EasyLayout.Sample
                 label1.Bounds.Width == 100 &&
                 label1.Bounds.Height == 100 &&
 
-                label2.Bounds.Bottom == label1.Bounds.Top &&
-                label2.Bounds.Right == label1.Bounds.Left
+                label2.Bounds.GetCenterX() == label1.Bounds.GetCenterX() &&
+                label2.Bounds.Top == label1.Bounds.Bottom + 10
             );
 
             Content = relativeLayout;
