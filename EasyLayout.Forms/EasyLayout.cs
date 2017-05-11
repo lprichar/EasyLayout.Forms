@@ -50,13 +50,17 @@ namespace EasyLayout.Forms
                 RightExpression = rightExpression;
             }
 
+            public Constraint GetSizeConstraint() {
+				if (RightExpression.IsConstant && RightExpression.Constant.HasValue)
+				{
+					return Constraint.Constant(RightExpression.Constant.Value);
+				}
+				View sibling = RightExpression.View;
+                return Constraint.RelativeToView(sibling, (rv, v) => v.Width);
+			}
+
             public Constraint GetConstraint(Assertion widthHeightAssertion = null)
             {
-                if (RightExpression.IsConstant && RightExpression.Constant.HasValue)
-                {
-                    var constraint = Constraint.Constant(RightExpression.Constant.Value);
-                    return constraint;
-                }
                 if (RightExpression.IsParent)
                 {
                     return GetLayoutRuleForParent(widthHeightAssertion);
@@ -261,6 +265,8 @@ namespace EasyLayout.Forms
                 if (LeftExpression.Position == Position.Left) return true;
                 return false;
             }
+
+            public Position Position => LeftExpression.Position;
         }
 
         private enum Position
@@ -331,10 +337,11 @@ namespace EasyLayout.Forms
 
                 var widthAssertion = GetExplicitWidthConstraint(viewAndRules);
                 var heightAssertion = GetExplicitHeightConstraint(viewAndRules);
-                var widthConstraint = widthAssertion?.GetConstraint();
-                var heightConstraint = heightAssertion?.GetConstraint();
-                var xConstraint = GetXConstraint(viewAndRules, widthAssertion);
-                var yConstraint = GetYConstraint(viewAndRules, heightAssertion);
+				var xConstraint = GetXConstraint(viewAndRules, widthAssertion);
+				var yConstraint = GetYConstraint(viewAndRules, heightAssertion);
+                widthAssertion = widthAssertion ?? GetRelativeWidthConstraint(viewAndRules);
+				var widthConstraint = widthAssertion?.GetSizeConstraint();
+                var heightConstraint = heightAssertion?.GetSizeConstraint();
 
                 relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
             }
@@ -379,6 +386,14 @@ namespace EasyLayout.Forms
         {
             return GetSingleAssertionOrDefault(assertions, i => i.IsExplicitWidthAssertion(), "Multiple width assertions found");
         }
+
+        private static Assertion GetRelativeWidthConstraint(IGrouping<View, Assertion> assertions) 
+        {
+            var left = GetSingleAssertionOrDefault(assertions, i => i.Position == Position.Left, "Only one left assertion allowed");
+			var right = GetSingleAssertionOrDefault(assertions, i => i.Position == Position.Right, "Only one left assertion allowed");
+            if (left == null || right == null) return null;
+            return right;
+		}
 
         private static Assertion GetSingleAssertionOrDefault(IGrouping<View, Assertion> viewsGroupedByRule, Func<Assertion, bool> func, string errorMessage)
         {

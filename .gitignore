@@ -109,3 +109,5 @@ Desktop.ini
 Releases/Updates
 /SirenOfShame.Extruder/Services/MySosOnlineService.cs
 /EasyLayout.Droid/*.nupkg
+packages
+*.userprefs
