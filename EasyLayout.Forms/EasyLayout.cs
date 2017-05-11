@@ -50,13 +50,17 @@ namespace EasyLayout.Forms
                 RightExpression = rightExpression;
             }
 
-            public Constraint GetSizeConstraint() {
+            public Constraint GetSizeConstraint(Position position) {
 				if (RightExpression.IsConstant && RightExpression.Constant.HasValue)
 				{
 					return Constraint.Constant(RightExpression.Constant.Value);
 				}
 				View sibling = RightExpression.View;
-                return Constraint.RelativeToView(sibling, (rv, v) => v.Width);
+                if (position == Position.Width)
+                    return Constraint.RelativeToView(sibling, (rv, v) => v.Width);
+                if (position == Position.Height)
+					return Constraint.RelativeToView(sibling, (rv, v) => v.Height);
+                throw new ArgumentException("Unsupported position in size constraint: " + position);
 			}
 
             public Constraint GetPositionConstraint(Assertion widthHeightAssertion = null)
@@ -340,8 +344,9 @@ namespace EasyLayout.Forms
 				var xConstraint = GetXConstraint(viewAndRules, widthAssertion);
 				var yConstraint = GetYConstraint(viewAndRules, heightAssertion);
                 widthAssertion = widthAssertion ?? GetRelativeWidthConstraint(viewAndRules);
-				var widthConstraint = widthAssertion?.GetSizeConstraint();
-                var heightConstraint = heightAssertion?.GetSizeConstraint();
+                heightAssertion = heightAssertion ?? GetRelativeHeightConstraint(viewAndRules);
+				var widthConstraint = widthAssertion?.GetSizeConstraint(Position.Width);
+                var heightConstraint = heightAssertion?.GetSizeConstraint(Position.Height);
 
                 relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
             }
@@ -393,6 +398,14 @@ namespace EasyLayout.Forms
         {
             return GetSingleAssertionOrDefault(assertions, i => i.IsExplicitWidthAssertion(), "Multiple width assertions found");
         }
+
+        private static Assertion GetRelativeHeightConstraint(IGrouping<View, Assertion> assertions)
+        {
+            var top = GetSingleAssertionOrDefault(assertions, i => i.Position == Position.Top, "Only one top assertion allowed");
+            var bottom = GetSingleAssertionOrDefault(assertions, i => i.Position == Position.Bottom, "Only one bottom assertion allowed");
+			if (top == null || bottom == null) return null;
+			return bottom;
+		}
 
         private static Assertion GetRelativeWidthConstraint(IGrouping<View, Assertion> assertions) 
         {

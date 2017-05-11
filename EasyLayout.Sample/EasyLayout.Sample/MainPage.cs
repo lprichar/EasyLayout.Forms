@@ -45,6 +45,7 @@ namespace EasyLayout.Sample
             _relativeLayout.ConstrainLayout(() =>
                 _center.Bounds.GetCenterX() == _relativeLayout.Bounds.GetCenterX() &&
                 _center.Bounds.GetCenterY() == _relativeLayout.Bounds.GetCenterY() &&
+                _center.Bounds.Height == 50 &&
 
                 _topTop.Bounds.GetCenterX() == _relativeLayout.Bounds.GetCenterX() &&
                 _topTop.Bounds.Top == _relativeLayout.Bounds.Top &&
