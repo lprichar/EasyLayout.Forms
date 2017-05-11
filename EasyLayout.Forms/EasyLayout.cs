@@ -196,7 +196,7 @@ namespace EasyLayout.Forms
                 
                 // aka LayoutRules.Below
                 if (leftPosition == Position.Top && rightPosition == Position.Bottom)
-                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Bottom);
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Bottom + margin);
 
                 // aka LayoutRules.Above
                 if (leftPosition == Position.Bottom && rightPosition == Position.Top)

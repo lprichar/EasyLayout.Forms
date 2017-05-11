@@ -57,25 +57,25 @@ namespace EasyLayout.Sample
 
 	            _right.Bounds.Left == _center.Bounds.Right + 20 &&
 	            _right.Bounds.Top == _center.Bounds.Top &&
-	            _right.Bounds.Bottom == _center.Bounds.Bottom
+	            _right.Bounds.Bottom == _center.Bounds.Bottom &&
 
-            //_left.Bounds.Right == _center.Bounds.Left - 20 &&
-            //_left.Bounds.Top == _center.Bounds.Top &&
-            //_left.Bounds.Bottom == _center.Bounds.Bottom &&
+	            _left.Bounds.Right == _center.Bounds.Left - 20 &&
+	            _left.Bounds.Top == _center.Bounds.Top &&
+	            _left.Bounds.Bottom == _center.Bounds.Bottom &&
 
-            //_bottom.Bounds.Left == _center.Bounds.Left &&
-            //_bottom.Bounds.Right == _center.Bounds.Right &&
-            //_bottom.Bounds.Top == _center.Bounds.Bottom + 20 &&
+	            _bottom.Bounds.Left == _center.Bounds.Left &&
+	            _bottom.Bounds.Right == _center.Bounds.Right &&
+                _bottom.Bounds.Top == _center.Bounds.Bottom + 20
 
-            //_upperRight.Bounds.Left == _center.Bounds.Right + 20 &&
-            //_upperRight.Bounds.Bottom == _top.Bounds.Bottom &&
-            //_upperRight.Bounds.Height == 45 &&
-            //_upperRight.Bounds.Width == 140 &&
+	            //_upperRight.Bounds.Left == _center.Bounds.Right + 20 &&
+	            //_upperRight.Bounds.Bottom == _top.Bounds.Bottom &&
+	            //_upperRight.Bounds.Height == 45 &&
+	            //_upperRight.Bounds.Width == 140 &&
 
-            //_upperLeft.Bounds.Right == _center.Bounds.Left - 20 &&
-            //_upperLeft.Bounds.Bottom == _center.Bounds.Top - 20 &&
-            //_upperLeft.Bounds.Height == 40 &&
-            //_upperLeft.Bounds.Width == 140 &&
+	            //_upperLeft.Bounds.Right == _center.Bounds.Left - 20 &&
+	            //_upperLeft.Bounds.Bottom == _center.Bounds.Top - 20 &&
+	            //_upperLeft.Bounds.Height == 40 &&
+	            //_upperLeft.Bounds.Width == 140
 
             //_lowerLeft.Bounds.Right == _left.Bounds.Right &&
             //_lowerLeft.Bounds.Bottom == _bottom.Bounds.Bottom &&
