@@ -59,7 +59,7 @@ namespace EasyLayout.Forms
                 return Constraint.RelativeToView(sibling, (rv, v) => v.Width);
 			}
 
-            public Constraint GetConstraint(Assertion widthHeightAssertion = null)
+            public Constraint GetPositionConstraint(Assertion widthHeightAssertion = null)
             {
                 if (RightExpression.IsParent)
                 {
@@ -347,21 +347,29 @@ namespace EasyLayout.Forms
             }
         }
 
-        private static Constraint GetXConstraint(IGrouping<View, Assertion> assertions, Assertion widthAssertion)
+		private static Constraint GetXConstraint(IGrouping<View, Assertion> assertions, Assertion widthAssertion)
         {
-            var xAssertions = assertions.Where(i => i.IsXConstraint()).ToList();
+            return GetXorYConstraint(assertions, widthAssertion, "X", i => i.IsXConstraint());
+        }
+
+
+        private static Constraint GetXorYConstraint(IGrouping<View, Assertion> assertions, 
+                                                    Assertion sizeAssertion, string xorY,
+                                                    Func<Assertion, bool> positionConstraintFunc)
+        {
+            var xAssertions = assertions.Where(positionConstraintFunc).ToList();
             if (xAssertions.Count == 0) return null;
             if (xAssertions.Count == 1)
             {
-                return xAssertions[0].GetConstraint(widthAssertion);
+                return xAssertions[0].GetPositionConstraint(sizeAssertion);
             }
             if (xAssertions.Count == 2)
             {
                 var assertion = GetLeftOrTop(xAssertions[0], xAssertions[1]);
-                return assertion.GetConstraint(widthAssertion);
+                return assertion.GetPositionConstraint(sizeAssertion);
             }
 
-            throw new ArgumentException("Multiple assertions found affecting X for " + xAssertions[0].LeftName);
+            throw new ArgumentException($"Multiple assertions found affecting {xorY} for " + xAssertions[0].LeftName);
         }
 
         private static Assertion GetLeftOrTop(Assertion assertion1, Assertion assertion2)
@@ -373,9 +381,8 @@ namespace EasyLayout.Forms
 
         private static Constraint GetYConstraint(IGrouping<View, Assertion> assertions, Assertion heightAssertion)
         {
-            var assertion = GetSingleAssertionOrDefault(assertions, i => i.IsYConstraint(), "Multiple assertions found affecting Y");
-            return assertion?.GetConstraint(heightAssertion);
-        }
+			return GetXorYConstraint(assertions, heightAssertion, "Y", i => i.IsYConstraint());
+		}
 
         private static Assertion GetExplicitHeightConstraint(IGrouping<View, Assertion> assertions)
         {

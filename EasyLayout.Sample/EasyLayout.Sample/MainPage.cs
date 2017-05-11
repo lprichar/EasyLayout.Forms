@@ -52,12 +52,11 @@ namespace EasyLayout.Sample
 
                 _top.Bounds.Left == _center.Bounds.Left &&
                 _top.Bounds.Right == _center.Bounds.Right &&
-                _top.Bounds.Bottom == _center.Bounds.Top - 20
+                _top.Bounds.Bottom == _center.Bounds.Top - 20 &&
 
-            // todo: top & bottom assertions
-            //_right.Bounds.Left == _center.Bounds.Right + 20 &&
-            //_right.Bounds.Top == _center.Bounds.Top &&
-            //_right.Bounds.Bottom == _center.Bounds.Bottom &&
+	            _right.Bounds.Left == _center.Bounds.Right + 20 &&
+	            _right.Bounds.Top == _center.Bounds.Top &&
+	            _right.Bounds.Bottom == _center.Bounds.Bottom
 
             //_left.Bounds.Right == _center.Bounds.Left - 20 &&
             //_left.Bounds.Top == _center.Bounds.Top &&
