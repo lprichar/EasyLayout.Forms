@@ -2,6 +2,6 @@
 {
     public class MainViewModel
     {
-        public int Height { get; } = 40;
+        public int Height { get; } = 50;
     }
 }

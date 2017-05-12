@@ -84,9 +84,7 @@ namespace EasyLayout.Sample
 	            //_lowerRight.Bounds.Left == _right.Bounds.Left &&
 
 	            _bottomBottom.Bounds.Bottom == _relativeLayout.Bounds.Bottom &&
-                                            // todo: GetCenterX() with Width relative to other thing
-//	            _bottomBottom.Bounds.GetCenterX() == _relativeLayout.Bounds.GetCenterX() &&
-                _bottomBottom.Bounds.Left == _relativeLayout.Bounds.Left &&
+	            _bottomBottom.Bounds.GetCenterX() == _relativeLayout.Bounds.GetCenterX() &&
 	            _bottomBottom.Bounds.Height == ViewModel.Height.ToConst() &&
 	            _bottomBottom.Bounds.Width == _relativeLayout.Bounds.Width - 10
             );

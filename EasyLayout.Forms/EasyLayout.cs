@@ -79,8 +79,9 @@ namespace EasyLayout.Forms
                 return GetLayoutRuleForSibling(widthHeightAssertion);
             }
 
-            private static double GetWidth(RelativeLayout relativeLayout, Guid id, double? widthAssertion)
+            private static double GetWidth(RelativeLayout relativeLayout, Guid id, bool isSizeRelativeToParent, double? widthAssertion)
             {
+                if (isSizeRelativeToParent) return relativeLayout.Width + (widthAssertion ?? 0);
                 if (widthAssertion.HasValue && widthAssertion > 0) return widthAssertion.Value;
                 var child = GetChildById(relativeLayout, id);
                 if (child == null) return 0;
@@ -112,7 +113,7 @@ namespace EasyLayout.Forms
 
             private static View GetChildById(RelativeLayout relativeLayout, Guid id) => relativeLayout.Children.FirstOrDefault(i => i.Id == id);
 
-            private Constraint GetLayoutRuleForParent(Assertion widthHeightAssertion)
+            private Constraint GetLayoutRuleForParent(Assertion sizeAssertion)
             {
                 Position childPosition = LeftExpression.Position;
                 Position parentPosition = RightExpression.Position;
@@ -120,7 +121,8 @@ namespace EasyLayout.Forms
                 Guid childId = LeftExpression.View.Id;
                 var margin = GetMargin();
 
-                var heightWidthConstant = widthHeightAssertion?.RightExpression.Constant;
+                var sizeConstant = sizeAssertion?.RightExpression.Constant;
+                var isSizeRelativeToParent = sizeAssertion?.RightExpression.IsParent ?? false;
 
                 // X Constraints
 
@@ -130,11 +132,11 @@ namespace EasyLayout.Forms
 
                 // aka LayoutRules.AlignParentRight
                 if (childPosition == Position.Right && parentPosition == Position.Right)
-                    return Constraint.RelativeToParent(rl => rl.Width - GetWidth(rl, childId, heightWidthConstant) + margin);
+                    return Constraint.RelativeToParent(rl => rl.Width - GetWidth(rl, childId, isSizeRelativeToParent, sizeConstant) + margin);
 
                 // aka LayoutRules.CenterHorizontal
                 if (childPosition == Position.CenterX && parentPosition == Position.CenterX)
-                    return Constraint.RelativeToParent(rl => (rl.Width * .5f) - (GetWidth(rl, childId, heightWidthConstant) * .5f) + margin);
+                    return Constraint.RelativeToParent(rl => (rl.Width * .5f) - (GetWidth(rl, childId, isSizeRelativeToParent, sizeConstant) * .5f) + margin);
 
                 // Y Constraints
 
@@ -144,11 +146,11 @@ namespace EasyLayout.Forms
 
                 // aka LayoutRules.AlignParentBottom
                 if (childPosition == Position.Bottom && parentPosition == Position.Bottom)
-                    return Constraint.RelativeToParent(rl => rl.Height - GetHeight(rl, childId, heightWidthConstant) + margin);
+                    return Constraint.RelativeToParent(rl => rl.Height - GetHeight(rl, childId, sizeConstant) + margin);
 
                 // aka LayoutRules.CenterVertical
                 if (childPosition == Position.CenterY && parentPosition == Position.CenterY)
-                    return Constraint.RelativeToParent(rl => (rl.Height * .5f) - (GetHeight(rl, childId, heightWidthConstant) * .5f) + margin);
+                    return Constraint.RelativeToParent(rl => (rl.Height * .5f) - (GetHeight(rl, childId, sizeConstant) * .5f) + margin);
 
                 // todo: support more parent layout constraints
                 // aka LayoutRules.CenterInParent
@@ -181,7 +183,7 @@ namespace EasyLayout.Forms
 
                 // aka LayoutRules.AlignRight
                 if (leftPosition == Position.Right && rightPosition == Position.Right)
-                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Right - GetWidth(rl, childId, heightWidthConstant) + margin);
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Right - GetWidth(rl, childId, false, heightWidthConstant) + margin);
 
                 // aka LayoutRules.RightOf
                 if (leftPosition == Position.Left && rightPosition == Position.Right)
@@ -189,7 +191,7 @@ namespace EasyLayout.Forms
 
                 // aka LayoutRules.LeftOf
                 if (leftPosition == Position.Right && rightPosition == Position.Left)
-                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Left - GetWidth(rl, childId, heightWidthConstant) + margin);
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Left - GetWidth(rl, childId, false, heightWidthConstant) + margin);
 
                 // Y Constraints
 
@@ -210,7 +212,7 @@ namespace EasyLayout.Forms
                     return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Top - GetHeight(rl, childId, heightWidthConstant) + margin);
 
                 if (leftPosition == Position.CenterX && rightPosition == Position.CenterX)
-                    return Constraint.RelativeToView(sibling, (rl, v) => v.X  + (v.Bounds.Width * .5f) - (GetWidth(rl, childId, heightWidthConstant) * .5f) + margin);
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.X  + (v.Bounds.Width * .5f) - (GetWidth(rl, childId, false, heightWidthConstant) * .5f) + margin);
 
                 // todo: constrain width's & height's
                 //if (leftPosition == Position.Width && rightPosition == Position.Width)
