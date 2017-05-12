@@ -1,4 +1,4 @@
-﻿//
+﻿﻿//
 // Copyright (c) 2017 Lee P. Richardson
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -56,7 +56,14 @@ namespace EasyLayout.Forms
 					return Constraint.Constant(RightExpression.Constant.Value);
 				}
 				View sibling = RightExpression.View;
-                if (position == Position.Width)
+                var margin = GetMargin();
+
+                var isParent = RightExpression.IsParent;
+                if (isParent && position == Position.Width)
+                    return Constraint.RelativeToParent(rl => rl.Width + margin);
+				if (isParent && position == Position.Height)
+					return Constraint.RelativeToParent(rl => rl.Height);
+				if (position == Position.Width)
                     return Constraint.RelativeToView(sibling, (rv, v) => v.Width);
                 if (position == Position.Height)
 					return Constraint.RelativeToView(sibling, (rv, v) => v.Height);
@@ -226,9 +233,9 @@ namespace EasyLayout.Forms
                     case Position.Bottom:
                         return value;
                     case Position.Width:
-                        throw new NotImplementedException("Width adjustments not currently supported");
+                        return value;
                     case Position.Height:
-                        throw new NotImplementedException("Height adjustments not currently supported");
+                        return value;
                     case Position.CenterX:
                         return value;
                         //return value > 0 ?

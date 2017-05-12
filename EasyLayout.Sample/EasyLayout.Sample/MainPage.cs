@@ -47,25 +47,25 @@ namespace EasyLayout.Sample
                 _center.Bounds.GetCenterY() == _relativeLayout.Bounds.GetCenterY() &&
                 _center.Bounds.Height == 50 &&
 
-                _topTop.Bounds.GetCenterX() == _relativeLayout.Bounds.GetCenterX() &&
-                _topTop.Bounds.Top == _relativeLayout.Bounds.Top &&
-                _topTop.Bounds.Height == 40 &&
+             //   _topTop.Bounds.GetCenterX() == _relativeLayout.Bounds.GetCenterX() &&
+             //   _topTop.Bounds.Top == _relativeLayout.Bounds.Top &&
+             //   _topTop.Bounds.Height == 40 &&
 
-                _top.Bounds.Left == _center.Bounds.Left &&
-                _top.Bounds.Right == _center.Bounds.Right &&
-                _top.Bounds.Bottom == _center.Bounds.Top - 20 &&
+             //   _top.Bounds.Left == _center.Bounds.Left &&
+             //   _top.Bounds.Right == _center.Bounds.Right &&
+             //   _top.Bounds.Bottom == _center.Bounds.Top - 20 &&
 
-	            _right.Bounds.Left == _center.Bounds.Right + 20 &&
-	            _right.Bounds.Top == _center.Bounds.Top &&
-	            _right.Bounds.Bottom == _center.Bounds.Bottom &&
+	            //_right.Bounds.Left == _center.Bounds.Right + 20 &&
+	            //_right.Bounds.Top == _center.Bounds.Top &&
+	            //_right.Bounds.Bottom == _center.Bounds.Bottom &&
 
-	            _left.Bounds.Right == _center.Bounds.Left - 20 &&
-	            _left.Bounds.Top == _center.Bounds.Top &&
-	            _left.Bounds.Bottom == _center.Bounds.Bottom &&
+	            //_left.Bounds.Right == _center.Bounds.Left - 20 &&
+	            //_left.Bounds.Top == _center.Bounds.Top &&
+	            //_left.Bounds.Bottom == _center.Bounds.Bottom &&
 
-	            _bottom.Bounds.Left == _center.Bounds.Left &&
-	            _bottom.Bounds.Right == _center.Bounds.Right &&
-                _bottom.Bounds.Top == _center.Bounds.Bottom + 20
+	            //_bottom.Bounds.Left == _center.Bounds.Left &&
+	            //_bottom.Bounds.Right == _center.Bounds.Right &&
+             //   _bottom.Bounds.Top == _center.Bounds.Bottom + 20 &&
 
 	            //_upperRight.Bounds.Left == _center.Bounds.Right + 20 &&
 	            //_upperRight.Bounds.Bottom == _top.Bounds.Bottom &&
@@ -75,19 +75,20 @@ namespace EasyLayout.Sample
 	            //_upperLeft.Bounds.Right == _center.Bounds.Left - 20 &&
 	            //_upperLeft.Bounds.Bottom == _center.Bounds.Top - 20 &&
 	            //_upperLeft.Bounds.Height == 40 &&
-	            //_upperLeft.Bounds.Width == 140
+	            //_upperLeft.Bounds.Width == 140 &&
 
-            //_lowerLeft.Bounds.Right == _left.Bounds.Right &&
-            //_lowerLeft.Bounds.Bottom == _bottom.Bounds.Bottom &&
+	            //_lowerLeft.Bounds.Right == _left.Bounds.Right &&
+	            //_lowerLeft.Bounds.Bottom == _bottom.Bounds.Bottom &&
 
-            //_lowerRight.Bounds.Top == _bottom.Bounds.Top &&
-            //_lowerRight.Bounds.Left == _right.Bounds.Left
+	            //_lowerRight.Bounds.Top == _bottom.Bounds.Top &&
+	            //_lowerRight.Bounds.Left == _right.Bounds.Left &&
 
-            // todo: Width == Width assertions
-            //_bottomBottom.Bounds.Bottom == _relativeLayout.Bounds.Bottom &&
-            //_bottomBottom.Bounds.GetCenterX() == _relativeLayout.Bounds.GetCenterX() &&
-            //_bottomBottom.Bounds.Height == ViewModel.Height.ToConst() &&
-            //_bottomBottom.Bounds.Width == _relativeLayout.Bounds.Width
+	            _bottomBottom.Bounds.Bottom == _relativeLayout.Bounds.Bottom &&
+                                            // todo: GetCenterX() with Width relative to other thing
+//	            _bottomBottom.Bounds.GetCenterX() == _relativeLayout.Bounds.GetCenterX() &&
+                _bottomBottom.Bounds.Left == _relativeLayout.Bounds.Left &&
+	            _bottomBottom.Bounds.Height == ViewModel.Height.ToConst() &&
+	            _bottomBottom.Bounds.Width == _relativeLayout.Bounds.Width - 10
             );
         }
 
