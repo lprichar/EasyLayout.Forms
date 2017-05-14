@@ -2,31 +2,36 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EasyLayout.Sample.Views.TraditionalRelativeLayout">
-    
-<RelativeLayout>
-    <Label BackgroundColor="Aqua"
-        Text="Main Label"
-        x:Name="MainLabel"
-        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Constant=10}"
-        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Y, Constant=10}"
-        RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
-        RelativeLayout.HeightConstraint="{ConstraintExpression Type=Constant, Constant=40}"
-        ></Label>
-    <Label BackgroundColor="OrangeRed"
-        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToView, Property=X, ElementName=MainLabel, Constant=110}"
-        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, Property=Y, ElementName=MainLabel, Constant=50}"
-        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToView, Property=Width, ElementName=MainLabel}"
-        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToView, Property=Height, ElementName=MainLabel}"
-        Text="RelativeLabel"
-        ></Label>
-    <RelativeLayout
-        x:Name="InnerRelativeLayout"
-        RelativeLayout.XConstraint="{ConstraintExpression Type=Constant, Constant=0}"
-        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Y, Constant=60}"
-        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
-        RelativeLayout.HeightConstraint="{ConstraintExpression Type=Constant, Constant=300}"
-        >
-        
+
+    <RelativeLayout>
+        <Label BackgroundColor="Aqua"
+            Text="Main Label"
+            x:Name="MainLabel"
+            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Constant=10}"
+            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Y, Constant=10}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=Constant, Constant=40}"
+             />
+        <Label BackgroundColor="OrangeRed"
+            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToView, Property=X, ElementName=MainLabel, Constant=110}"
+            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, Property=Y, ElementName=MainLabel, Constant=50}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToView, Property=Width, ElementName=MainLabel}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToView, Property=Height, ElementName=MainLabel}"
+            Text="RelativeLabel"
+            />
+        <RelativeLayout
+            x:Name="InnerRelativeLayout"
+            RelativeLayout.XConstraint="{ConstraintExpression Type=Constant, Constant=0}"
+            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Y, Constant=60}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=Constant, Constant=300}"
+            />
+        <RelativeLayout
+            x:Name="EasyLayoutRelativeLayout"
+            RelativeLayout.XConstraint="{ConstraintExpression Type=Constant, Constant=0}"
+            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Y, Constant=140}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=Constant, Constant=300}"
+            />
     </RelativeLayout>
-</RelativeLayout>
 </ContentPage>

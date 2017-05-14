@@ -66,7 +66,7 @@ namespace EasyLayout.Sample
         {
             _relativeLayout = ViewUtils.AddRelativeLayout();
             _layoutExampleButton = _relativeLayout.AddButton("Layout Example");
-            _traditionalXamlRelativeLayout = _relativeLayout.AddButton("Traditional XAML RelativeLayout");
+            _traditionalXamlRelativeLayout = _relativeLayout.AddButton("Traditional RelativeLayout vs EasyLayout");
         }
     }
 
