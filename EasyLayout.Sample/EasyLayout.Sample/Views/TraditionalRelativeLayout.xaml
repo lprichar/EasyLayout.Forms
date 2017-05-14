@@ -22,9 +22,9 @@
     <RelativeLayout
         x:Name="InnerRelativeLayout"
         RelativeLayout.XConstraint="{ConstraintExpression Type=Constant, Constant=0}"
-        RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Y, Constant=60}"
         RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
-        RelativeLayout.HeightConstraint="{ConstraintExpression Type=Constant, Constant=200}"
+        RelativeLayout.HeightConstraint="{ConstraintExpression Type=Constant, Constant=300}"
         >
         
     </RelativeLayout>
