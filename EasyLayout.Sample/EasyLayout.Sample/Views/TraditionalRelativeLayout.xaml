@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EasyLayout.Sample.Views.TraditionalRelativeLayout">
+    
+<RelativeLayout>
+    <Label BackgroundColor="Aqua"
+        Text="Main Label"
+        x:Name="MainLabel"
+        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Constant=10}"
+        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Y, Constant=10}"
+        RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+        RelativeLayout.HeightConstraint="{ConstraintExpression Type=Constant, Constant=40}"
+        ></Label>
+    <Label BackgroundColor="OrangeRed"
+        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToView, Property=X, ElementName=MainLabel, Constant=110}"
+        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, Property=Y, ElementName=MainLabel, Constant=50}"
+        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToView, Property=Width, ElementName=MainLabel}"
+        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToView, Property=Width, ElementName=MainLabel}"
+        Text="RelativeLabel"
+        ></Label>
+</RelativeLayout>
+</ContentPage>
