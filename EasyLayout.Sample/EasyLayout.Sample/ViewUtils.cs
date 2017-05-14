@@ -29,6 +29,7 @@ namespace EasyLayout.Forms.Sample
             textView.Text = text;
             textView.BackgroundColor = background;
             textView.TextColor = textColor;
+            textView.FontSize = 15f;
             textView.HorizontalTextAlignment = TextAlignment.Center;
             return textView;
         }

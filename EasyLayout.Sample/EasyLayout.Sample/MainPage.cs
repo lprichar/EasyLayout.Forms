@@ -1,4 +1,4 @@
-﻿using EasyLayout.Forms.Sample;
+﻿﻿using EasyLayout.Forms.Sample;
 using EasyLayout.Forms;
 using EasyLayout.Forms.Sample.Models;
 using Xamarin.Forms;
@@ -27,16 +27,6 @@ namespace EasyLayout.Sample
         {
             AddViews();
             ConstrainLayout();
-
-            //Size GetSize(VisualElement ve, RelativeLayout rl) => ve.Measure(rl.Width, rl.Height).Request;
-
-            //_relativeLayout.Children.Add(
-            //    _top,
-            //    Constraint.RelativeToView(_center, (rl, v) => v.X),
-            //    Constraint.RelativeToView(_center, (rl, v) => v.Y - GetSize(_top, rl).Height - 20),
-            //    Constraint.RelativeToView(_center, (rl, v) => v.Width)
-            //    );
-
             Content = _relativeLayout;
         }
 
@@ -47,46 +37,47 @@ namespace EasyLayout.Sample
                 _center.Bounds.GetCenterY() == _relativeLayout.Bounds.GetCenterY() &&
                 _center.Bounds.Height == 50 &&
 
-             //   _topTop.Bounds.GetCenterX() == _relativeLayout.Bounds.GetCenterX() &&
-             //   _topTop.Bounds.Top == _relativeLayout.Bounds.Top &&
-             //   _topTop.Bounds.Height == 40 &&
+                _topTop.Bounds.GetCenterX() == _relativeLayout.Bounds.GetCenterX() &&
+                _topTop.Bounds.Top == _relativeLayout.Bounds.Top &&
+                _topTop.Bounds.Height == 40 &&
+                _topTop.Bounds.Width == _relativeLayout.Bounds.Width - 10 &&
 
-             //   _top.Bounds.Left == _center.Bounds.Left &&
-             //   _top.Bounds.Right == _center.Bounds.Right &&
-             //   _top.Bounds.Bottom == _center.Bounds.Top - 20 &&
+                _top.Bounds.Left == _center.Bounds.Left &&
+                _top.Bounds.Right == _center.Bounds.Right &&
+                _top.Bounds.Bottom == _center.Bounds.Top - 20 &&
 
-	            //_right.Bounds.Left == _center.Bounds.Right + 20 &&
-	            //_right.Bounds.Top == _center.Bounds.Top &&
-	            //_right.Bounds.Bottom == _center.Bounds.Bottom &&
+	            _right.Bounds.Left == _center.Bounds.Right + 20 &&
+	            _right.Bounds.Top == _center.Bounds.Top &&
+	            _right.Bounds.Bottom == _center.Bounds.Bottom &&
 
-	            //_left.Bounds.Right == _center.Bounds.Left - 20 &&
-	            //_left.Bounds.Top == _center.Bounds.Top &&
-	            //_left.Bounds.Bottom == _center.Bounds.Bottom &&
+	            _left.Bounds.Right == _center.Bounds.Left - 20 &&
+	            _left.Bounds.Top == _center.Bounds.Top &&
+	            _left.Bounds.Bottom == _center.Bounds.Bottom &&
 
-	            //_bottom.Bounds.Left == _center.Bounds.Left &&
-	            //_bottom.Bounds.Right == _center.Bounds.Right &&
-             //   _bottom.Bounds.Top == _center.Bounds.Bottom + 20 &&
+	            _bottom.Bounds.Left == _center.Bounds.Left &&
+	            _bottom.Bounds.Right == _center.Bounds.Right &&
+                _bottom.Bounds.Top == _center.Bounds.Bottom + 20 &&
 
-	            //_upperRight.Bounds.Left == _center.Bounds.Right + 20 &&
-	            //_upperRight.Bounds.Bottom == _top.Bounds.Bottom &&
-	            //_upperRight.Bounds.Height == 45 &&
-	            //_upperRight.Bounds.Width == 140 &&
+	            _upperRight.Bounds.Left == _center.Bounds.Right + 20 &&
+	            _upperRight.Bounds.Bottom == _top.Bounds.Bottom &&
+	            _upperRight.Bounds.Height == 45 &&
+	            _upperRight.Bounds.Width == 140 &&
 
-	            //_upperLeft.Bounds.Right == _center.Bounds.Left - 20 &&
-	            //_upperLeft.Bounds.Bottom == _center.Bounds.Top - 20 &&
-	            //_upperLeft.Bounds.Height == 40 &&
-	            //_upperLeft.Bounds.Width == 140 &&
+	            _upperLeft.Bounds.Right == _center.Bounds.Left - 20 &&
+	            _upperLeft.Bounds.Bottom == _center.Bounds.Top - 20 &&
+	            _upperLeft.Bounds.Height == 40 &&
+	            _upperLeft.Bounds.Width == 140 &&
 
-	            //_lowerLeft.Bounds.Right == _left.Bounds.Right &&
-	            //_lowerLeft.Bounds.Bottom == _bottom.Bounds.Bottom &&
+	            _lowerLeft.Bounds.Right == _left.Bounds.Right &&
+	            _lowerLeft.Bounds.Bottom == _bottom.Bounds.Bottom &&
 
-	            //_lowerRight.Bounds.Top == _bottom.Bounds.Top &&
-	            //_lowerRight.Bounds.Left == _right.Bounds.Left &&
+	            _lowerRight.Bounds.Top == _bottom.Bounds.Top &&
+	            _lowerRight.Bounds.Left == _right.Bounds.Left &&
 
 	            _bottomBottom.Bounds.Bottom == _relativeLayout.Bounds.Bottom &&
-	            _bottomBottom.Bounds.GetCenterX() == _relativeLayout.Bounds.GetCenterX() &&
+	            _bottomBottom.Bounds.Left == _topTop.Bounds.Left &&
 	            _bottomBottom.Bounds.Height == ViewModel.Height.ToConst() &&
-	            _bottomBottom.Bounds.Width == _relativeLayout.Bounds.Width - 10
+	            _bottomBottom.Bounds.Width == _topTop.Bounds.Width
             );
         }
 
@@ -103,7 +94,7 @@ namespace EasyLayout.Sample
             _lowerRight = _relativeLayout.AddLabel("this.Top == _bottom.Top &&\nthis.Left == _right.Left", Colors.BluePurple, Colors.White);
             _right = _relativeLayout.AddLabel("this.Left == \n_center.Right + 20", Colors.Red, Colors.White);
             _upperRight = _relativeLayout.AddLabel("this.Baseline ==\n_top.Baseline", Colors.Orange, Colors.White);
-            _bottomBottom = _relativeLayout.AddLabel("this.Height == ViewModel.Height.ToConst() && \nthis.Width == relativeLayout.Width", Colors.Purple, Colors.White);
+            _bottomBottom = _relativeLayout.AddLabel("this.Height == ViewModel.Height.ToConst() && \nthis.Width == _topTop.Width", Colors.Purple, Colors.White);
         }
     }
 }
