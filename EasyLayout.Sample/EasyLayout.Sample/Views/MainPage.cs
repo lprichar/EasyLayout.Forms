@@ -13,6 +13,12 @@ namespace EasyLayout.Sample
         {
             AddViews();
             ConstrainLayout();
+            SetPageProperties();
+        }
+
+        private void SetPageProperties()
+        {
+            Title = "EasyLayout.Forms";
             Content = _relativeLayout;
         }
 
