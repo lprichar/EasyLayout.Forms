@@ -34,6 +34,8 @@ namespace EasyLayout.Forms
     {
         private class Assertion
         {
+            private double _relativeSizeDelta = 0;
+
             public Assertion(View view)
             {
                 View = view;
@@ -224,7 +226,7 @@ namespace EasyLayout.Forms
 
             private double GetMargin()
             {
-                if (RightExpression.Constant == null) return 0;
+                if (RightExpression.Constant == null) return 0 - _relativeSizeDelta;
                 var value = RightExpression.Constant.Value;
 
                 switch (LeftExpression.Position)
@@ -233,16 +235,10 @@ namespace EasyLayout.Forms
                     case Position.Left:
                     case Position.Right:
                     case Position.Bottom:
-                        return value;
                     case Position.Width:
-                        return value;
                     case Position.Height:
-                        return value;
                     case Position.CenterX:
-                        return value;
-                        //return value > 0 ?
-                        //    new Margin { Left = value } :
-                        //    new Margin() { Right = -value };
+                        return value - _relativeSizeDelta;
                     default:
                         throw new ArgumentException($"Constant expressions with {RightExpression.Position} are currently unsupported.");
                 }
@@ -280,6 +276,11 @@ namespace EasyLayout.Forms
             }
 
             public Position Position => LeftExpression.Position;
+
+            public void UpdateMarginFromRelativeWidthConstraint(Assertion leftOrTopAssertion)
+            {
+                _relativeSizeDelta = leftOrTopAssertion?.RightExpression.Constant ?? 0;
+            }
         }
 
         private enum Position
@@ -421,6 +422,7 @@ namespace EasyLayout.Forms
             var left = GetSingleAssertionOrDefault(assertions, i => i.Position == Position.Left, "Only one left assertion allowed");
 			var right = GetSingleAssertionOrDefault(assertions, i => i.Position == Position.Right, "Only one left assertion allowed");
             if (left == null || right == null) return null;
+            right.UpdateMarginFromRelativeWidthConstraint(left);
             return right;
 		}
 
