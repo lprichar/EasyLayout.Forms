@@ -1,0 +1,1 @@
+nuget pack -Prop Platform=AnyCPU EasyLayout.Forms.csproj
