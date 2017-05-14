@@ -61,12 +61,12 @@ namespace EasyLayout.Sample
 	            _upperRight.Bounds.Left == _center.Bounds.Right + 20 &&
 	            _upperRight.Bounds.Bottom == _top.Bounds.Bottom &&
 	            _upperRight.Bounds.Height == 45 &&
-	            _upperRight.Bounds.Width == 140 &&
+	            _upperRight.Bounds.Width == _upperLeft.Bounds.Width &&
 
 	            _upperLeft.Bounds.Right == _center.Bounds.Left - 20 &&
 	            _upperLeft.Bounds.Bottom == _center.Bounds.Top - 20 &&
 	            _upperLeft.Bounds.Height == 40 &&
-	            _upperLeft.Bounds.Width == 140 &&
+	            _upperLeft.Bounds.Width == 200 &&
 
 	            _lowerLeft.Bounds.Right == _left.Bounds.Right &&
 	            _lowerLeft.Bounds.Bottom == _bottom.Bounds.Bottom &&
@@ -85,7 +85,7 @@ namespace EasyLayout.Sample
         {
             _relativeLayout = ViewUtils.AddRelativeLayout();
             _topTop = _relativeLayout.AddLabel("this.GetCenterX() == _layoutView.GetCenterX() \n&& this.Top == relativeLayout.Top", Colors.Gold, Colors.DarkGrey);
-            _center = _relativeLayout.AddLabel("this.GetCenter() == \nrelativeLayout.GetCenter()", Colors.DarkGrey, Colors.White);
+            _center = _relativeLayout.AddLabel("this.GetCenterY() == \nrelativeLayout.GetCenterY()", Colors.DarkGrey, Colors.White);
             _top = _relativeLayout.AddLabel("this.Bottom == \n_center.Top - 20", Colors.Yellow, Colors.DarkGrey);
             _upperLeft = _relativeLayout.AddLabel("this.Height == 40 &&\nthis.Width == 140", Colors.YellowGreen, Colors.White);
             _left = _relativeLayout.AddLabel("this.Right == \n_center.Left - 20", Colors.Green, Colors.White);
@@ -93,7 +93,7 @@ namespace EasyLayout.Sample
             _bottom = _relativeLayout.AddLabel("this.Top == \n_center.Bottom + 20", Colors.DarkBlue, Colors.White);
             _lowerRight = _relativeLayout.AddLabel("this.Top == _bottom.Top &&\nthis.Left == _right.Left", Colors.BluePurple, Colors.White);
             _right = _relativeLayout.AddLabel("this.Left == \n_center.Right + 20", Colors.Red, Colors.White);
-            _upperRight = _relativeLayout.AddLabel("this.Baseline ==\n_top.Baseline", Colors.Orange, Colors.White);
+            _upperRight = _relativeLayout.AddLabel("this.Bounds.Bottom == _top.Bounds.Bottom", Colors.Orange, Colors.White);
             _bottomBottom = _relativeLayout.AddLabel("this.Height == ViewModel.Height.ToConst() && \nthis.Width == _topTop.Width", Colors.Purple, Colors.White);
         }
     }
