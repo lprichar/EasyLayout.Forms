@@ -16,8 +16,17 @@
         RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToView, Property=X, ElementName=MainLabel, Constant=110}"
         RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, Property=Y, ElementName=MainLabel, Constant=50}"
         RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToView, Property=Width, ElementName=MainLabel}"
-        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToView, Property=Width, ElementName=MainLabel}"
+        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToView, Property=Height, ElementName=MainLabel}"
         Text="RelativeLabel"
         ></Label>
+    <RelativeLayout
+        x:Name="InnerRelativeLayout"
+        RelativeLayout.XConstraint="{ConstraintExpression Type=Constant, Constant=0}"
+        RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+        RelativeLayout.HeightConstraint="{ConstraintExpression Type=Constant, Constant=200}"
+        >
+        
+    </RelativeLayout>
 </RelativeLayout>
 </ContentPage>
