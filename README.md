@@ -1,9 +1,11 @@
 # EasyLayout.Forms
 EasyLayout.Forms makes it easier to read, write, and maintain relative layouts in Xamarin Forms. It's a port of [EasyLayout.Droid](https://github.com/lprichar/EasyLayout.Droid) which is a port of Frank Krueger's EasyLayout (https://gist.github.com/praeclarum/6225853) for iOS.
 
-## Sample Project
+## What Is It
 
-The best place to get started is to take a look at the [sample project](https://github.com/lprichar/EasyLayout.Forms/blob/master/EasyLayout.Sample/EasyLayout.Sample/MainPage.cs).
+For getting started read [Introducing EasyLayout for Xamarin.Forms: For Concise, Maintainable & Fast Programmatic UI's](http://www.leerichardson.com/2017/05/introducing-easylayout-for-xamarinforms.html).
+
+After that take a look at the [sample project](https://github.com/lprichar/EasyLayout.Forms/blob/master/EasyLayout.Sample/EasyLayout.Sample/Views/LayoutExamplePage.cs).
 
 ![Sample Project Screenshot](SampleProject.PNG)
 
@@ -76,8 +78,6 @@ That's less code and easier to read plus there's some other small benefits.
 If you want to add this to your project you can either [install via NuGet](https://www.nuget.org/packages/EasyLayout.Forms/) (safer):
 
 `Install-Package EasyLayout.Forms`
-
-(todo: publish to nuget)
 
 or if you think it's perfect as is (you don't want updates) you can copy [EasyLayout.cs](https://github.com/lprichar/EasyLayout.Forms/blob/master/EasyLayout.Forms/EasyLayout.cs) into your source.
 
