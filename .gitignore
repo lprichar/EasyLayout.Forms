@@ -111,3 +111,4 @@ Releases/Updates
 /EasyLayout.Droid/*.nupkg
 packages
 *.userprefs
+*.nupkg
