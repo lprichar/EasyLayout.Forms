@@ -81,8 +81,6 @@ namespace EasyLayout.Sample.Views
 	            Constraint.RelativeToView(mainLabel, (rl, v) => v.Height)
 	        );
 
-	        Size GetSize(VisualElement ve, RelativeLayout rl) => ve.Measure(rl.Width, rl.Height).Request;
-
 	        relativeLayout.Children.Add(centerLabel,
 	            Constraint.RelativeToView(relativeLabel,
 	                (rl, v) => v.X + (v.Width * .5f) - (GetSize(centerLabel, rl).Width / 2)),
@@ -91,5 +89,7 @@ namespace EasyLayout.Sample.Views
 	            // ^ this breaks RelativeLayout
 	        );
 	    }
+
+	    private Size GetSize(VisualElement ve, RelativeLayout rl) => ve.Measure(rl.Width, rl.Height).Request;
 	}
 }
