@@ -7,7 +7,7 @@ For getting started read [Introducing EasyLayout for Xamarin.Forms: For Concise,
 
 After that take a look at the [sample project](https://github.com/lprichar/EasyLayout.Forms/blob/master/EasyLayout.Sample/EasyLayout.Sample/Views/LayoutExamplePage.cs).
 
-![Sample Project Screenshot](SampleProject.PNG)
+![Sample Project Screenshot](SampleProject.png)
 
 ## Example 1 - Parent Align
 
