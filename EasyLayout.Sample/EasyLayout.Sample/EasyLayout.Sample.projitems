@@ -13,10 +13,13 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Colors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ElxfPerformancePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\LayoutExamplePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ViewUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PlaygroundPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TraditionalPerformancePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TraditionalRelativeLayout.xaml.cs">
       <DependentUpon>TraditionalRelativeLayout.xaml</DependentUpon>
       <SubType>Code</SubType>
