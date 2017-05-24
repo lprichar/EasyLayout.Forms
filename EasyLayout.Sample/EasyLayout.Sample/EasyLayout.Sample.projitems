@@ -12,8 +12,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\TraditionalHeader.xaml.cs">
-      <DependentUpon>TraditionalHeader.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\TraditionalProductView.xaml.cs">
+      <DependentUpon>TraditionalProductView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Models\Data.cs" />
@@ -58,7 +58,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Controls\TraditionalHeader.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Controls\TraditionalProductView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

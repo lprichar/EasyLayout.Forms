@@ -15,20 +15,20 @@
         </Grid.ColumnDefinitions>
 
         <StackLayout Grid.Row="0" BackgroundColor="#7E5BE1">
-            <controls:TraditionalHeader x:Name="TraditionalHeader"></controls:TraditionalHeader>
-            <controls:PerfLabel x:Name="MainTitle" TextColor="White" HorizontalTextAlignment="Center" Text="Traditional Performance Sample" LineBreakMode="WordWrap" />
+            <controls:TraditionalProductView x:Name="ProductView" HorizontalOptions="Center" />
+            <controls:PerfLabel x:Name="MainTitle" TextColor="White" HorizontalTextAlignment="End" Text="Click The Buttons To View Perf Stats" LineBreakMode="WordWrap" FontSize="Small" />
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                <Button Clicked="AggregateStats_OnClicked" BackgroundColor="DarkOliveGreen" Text="Aggregate Stats" TextColor="White"></Button>
-                <Button Clicked="Button_OnClicked" BackgroundColor="DarkOliveGreen" Text="Show Stats In Views" TextColor="White"></Button>
+                <Button Image="text_sum.png" Clicked="AggregateStats_OnClicked" BackgroundColor="Transparent" Text="Aggregate Stats" TextColor="White"></Button>
+                <Button Image="calculator.png" Clicked="Button_OnClicked" BackgroundColor="Transparent" Text="Show Stats In Views" TextColor="White"></Button>
             </StackLayout>
         </StackLayout>
 
-        <ListView x:Name="ProductsList" Grid.Row="1" CachingStrategy="RetainElement">
+        <ListView x:Name="ProductsList" Grid.Row="1" CachingStrategy="RetainElement" ItemSelected="ProductsList_OnItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Orientation="Horizontal">
-                            <Image Margin="5" Source="{Binding Image}" BackgroundColor="#f35e20" />
+                            <Image Margin="5" Source="{Binding Image}" BackgroundColor="#F55F5F" />
                             <StackLayout Orientation="Vertical" VerticalOptions="Start" Spacing="0">
                                 <controls:PerfLabel x:Name="Title2" 
                                                     Text="{Binding Title}"

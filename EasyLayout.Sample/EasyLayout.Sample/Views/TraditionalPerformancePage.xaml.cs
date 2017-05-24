@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using EasyLayout.Droid.Sample.Models;
 using EasyLayout.Sample.Controls;
 using Xamarin.Forms;
@@ -11,7 +9,7 @@ using Xamarin.Forms.Xaml;
 namespace EasyLayout.Sample.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class TraditionalPerformancePage : ContentPage
+	public partial class TraditionalPerformancePage
 	{
 		public TraditionalPerformancePage ()
 		{
@@ -22,7 +20,7 @@ namespace EasyLayout.Sample.Views
 	    private void Button_OnClicked(object sender, EventArgs e)
 	    {
 	        MainTitle.PrintStats();
-	        TraditionalHeader.PrintStats();
+	        ProductView.PrintStats();
 	        var it = ProductsList as ITemplatedItemsView<Cell>;
 	        var items = it.TemplatedItems;
 	        foreach (var item in items)
@@ -36,7 +34,7 @@ namespace EasyLayout.Sample.Views
 	    {
             StringBuilder sb = new StringBuilder();
 
-	        sb.Append($"Header[0]: {TraditionalHeader.SpeakerDeptMeasures}, {TraditionalHeader.SpeakerDeptLayouts}; ");
+	        sb.Append($"Header[0]: {ProductView.TitleMeasures}, {ProductView.TitleLayouts}; ");
 
 	        var it = ProductsList as ITemplatedItemsView<Cell>;
 	        var items = it.TemplatedItems;
@@ -49,5 +47,11 @@ namespace EasyLayout.Sample.Views
 	        }
 	        MainTitle.Text = sb.ToString();
 	    }
-    }
+
+	    private void ProductsList_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+	    {
+	        var eSelectedItem = (Product)e.SelectedItem;
+	        ProductView.SetProduct(eSelectedItem);
+	    }
+	}
 }

@@ -1,5 +1,3 @@
-using System;
-
 namespace EasyLayout.Droid.Sample.Models
 {
     public class Product
