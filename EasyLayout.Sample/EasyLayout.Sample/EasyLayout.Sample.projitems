@@ -12,14 +12,24 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\TraditionalHeader.xaml.cs">
+      <DependentUpon>TraditionalHeader.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Data.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Product.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Colors.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ElxfPerformancePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\LayoutExamplePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ViewUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\PerfLabel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\PlaygroundPage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\TraditionalPerformancePage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TraditionalPerformancePage.xaml.cs">
+      <DependentUpon>TraditionalPerformancePage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\TraditionalRelativeLayout.xaml.cs">
       <DependentUpon>TraditionalRelativeLayout.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -37,6 +47,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\TraditionalRelativeLayout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\TraditionalPerformancePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Controls\TraditionalHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

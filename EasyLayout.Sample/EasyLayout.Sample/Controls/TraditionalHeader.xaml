@@ -7,10 +7,10 @@
     <ContentView.Content>
         <StackLayout>
             <StackLayout Orientation="Horizontal">
-                <controls:PerfLabel x:Name="SpeakerDept" Text="Title Dept" Font="Bold,Medium" />
-                <controls:PerfLabel x:Name="SpeakerName" Text="Speaker Name" XAlign="End" Font="Micro" />
+                <controls:PerfLabel x:Name="SpeakerDept" TextColor="White" Text="Title Dept" Font="Bold,Medium" />
+                <controls:PerfLabel x:Name="SpeakerName" TextColor="White" Text="Speaker Name" XAlign="End" Font="Micro" />
             </StackLayout>
-            <controls:PerfLabel x:Name="Moar" Text="Moar" Font="Bold,Medium" />
+            <controls:PerfLabel x:Name="Moar" TextColor="White" Text="Moar" Font="Bold,Medium" />
         </StackLayout>
     </ContentView.Content>
 </ContentView>

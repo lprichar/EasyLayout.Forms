@@ -116,6 +116,7 @@ namespace EasyLayout.Sample
     {
         public MainPage() : base(new RootPage())
         {
+            BarBackgroundColor = Color.FromRgb(126, 91, 225);
         }
     }
 }

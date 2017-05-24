@@ -7,19 +7,29 @@ namespace EasyLayout.Sample.Controls
 {
     public class PerfLabel : Label
     {
-        private int _measured = 0;
-        private int _sizeAllocated = 0;
+        public int Measures { get; private set; } = 0;
+        public int Layouts { get; private set; } = 0;
         private string _text;
+
+        public PerfLabel()
+        {
+            this.MeasureInvalidated += OnMeasureInvalidated;
+        }
+
+        private void OnMeasureInvalidated(object sender, EventArgs eventArgs)
+        {
+            Measures++;
+        }
 
         protected override SizeRequest OnMeasure(double widthConstraint, double heightConstraint)
         {
-            _measured++;
+            Measures++;
             return base.OnMeasure(widthConstraint, heightConstraint);
         }
 
         protected override void OnSizeAllocated(double width, double height)
         {
-            _sizeAllocated++;
+            Layouts++;
             base.OnSizeAllocated(width, height);
         }
 
@@ -29,7 +39,7 @@ namespace EasyLayout.Sample.Controls
             {
                 _text = Text;
             }
-            Text = _text + " (" + _measured + "," + _sizeAllocated + ")";
+            Text = _text + " (" + Measures + "," + Layouts + ")";
         }
     }
 }

@@ -10,6 +10,9 @@ namespace EasyLayout.Sample.Controls
 {
 	public partial class TraditionalHeader : ContentView
 	{
+	    public int SpeakerDeptMeasures => SpeakerDept.Measures;
+	    public int SpeakerDeptLayouts => SpeakerDept.Layouts;
+
 		public TraditionalHeader ()
 		{
 			InitializeComponent ();
