@@ -64,7 +64,7 @@ namespace EasyLayout.Forms
                 if (isParent && position == Position.Width)
                     return Constraint.RelativeToParent(rl => rl.Width + margin);
 				if (isParent && position == Position.Height)
-					return Constraint.RelativeToParent(rl => rl.Height);
+					return Constraint.RelativeToParent(rl => rl.Height + margin);
 				if (position == Position.Width)
                     return Constraint.RelativeToView(sibling, (rv, v) => v.Width);
                 if (position == Position.Height)
