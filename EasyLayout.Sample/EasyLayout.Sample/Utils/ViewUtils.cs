@@ -16,6 +16,13 @@ namespace EasyLayout.Forms.Sample
             return child;
         }
 
+        public static BoxView AddBoxView(this RelativeLayout parent, Color backgroundColor)
+        {
+            var frame = parent.Add<BoxView>();
+            frame.BackgroundColor = backgroundColor;
+            return frame;
+        }
+
         public static Button AddButton(this RelativeLayout parent, string text)
         {
             var button = parent.Add<Button>();
@@ -23,11 +30,14 @@ namespace EasyLayout.Forms.Sample
             return button;
         }
 
-        public static Label AddLabel(this RelativeLayout parent, string text, Color background, Color textColor)
+        public static Label AddLabel(this RelativeLayout parent, string text, Color textColor, Color? background = null)
         {
             var textView = parent.Add<Label>();
             textView.Text = text;
-            textView.BackgroundColor = background;
+            if (background != null)
+            {
+                textView.BackgroundColor = background.Value;
+            }
             textView.TextColor = textColor;
             textView.FontSize = 15f;
             textView.HorizontalTextAlignment = TextAlignment.Center;

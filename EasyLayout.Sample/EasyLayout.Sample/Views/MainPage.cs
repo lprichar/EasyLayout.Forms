@@ -1,8 +1,9 @@
-﻿﻿using System;
- using EasyLayout.Forms.Sample;
+﻿// ReSharper disable CompareOfFloatsByEqualityOperator
+using System;
+using EasyLayout.Forms.Sample;
 using EasyLayout.Forms;
- using EasyLayout.Sample.Views;
- using Xamarin.Forms;
+using EasyLayout.Sample.Views;
+using Xamarin.Forms;
 
 namespace EasyLayout.Sample
 {
@@ -70,7 +71,7 @@ namespace EasyLayout.Sample
             Navigation.PushAsync(traditionalRelativeLayout);
         }
 
-        private void LayoutExampleButton_Clicked(object sender, System.EventArgs e)
+        private void LayoutExampleButton_Clicked(object sender, EventArgs e)
         {
             var layoutExamplePage = new LayoutExamplePage();
             Navigation.PushAsync(layoutExamplePage);
@@ -79,7 +80,7 @@ namespace EasyLayout.Sample
         private void ConstrainLayout()
         {
             _relativeLayout.ConstrainLayout(() =>
-                 _layoutExampleButton.Bounds.Top == _relativeLayout.Bounds.Top + 20
+                _layoutExampleButton.Bounds.Top == _relativeLayout.Bounds.Top + 20
                 && _layoutExampleButton.Bounds.Left == _relativeLayout.Bounds.Left + 10
                 && _layoutExampleButton.Bounds.Right == _relativeLayout.Bounds.Right - 10
 
@@ -116,7 +117,7 @@ namespace EasyLayout.Sample
     {
         public MainPage() : base(new RootPage())
         {
-            BarBackgroundColor = Color.FromRgb(126, 91, 225);
+            BarBackgroundColor = Colors.Background;
         }
     }
 }

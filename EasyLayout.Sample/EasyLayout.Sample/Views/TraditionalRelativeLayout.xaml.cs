@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// ReSharper disable CompareOfFloatsByEqualityOperator
 using EasyLayout.Forms;
 using EasyLayout.Forms.Sample;
 using Xamarin.Forms;
@@ -11,7 +7,7 @@ using Xamarin.Forms.Xaml;
 namespace EasyLayout.Sample.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class TraditionalRelativeLayout : ContentPage
+	public partial class TraditionalRelativeLayout
 	{
 	    private Label _mainLabel;
 	    private Label _relativeLabel;
@@ -54,18 +50,18 @@ namespace EasyLayout.Sample.Views
 	    private void AddEasyLayoutControls()
 	    {
 	        var relativeLayout = EasyLayoutRelativeLayout;
-            _mainLabel = relativeLayout.AddLabel("MainLabel", Colors.BluePurple, Colors.DarkGrey);
-	        _relativeLabel = relativeLayout.AddLabel("RelativeLabel", Colors.Red, Colors.DarkGrey);
-	        _centerLabel = relativeLayout.AddLabel("CenterLabel", Colors.Green, Colors.White);
+            _mainLabel = relativeLayout.AddLabel("MainLabel", Colors.DarkGrey, Colors.BluePurple);
+	        _relativeLabel = relativeLayout.AddLabel("RelativeLabel", Colors.DarkGrey, Colors.Red);
+	        _centerLabel = relativeLayout.AddLabel("CenterLabel", Colors.White, Colors.Green);
 	    }
 
         private void AddTraditionalProgramaticRelativeLayout()
 	    {
 	        var relativeLayout = InnerRelativeLayout;
 
-	        var mainLabel = relativeLayout.AddLabel("MainLabel", Colors.BluePurple, Colors.DarkGrey);
-	        var relativeLabel = relativeLayout.AddLabel("RelativeLabel", Colors.Red, Colors.DarkGrey);
-	        var centerLabel = relativeLayout.AddLabel("CenterLabel", Colors.Green, Colors.White);
+	        var mainLabel = relativeLayout.AddLabel("MainLabel", Colors.DarkGrey, Colors.BluePurple);
+	        var relativeLabel = relativeLayout.AddLabel("RelativeLabel", Colors.DarkGrey, Colors.Red);
+	        var centerLabel = relativeLayout.AddLabel("CenterLabel", Colors.White, Colors.Green);
 
 	        relativeLayout.Children.Add(mainLabel,
 	            Constraint.RelativeToParent(rl => rl.X + 10),

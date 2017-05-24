@@ -1,4 +1,5 @@
-﻿using EasyLayout.Forms.Sample;
+﻿// ReSharper disable CompareOfFloatsByEqualityOperator
+using EasyLayout.Forms.Sample;
 using EasyLayout.Forms;
 using EasyLayout.Forms.Sample.Models;
 using Xamarin.Forms;
@@ -90,17 +91,17 @@ namespace EasyLayout.Sample
         private void AddViews()
         {
             _relativeLayout = ViewUtils.AddRelativeLayout();
-            _topTop = _relativeLayout.AddLabel("this.GetCenterX() == _layoutView.GetCenterX() \n&& this.Top == relativeLayout.Top", Colors.Gold, Colors.DarkGrey);
-            _center = _relativeLayout.AddLabel("this.GetCenterY() == \nrelativeLayout.GetCenterY()", Colors.DarkGrey, Colors.White);
-            _top = _relativeLayout.AddLabel("this.Bottom == \n_center.Top - 20", Colors.Yellow, Colors.DarkGrey);
-            _upperLeft = _relativeLayout.AddLabel("this.Height == 40 &&\nthis.Width == 140", Colors.YellowGreen, Colors.White);
-            _left = _relativeLayout.AddLabel("this.Right == \n_center.Left - 20", Colors.Green, Colors.White);
-            _lowerLeft = _relativeLayout.AddLabel("this.Right == _left.Right &&\nthis.Bottom == _bottom.Bottom", Colors.LightBlue, Colors.White);
-            _bottom = _relativeLayout.AddLabel("this.Top == \n_center.Bottom + 20", Colors.DarkBlue, Colors.White);
-            _lowerRight = _relativeLayout.AddLabel("this.Top == _bottom.Top &&\nthis.Left == _right.Left", Colors.BluePurple, Colors.White);
-            _right = _relativeLayout.AddLabel("this.Left == \n_center.Right + 20", Colors.Red, Colors.White);
-            _upperRight = _relativeLayout.AddLabel("this.Bounds.Bottom == _top.Bounds.Bottom", Colors.Orange, Colors.White);
-            _bottomBottom = _relativeLayout.AddLabel("this.Height == ViewModel.Height.ToConst() && \nthis.Width == _topTop.Width", Colors.Purple, Colors.White);
+            _topTop = _relativeLayout.AddLabel("this.GetCenterX() == _layoutView.GetCenterX() \n&& this.Top == relativeLayout.Top", Colors.DarkGrey, Colors.Gold);
+            _center = _relativeLayout.AddLabel("this.GetCenterY() == \nrelativeLayout.GetCenterY()", Colors.White, Colors.DarkGrey);
+            _top = _relativeLayout.AddLabel("this.Bottom == \n_center.Top - 20", Colors.DarkGrey, Colors.Yellow);
+            _upperLeft = _relativeLayout.AddLabel("this.Height == 40 &&\nthis.Width == 140", Colors.White, Colors.YellowGreen);
+            _left = _relativeLayout.AddLabel("this.Right == \n_center.Left - 20", Colors.White, Colors.Green);
+            _lowerLeft = _relativeLayout.AddLabel("this.Right == _left.Right &&\nthis.Bottom == _bottom.Bottom", Colors.White, Colors.LightBlue);
+            _bottom = _relativeLayout.AddLabel("this.Top == \n_center.Bottom + 20", Colors.White, Colors.DarkBlue);
+            _lowerRight = _relativeLayout.AddLabel("this.Top == _bottom.Top &&\nthis.Left == _right.Left", Colors.White, Colors.BluePurple);
+            _right = _relativeLayout.AddLabel("this.Left == \n_center.Right + 20", Colors.White, Colors.Red);
+            _upperRight = _relativeLayout.AddLabel("this.Bounds.Bottom == _top.Bounds.Bottom", Colors.White, Colors.Orange);
+            _bottomBottom = _relativeLayout.AddLabel("this.Height == ViewModel.Height.ToConst() && \nthis.Width == _topTop.Width", Colors.White, Colors.Purple);
         }
     }
 }
