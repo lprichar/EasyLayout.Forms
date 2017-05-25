@@ -139,6 +139,42 @@
       <Name>EasyLayout.Forms</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\calculator%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\keyboard_key_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\keyboard_key_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\keyboard_key_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\keyboard_key_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\keyboard_key_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\keyboard_key_5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\keyboard_key_6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\keyboard_key_7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\keyboard_key_8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\keyboard_key_9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\text_sum%402x.png" />
+  </ItemGroup>
   <Import Project="..\EasyLayout.Sample\EasyLayout.Sample.projitems" Label="Shared" Condition="Exists('..\EasyLayout.Sample\EasyLayout.Sample.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
