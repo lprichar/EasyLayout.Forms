@@ -127,6 +127,7 @@ namespace EasyLayout.Sample.Views
     {
         private RelativeLayout _relativeLayout;
         private PerfLabel _titleLabel;
+        private Image _image;
 
         public ProductsListCell()
         {
@@ -147,6 +148,17 @@ namespace EasyLayout.Sample.Views
         {
             _relativeLayout = ViewUtils.AddRelativeLayout();
             _titleLabel = AddLabel("Title");
+            _image = AddImage("Image");
+        }
+
+        private Image AddImage(string sourceBinding)
+        {
+            var image = new Image
+            {
+                BackgroundColor = Color.FromRgb(245, 95, 95)
+            };
+            image.SetBinding(Image.SourceProperty, sourceBinding);
+            return image;
         }
 
         private static PerfLabel AddLabel(string textBinding)
@@ -158,16 +170,16 @@ namespace EasyLayout.Sample.Views
 
         private void ConstrainLayout()
         {
-            _relativeLayout.Children.Add(_titleLabel,
-                Constraint.RelativeToParent(rl => rl.X),
-                Constraint.RelativeToParent(rl => rl.Y));
+            _relativeLayout.ConstrainLayout(() =>
+                _image.Bounds.Left == _relativeLayout.Bounds.Left
+                && _image.Bounds.Top == _relativeLayout.Bounds.Top
+                && _image.Bounds.Height == 36
+                && _image.Bounds.Width == 36
 
-            //_relativeLayout.ConstrainLayout(() =>
-            //    _titleLabel.Bounds.Left == _relativeLayout.Bounds.Left
-            //    && _titleLabel.Bounds.Top == _relativeLayout.Bounds.Top
-            //    && _titleLabel.Bounds.Width == _relativeLayout.Bounds.Width
-            //    && _titleLabel.Bounds.Height == _relativeLayout.Bounds.Height
-            //    );
+                && _titleLabel.Bounds.Left == _image.Bounds.Right + 10
+                && _titleLabel.Bounds.Top == _relativeLayout.Bounds.Top
+                && _titleLabel.Bounds.Height == _relativeLayout.Bounds.Height
+                );
         }
     }
 }
