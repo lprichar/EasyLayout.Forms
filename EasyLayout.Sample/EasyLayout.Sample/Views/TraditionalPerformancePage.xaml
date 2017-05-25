@@ -28,7 +28,7 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Orientation="Horizontal">
-                            <Image Margin="5" Source="{Binding Image}" BackgroundColor="#F55F5F" />
+                            <Image Margin="5" Source="{Binding Image}" BackgroundColor="#F55F5F" WidthRequest="36" HeightRequest="36" />
                             <StackLayout Orientation="Vertical" VerticalOptions="Start" Spacing="0">
                                 <controls:PerfLabel x:Name="Title2" 
                                                     Text="{Binding Title}"

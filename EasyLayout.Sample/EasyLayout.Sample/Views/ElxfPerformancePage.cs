@@ -127,7 +127,9 @@ namespace EasyLayout.Sample.Views
     {
         private RelativeLayout _relativeLayout;
         private PerfLabel _titleLabel;
+        private PerfLabel _categoryLabel;
         private Image _image;
+        private PerfLabel _amountLabel;
 
         public ProductsListCell()
         {
@@ -147,7 +149,9 @@ namespace EasyLayout.Sample.Views
         private void AddViews()
         {
             _relativeLayout = ViewUtils.AddRelativeLayout();
-            _titleLabel = AddLabel("Title");
+            _titleLabel = AddLabel("Title", true);
+            _categoryLabel = AddLabel("Category", false);
+            _amountLabel = AddLabel("Amount", false);
             _image = AddImage("Image");
         }
 
@@ -161,24 +165,33 @@ namespace EasyLayout.Sample.Views
             return image;
         }
 
-        private static PerfLabel AddLabel(string textBinding)
+        private static PerfLabel AddLabel(string textBinding, bool bold)
         {
             var label = new PerfLabel();
             label.SetBinding(Label.TextProperty, textBinding);
+            if (bold)
+            {
+                label.FontAttributes = FontAttributes.Bold;
+            }
             return label;
         }
 
         private void ConstrainLayout()
         {
             _relativeLayout.ConstrainLayout(() =>
-                _image.Bounds.Left == _relativeLayout.Bounds.Left
-                && _image.Bounds.Top == _relativeLayout.Bounds.Top
+                _image.Bounds.Left == _relativeLayout.Bounds.Left + 5
+                && _image.Bounds.GetCenterY() == _relativeLayout.Bounds.GetCenterY()
                 && _image.Bounds.Height == 36
                 && _image.Bounds.Width == 36
 
                 && _titleLabel.Bounds.Left == _image.Bounds.Right + 10
-                && _titleLabel.Bounds.Top == _relativeLayout.Bounds.Top
-                && _titleLabel.Bounds.Height == _relativeLayout.Bounds.Height
+                && _titleLabel.Bounds.Top == _relativeLayout.Bounds.Top + 2
+
+                && _categoryLabel.Bounds.Bottom == _relativeLayout.Bounds.Bottom - 2
+                && _categoryLabel.Bounds.Left == _image.Bounds.Right + 10
+
+                && _amountLabel.Bounds.Right == _relativeLayout.Bounds.Right - 5
+                && _amountLabel.Bounds.GetCenterY() == _relativeLayout.Bounds.GetCenterY()
                 );
         }
     }
