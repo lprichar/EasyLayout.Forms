@@ -1,8 +1,13 @@
 ﻿// ReSharper disable CompareOfFloatsByEqualityOperator
 
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using EasyLayout.Droid.Sample.Models;
 using EasyLayout.Forms;
 using EasyLayout.Forms.Sample;
+using EasyLayout.Sample.Controls;
 using Xamarin.Forms;
 
 namespace EasyLayout.Sample.Views
@@ -11,8 +16,10 @@ namespace EasyLayout.Sample.Views
     {
         private RelativeLayout _relativeLayout;
         private BoxView _topFrame;
-        private Label _perfLabel;
+        private PerfLabel _perfLabel;
         private ListView _productsListView;
+        private Button _showStatsButton;
+        private Button _aggregateButton;
 
         public ElxfPerformancePage()
         {
@@ -31,8 +38,10 @@ namespace EasyLayout.Sample.Views
         {
             _relativeLayout = ViewUtils.AddRelativeLayout();
             _topFrame = _relativeLayout.AddBoxView(Colors.Background);
-            _perfLabel = _relativeLayout.AddLabel("Click The Buttons To View Perf Stats", Color.White);
+            _perfLabel = _relativeLayout.AddPerfLabel("Click The Buttons To View Perf Stats", Color.White);
             _productsListView = GetProductsListView();
+            _showStatsButton = _relativeLayout.AddButton("Show Stats In Views");
+            _aggregateButton = _relativeLayout.AddButton("Aggregate Stats");
         }
 
         private static ListView GetProductsListView()
@@ -60,14 +69,64 @@ namespace EasyLayout.Sample.Views
                 && _productsListView.Bounds.Left == _relativeLayout.Bounds.Left
                 && _productsListView.Bounds.Right == _relativeLayout.Bounds.Right
                 && _productsListView.Bounds.Height == _relativeLayout.Bounds.Height - 200
+
+                && _showStatsButton.Bounds.Bottom == _topFrame.Bounds.Bottom - 10
+                && _showStatsButton.Bounds.Right == _topFrame.Bounds.Right - 10
+
+                && _aggregateButton.Bounds.Right == _showStatsButton.Bounds.Left - 10
+                && _aggregateButton.Bounds.Bottom == _showStatsButton.Bounds.Bottom
             );
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _showStatsButton.Clicked += ShowStatsButtonOnClicked;
+            _aggregateButton.Clicked += AggregateButtonOnClicked;
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            _showStatsButton.Clicked -= ShowStatsButtonOnClicked;
+            _aggregateButton.Clicked -= AggregateButtonOnClicked;
+        }
+
+        private void AggregateButtonOnClicked(object sender, EventArgs eventArgs)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            //sb.Append($"Header[0]: {ProductView.TitleMeasures}, {ProductView.TitleLayouts}; ");
+
+            var it = _productsListView as ITemplatedItemsView<Cell>;
+            var items = it.TemplatedItems;
+
+            var firstRowTitle = items.FirstOrDefault();
+            if (firstRowTitle != null)
+            {
+                var productsListCell = firstRowTitle as ProductsListCell;
+                sb.Append($"List[0].Title: {productsListCell?.Measures}, {productsListCell?.Layouts}; ");
+            }
+            _perfLabel.Text = sb.ToString();
+        }
+
+        private void ShowStatsButtonOnClicked(object sender, EventArgs eventArgs)
+        {
+            _perfLabel.PrintStats();
+            var it = _productsListView as ITemplatedItemsView<Cell>;
+            var items = it.TemplatedItems;
+            foreach (var item in items)
+            {
+                var productsListCell = item as ProductsListCell;
+                productsListCell?.PrintStats();
+            }
         }
     }
 
     public class ProductsListCell : ViewCell
     {
         private RelativeLayout _relativeLayout;
-        private Label _titleLabel;
+        private PerfLabel _titleLabel;
 
         public ProductsListCell()
         {
@@ -76,15 +135,23 @@ namespace EasyLayout.Sample.Views
             View = _relativeLayout;
         }
 
+        public int Measures => _titleLabel.Measures;
+        public int Layouts => _titleLabel.Layouts;
+
+        public void PrintStats()
+        {
+            _titleLabel.PrintStats();
+        }
+
         private void AddViews()
         {
             _relativeLayout = ViewUtils.AddRelativeLayout();
             _titleLabel = AddLabel("Title");
         }
 
-        private static Label AddLabel(string textBinding)
+        private static PerfLabel AddLabel(string textBinding)
         {
-            var label = new Label();
+            var label = new PerfLabel();
             label.SetBinding(Label.TextProperty, textBinding);
             return label;
         }
@@ -92,8 +159,8 @@ namespace EasyLayout.Sample.Views
         private void ConstrainLayout()
         {
             _relativeLayout.Children.Add(_titleLabel,
-                () => _relativeLayout.X,
-                () => _relativeLayout.Y);
+                Constraint.RelativeToParent(rl => rl.X),
+                Constraint.RelativeToParent(rl => rl.Y));
 
             //_relativeLayout.ConstrainLayout(() =>
             //    _titleLabel.Bounds.Left == _relativeLayout.Bounds.Left

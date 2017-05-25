@@ -1,4 +1,5 @@
 ﻿using System;
+using EasyLayout.Sample.Controls;
 using Xamarin.Forms;
 
 namespace EasyLayout.Forms.Sample
@@ -42,6 +43,16 @@ namespace EasyLayout.Forms.Sample
             textView.FontSize = 15f;
             textView.HorizontalTextAlignment = TextAlignment.Center;
             return textView;
+        }
+
+        public static PerfLabel AddPerfLabel(this RelativeLayout parent, string text, Color color)
+        {
+            var perfLabel = new PerfLabel
+            {
+                Text = text,
+                TextColor = color
+            };
+            return perfLabel;
         }
     }
 }
