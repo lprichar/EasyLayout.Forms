@@ -25145,16 +25145,16 @@
   },
   "project": {
     "restore": {
-      "projectUniqueName": "C:\\dev\\EasyLayout.Forms\\EasyLayout.Sample\\EasyLayout.Sample.UWP\\EasyLayout.Sample.UWP.csproj",
+      "projectUniqueName": "c:\\dev\\EasyLayout.Forms\\EasyLayout.Sample\\EasyLayout.Sample.UWP\\EasyLayout.Sample.UWP.csproj",
       "projectName": "EasyLayout.Sample.UWP",
-      "projectPath": "C:\\dev\\EasyLayout.Forms\\EasyLayout.Sample\\EasyLayout.Sample.UWP\\EasyLayout.Sample.UWP.csproj",
-      "projectJsonPath": "C:\\dev\\EasyLayout.Forms\\EasyLayout.Sample\\EasyLayout.Sample.UWP\\project.json",
+      "projectPath": "c:\\dev\\EasyLayout.Forms\\EasyLayout.Sample\\EasyLayout.Sample.UWP\\EasyLayout.Sample.UWP.csproj",
+      "projectJsonPath": "c:\\dev\\EasyLayout.Forms\\EasyLayout.Sample\\EasyLayout.Sample.UWP\\project.json",
       "projectStyle": "ProjectJson",
       "frameworks": {
         "uap10.0": {
           "projectReferences": {
-            "C:\\dev\\EasyLayout.Forms\\EasyLayout.Forms\\EasyLayout.Forms.csproj": {
-              "projectPath": "C:\\dev\\EasyLayout.Forms\\EasyLayout.Forms\\EasyLayout.Forms.csproj"
+            "c:\\dev\\EasyLayout.Forms\\EasyLayout.Forms\\EasyLayout.Forms.csproj": {
+              "projectPath": "c:\\dev\\EasyLayout.Forms\\EasyLayout.Forms\\EasyLayout.Forms.csproj"
             }
           }
         }
