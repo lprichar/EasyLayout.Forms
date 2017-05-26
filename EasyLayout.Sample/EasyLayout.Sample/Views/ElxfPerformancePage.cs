@@ -141,6 +141,18 @@ namespace EasyLayout.Sample.Views
                 sb.Append($"List[0].Title: {productsListCell?.Measures}, {productsListCell?.Layouts}; ");
             }
             _perfLabel.Text = sb.ToString();
+            ForceLayout();
+        }
+
+        /// <summary>
+        /// This is a terrible hack to force a right-edge constrained label, whose text has changed, 
+        /// to redraw itself.  This is a problem with RelativeLayout's since they don't know to take 
+        /// the width of their controls into account when determining whether to redraw themselves
+        /// </summary>
+        private void ForceLayout()
+        {
+            _relativeLayout.ForceLayout();
+            _relativeLayout.ForceLayout();
         }
 
         private void PrintStatsButtonOnClicked(object sender, EventArgs eventArgs)

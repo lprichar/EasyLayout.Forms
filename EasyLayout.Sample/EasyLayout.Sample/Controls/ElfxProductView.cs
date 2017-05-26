@@ -42,7 +42,7 @@ namespace EasyLayout.Sample.Controls
             BindingContext = this;
         }
 
-        protected Product Product
+        public Product Product
         {
             get { return _product; }
             set
