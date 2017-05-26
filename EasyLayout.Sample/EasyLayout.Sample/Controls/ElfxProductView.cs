@@ -94,6 +94,7 @@ namespace EasyLayout.Sample.Controls
 
         private void ConstrainLayout()
         {
+            _relativeLayout.ForceLayout();
             _relativeLayout.ConstrainLayout(() =>
                 _image.Bounds.Left == _relativeLayout.Bounds.Left + 10
                 && _image.Bounds.Top == _relativeLayout.Bounds.Top + 10
