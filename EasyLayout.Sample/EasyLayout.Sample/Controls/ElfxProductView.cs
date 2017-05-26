@@ -90,9 +90,13 @@ namespace EasyLayout.Sample.Controls
 
                 && _titleLabel.Bounds.Left == _image.Bounds.Right + 10
                 && _titleLabel.Bounds.Top == _relativeLayout.Bounds.Top
-                
+                && _titleLabel.Bounds.Width == _relativeLayout.Bounds.Width - 48
+                && _titleLabel.Bounds.Height == 20
+
                 && _categoryLabel.Bounds.Left == _titleLabel.Bounds.Left
                 && _categoryLabel.Bounds.Top == _titleLabel.Bounds.Bottom + 5
+                && _categoryLabel.Bounds.Width == _relativeLayout.Bounds.Width - 48
+                && _categoryLabel.Bounds.Height == 20
             );
         }
     }

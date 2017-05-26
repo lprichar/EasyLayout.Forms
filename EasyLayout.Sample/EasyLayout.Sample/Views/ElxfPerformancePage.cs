@@ -198,8 +198,15 @@ namespace EasyLayout.Sample.Views
             _relativeLayout = ViewUtils.AddRelativeLayout();
             _titleLabel = AddLabel("Title", true, "Header");
             _categoryLabel = AddLabel("Category", false, "Subheader");
-            _amountLabel = AddLabel("Amount", false, "Inverse");
+            _amountLabel = AddAmountLabel();
             _image = AddImage("Image");
+        }
+
+        private static PerfLabel AddAmountLabel()
+        {
+            var amountLabel = AddLabel("Amount", false, "Inverse");
+            amountLabel.VerticalTextAlignment = TextAlignment.Center;
+            return amountLabel;
         }
 
         private Image AddImage(string sourceBinding)
@@ -234,12 +241,17 @@ namespace EasyLayout.Sample.Views
 
                 && _titleLabel.Bounds.Left == _image.Bounds.Right + 10
                 && _titleLabel.Bounds.Top == _relativeLayout.Bounds.Top + 2
+                && _titleLabel.Bounds.Width == _relativeLayout.Bounds.Width
+                && _titleLabel.Bounds.Height == 15
 
                 && _categoryLabel.Bounds.Bottom == _relativeLayout.Bounds.Bottom - 2
                 && _categoryLabel.Bounds.Left == _image.Bounds.Right + 10
+                && _categoryLabel.Bounds.Width == _relativeLayout.Bounds.Width
+                && _categoryLabel.Bounds.Height == 15
 
                 && _amountLabel.Bounds.Right == _relativeLayout.Bounds.Right - 5
-                && _amountLabel.Bounds.GetCenterY() == _relativeLayout.Bounds.GetCenterY()
+                && _amountLabel.Bounds.Top == _relativeLayout.Bounds.Top
+                && _amountLabel.Bounds.Bottom == _relativeLayout.Bounds.Bottom
                 );
         }
     }
