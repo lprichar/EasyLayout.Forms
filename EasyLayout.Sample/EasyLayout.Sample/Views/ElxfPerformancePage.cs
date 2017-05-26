@@ -75,11 +75,13 @@ namespace EasyLayout.Sample.Views
 
         private void ConstrainLayout()
         {
+            const int topHeight = 140;
+
             _relativeLayout.ConstrainLayout(() =>
                 _topFrame.Bounds.Top == _relativeLayout.Bounds.Top
                 && _topFrame.Bounds.Left == _relativeLayout.Bounds.Left
                 && _topFrame.Bounds.Right == _relativeLayout.Bounds.Right
-                && _topFrame.Bounds.Height == 130
+                && _topFrame.Bounds.Height == topHeight
 
                 && _productView.Bounds.Top == _relativeLayout.Bounds.Top + 10
                 && _productView.Bounds.Left == _relativeLayout.Bounds.Left + 50
@@ -91,7 +93,7 @@ namespace EasyLayout.Sample.Views
                 && _productsListView.Bounds.Top == _topFrame.Bounds.Bottom
                 && _productsListView.Bounds.Left == _relativeLayout.Bounds.Left
                 && _productsListView.Bounds.Right == _relativeLayout.Bounds.Right
-                && _productsListView.Bounds.Height == _relativeLayout.Bounds.Height - 200
+                && _productsListView.Bounds.Height == _relativeLayout.Bounds.Height - topHeight
 
                 && _showStatsButton.Bounds.Bottom == _topFrame.Bounds.Bottom - 10
                 && _showStatsButton.Bounds.Right == _topFrame.Bounds.Right - 10

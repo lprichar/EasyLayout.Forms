@@ -1,6 +1,5 @@
 ﻿// ReSharper disable CompareOfFloatsByEqualityOperator
 
-using System.Collections.Generic;
 using EasyLayout.Droid.Sample.Models;
 using EasyLayout.Forms;
 using EasyLayout.Forms.Sample;
@@ -33,8 +32,8 @@ namespace EasyLayout.Sample.Controls
         {
             _relativeLayout = ViewUtils.AddRelativeLayout();
             _image = AddImage("Product.Image");
-            _titleLabel = AddLabel("Product.Title", isBold: true);
-            _categoryLabel = AddLabel("Product.Category");
+            _titleLabel = AddLabel("Product.Title", NamedSize.Medium, isBold: true);
+            _categoryLabel = AddLabel("Product.Category", NamedSize.Small);
         }
 
         private Image AddImage(string binding)
@@ -44,7 +43,7 @@ namespace EasyLayout.Sample.Controls
             return image;
         }
 
-        private PerfLabel AddLabel(string binding, bool isBold = false)
+        private PerfLabel AddLabel(string binding, NamedSize namedSize, bool isBold = false)
         {
             var perfLabel = new PerfLabel();
             perfLabel.SetBinding(Label.TextProperty, binding);
@@ -52,6 +51,7 @@ namespace EasyLayout.Sample.Controls
             {
                 perfLabel.FontAttributes = FontAttributes.Bold;
             }
+            perfLabel.FontSize = Device.GetNamedSize(namedSize, typeof(Label));
             perfLabel.TextColor = Color.White;
             return perfLabel;
         }
@@ -84,9 +84,7 @@ namespace EasyLayout.Sample.Controls
 
         public void SetProduct(Product product)
         {
-            //Image.Source = product.Image;
             Product = product;
-            //Category.Text = product.Category;
         }
     }
 }
