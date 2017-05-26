@@ -14,6 +14,7 @@ namespace EasyLayout.Sample.Controls
         private Product _product;
         private PerfLabel _categoryLabel;
         private Image _image;
+        private Button _confirmButton;
 
         public ElfxProductView()
         {
@@ -27,7 +28,9 @@ namespace EasyLayout.Sample.Controls
 
         public void SetProduct(Product product)
         {
+            BackgroundColor = Colors.DarkBlue;
             Product = product;
+            _confirmButton.IsVisible = true;
         }
 
         public void PrintStats()
@@ -58,6 +61,15 @@ namespace EasyLayout.Sample.Controls
             _image = AddImage("Product.Image");
             _titleLabel = AddLabel("Product.Title", NamedSize.Medium, isBold: true);
             _categoryLabel = AddLabel("Product.Category", NamedSize.Small);
+            _confirmButton = AddConfirmButton(_relativeLayout);
+        }
+
+        private static Button AddConfirmButton(RelativeLayout parent)
+        {
+            var confirmButton = parent.AddButton("Confirm");
+            confirmButton.IsVisible = false;
+            confirmButton.BackgroundColor = Colors.DarkerBlue;
+            return confirmButton;
         }
 
         private Image AddImage(string binding)
@@ -83,20 +95,25 @@ namespace EasyLayout.Sample.Controls
         private void ConstrainLayout()
         {
             _relativeLayout.ConstrainLayout(() =>
-                _image.Bounds.Left == _relativeLayout.Bounds.Left
-                && _image.Bounds.Top == _relativeLayout.Bounds.Top
+                _image.Bounds.Left == _relativeLayout.Bounds.Left + 10
+                && _image.Bounds.Top == _relativeLayout.Bounds.Top + 10
                 && _image.Bounds.Width == 48
                 && _image.Bounds.Height == 48
 
                 && _titleLabel.Bounds.Left == _image.Bounds.Right + 10
-                && _titleLabel.Bounds.Top == _relativeLayout.Bounds.Top
-                && _titleLabel.Bounds.Width == _relativeLayout.Bounds.Width - 48
+                && _titleLabel.Bounds.Top == _relativeLayout.Bounds.Top + 10
+                && _titleLabel.Bounds.Width == _relativeLayout.Bounds.Width - 168
                 && _titleLabel.Bounds.Height == 20
 
                 && _categoryLabel.Bounds.Left == _titleLabel.Bounds.Left
                 && _categoryLabel.Bounds.Top == _titleLabel.Bounds.Bottom + 5
-                && _categoryLabel.Bounds.Width == _relativeLayout.Bounds.Width - 48
+                && _categoryLabel.Bounds.Width == _relativeLayout.Bounds.Width - 58
                 && _categoryLabel.Bounds.Height == 20
+
+                && _confirmButton.Bounds.Right == _relativeLayout.Bounds.Right - 10
+                && _confirmButton.Bounds.Top == _relativeLayout.Bounds.Top + 10
+                && _confirmButton.Bounds.Bottom == _relativeLayout.Bounds.Bottom - 20
+                && _confirmButton.Bounds.Width == 90
             );
         }
     }

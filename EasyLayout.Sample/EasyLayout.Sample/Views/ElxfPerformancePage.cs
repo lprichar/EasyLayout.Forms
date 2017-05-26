@@ -41,10 +41,10 @@ namespace EasyLayout.Sample.Views
         {
             _relativeLayout = ViewUtils.AddRelativeLayout();
             _topFrame = _relativeLayout.AddBoxView(Color.Transparent);
-            _perfLabel = _relativeLayout.AddPerfLabel("Click To View Perf Stats", Color.Gray);
+            _perfLabel = _relativeLayout.AddPerfLabel("", Color.Gray);
             _productsListView = GetProductsListView();
             _printStatsButton = AddButton(_relativeLayout, "", "Default", "calculator.png");
-            _aggregateButton = AddButton(_relativeLayout, "", "Primary", "text_sum.png");
+            _aggregateButton = AddButton(_relativeLayout, "", "Default", "text_sum.png");
             _productView = AddProductView(_relativeLayout);
         }
 
@@ -84,11 +84,12 @@ namespace EasyLayout.Sample.Views
                 && _topFrame.Bounds.Height == topHeight
 
                 && _productView.Bounds.Top == _relativeLayout.Bounds.Top + 10
-                && _productView.Bounds.Left == _relativeLayout.Bounds.Left + 50
+                && _productView.Bounds.Left == _relativeLayout.Bounds.Left
                 && _productView.Bounds.Right == _relativeLayout.Bounds.Right
+                && _productView.Bounds.Height == 68
 
-                && _perfLabel.Bounds.Bottom == _printStatsButton.Bounds.Top - 5
-                && _perfLabel.Bounds.Right == _relativeLayout.Bounds.Right - 10
+                && _perfLabel.Bounds.Bottom == _topFrame.Bounds.Bottom - 10
+                && _perfLabel.Bounds.Left == _relativeLayout.Bounds.Left + 10
 
                 && _productsListView.Bounds.Top == _topFrame.Bounds.Bottom
                 && _productsListView.Bounds.Left == _relativeLayout.Bounds.Left
@@ -196,7 +197,7 @@ namespace EasyLayout.Sample.Views
         private void AddViews()
         {
             _relativeLayout = ViewUtils.AddRelativeLayout();
-            _titleLabel = AddLabel("Title", true, "Header");
+            _titleLabel = AddLabel("Title", true, "Header", null, Color.White);
             _categoryLabel = AddLabel("Category", false, "Subheader");
             _amountLabel = AddAmountLabel();
             _image = AddImage("Image");
@@ -204,7 +205,7 @@ namespace EasyLayout.Sample.Views
 
         private static PerfLabel AddAmountLabel()
         {
-            var amountLabel = AddLabel("Amount", false, "Inverse");
+            var amountLabel = AddLabel("Amount", false, "Inverse", "{0:C}");
             amountLabel.VerticalTextAlignment = TextAlignment.Center;
             return amountLabel;
         }
@@ -216,10 +217,10 @@ namespace EasyLayout.Sample.Views
             return image;
         }
 
-        private static PerfLabel AddLabel(string textBinding, bool bold, string style = null)
+        private static PerfLabel AddLabel(string textBinding, bool bold, string style = null, string stringFormat = null, Color? textColor = null)
         {
             var label = new PerfLabel();
-            label.SetBinding(Label.TextProperty, textBinding);
+            label.SetBinding(Label.TextProperty, textBinding, stringFormat: stringFormat);
             if (bold)
             {
                 label.FontAttributes = FontAttributes.Bold;
@@ -227,6 +228,10 @@ namespace EasyLayout.Sample.Views
             if (style != null)
             {
                 label.StyleClass = new List<string> { style };
+            }
+            if (textColor.HasValue)
+            {
+                label.TextColor = textColor.Value;
             }
             return label;
         }

@@ -1,4 +1,6 @@
 ﻿using EasyLayout.Droid.Sample.Models;
+using EasyLayout.Forms.Sample;
+using Xamarin.Forms;
 
 namespace EasyLayout.Sample.Controls
 {
@@ -23,6 +25,8 @@ namespace EasyLayout.Sample.Controls
 	        Image.Source = product.Image;
             Title.Text = product.Title;
 	        Category.Text = product.Category;
+	        Confirm.IsVisible = true;
+	        BackgroundColor = Colors.DarkBlue;
 	    }
 	}
 }

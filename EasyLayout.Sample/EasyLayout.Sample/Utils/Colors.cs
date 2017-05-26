@@ -12,6 +12,7 @@ namespace EasyLayout.Forms.Sample
         public static readonly Color Green = Color.FromRgb(0, 142, 91);
         public static readonly Color YellowGreen = Color.FromRgb(140, 187, 38);
         public static readonly Color DarkBlue = Color.FromRgb(42, 113, 176);
+        public static readonly Color DarkerBlue = Color.FromRgb(23, 86, 137);
         public static readonly Color LightBlue = Color.FromRgb(6, 150, 187);
         public static readonly Color Purple = Color.FromRgb(109, 57, 139);
         public static readonly Color DarkGrey = Color.FromRgb(20, 20, 20);
