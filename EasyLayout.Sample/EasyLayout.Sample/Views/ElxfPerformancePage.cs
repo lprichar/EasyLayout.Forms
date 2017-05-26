@@ -19,7 +19,7 @@ namespace EasyLayout.Sample.Views
         private BoxView _topFrame;
         private PerfLabel _perfLabel;
         private ListView _productsListView;
-        private Button _showStatsButton;
+        private Button _printStatsButton;
         private Button _aggregateButton;
         private ElfxProductView _productView;
 
@@ -43,7 +43,7 @@ namespace EasyLayout.Sample.Views
             _topFrame = _relativeLayout.AddBoxView(Color.Transparent);
             _perfLabel = _relativeLayout.AddPerfLabel("Click To View Perf Stats", Color.Gray);
             _productsListView = GetProductsListView();
-            _showStatsButton = AddButton(_relativeLayout, "", "Default", "calculator.png");
+            _printStatsButton = AddButton(_relativeLayout, "", "Default", "calculator.png");
             _aggregateButton = AddButton(_relativeLayout, "", "Primary", "text_sum.png");
             _productView = AddProductView(_relativeLayout);
         }
@@ -87,7 +87,7 @@ namespace EasyLayout.Sample.Views
                 && _productView.Bounds.Left == _relativeLayout.Bounds.Left + 50
                 && _productView.Bounds.Right == _relativeLayout.Bounds.Right
 
-                && _perfLabel.Bounds.Bottom == _showStatsButton.Bounds.Top - 5
+                && _perfLabel.Bounds.Bottom == _printStatsButton.Bounds.Top - 5
                 && _perfLabel.Bounds.Right == _relativeLayout.Bounds.Right - 10
 
                 && _productsListView.Bounds.Top == _topFrame.Bounds.Bottom
@@ -95,18 +95,18 @@ namespace EasyLayout.Sample.Views
                 && _productsListView.Bounds.Right == _relativeLayout.Bounds.Right
                 && _productsListView.Bounds.Height == _relativeLayout.Bounds.Height - topHeight
 
-                && _showStatsButton.Bounds.Bottom == _topFrame.Bounds.Bottom - 10
-                && _showStatsButton.Bounds.Right == _topFrame.Bounds.Right - 10
+                && _printStatsButton.Bounds.Bottom == _topFrame.Bounds.Bottom - 10
+                && _printStatsButton.Bounds.Right == _topFrame.Bounds.Right - 10
 
-                && _aggregateButton.Bounds.Right == _showStatsButton.Bounds.Left - 10
-                && _aggregateButton.Bounds.Bottom == _showStatsButton.Bounds.Bottom
+                && _aggregateButton.Bounds.Right == _printStatsButton.Bounds.Left - 10
+                && _aggregateButton.Bounds.Bottom == _printStatsButton.Bounds.Bottom
             );
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _showStatsButton.Clicked += ShowStatsButtonOnClicked;
+            _printStatsButton.Clicked += PrintStatsButtonOnClicked;
             _aggregateButton.Clicked += AggregateButtonOnClicked;
             _productsListView.ItemSelected += ProductsListViewOnItemSelected;
         }
@@ -114,7 +114,7 @@ namespace EasyLayout.Sample.Views
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            _showStatsButton.Clicked -= ShowStatsButtonOnClicked;
+            _printStatsButton.Clicked -= PrintStatsButtonOnClicked;
             _aggregateButton.Clicked -= AggregateButtonOnClicked;
             _productsListView.ItemSelected -= ProductsListViewOnItemSelected;
         }
@@ -129,7 +129,7 @@ namespace EasyLayout.Sample.Views
         {
             StringBuilder sb = new StringBuilder();
 
-            //sb.Append($"Header[0]: {ProductView.TitleMeasures}, {ProductView.TitleLayouts}; ");
+            sb.Append($"Header[0]: {_productView.TitleMeasures}, {_productView.TitleLayouts}; ");
 
             var it = _productsListView as ITemplatedItemsView<Cell>;
             var items = it.TemplatedItems;
@@ -143,9 +143,9 @@ namespace EasyLayout.Sample.Views
             _perfLabel.Text = sb.ToString();
         }
 
-        private void ShowStatsButtonOnClicked(object sender, EventArgs eventArgs)
+        private void PrintStatsButtonOnClicked(object sender, EventArgs eventArgs)
         {
-            _perfLabel.PrintStats();
+            _productView.PrintStats();
             var it = _productsListView as ITemplatedItemsView<Cell>;
             var items = it.TemplatedItems;
             foreach (var item in items)
@@ -177,6 +177,8 @@ namespace EasyLayout.Sample.Views
         public void PrintStats()
         {
             _titleLabel.PrintStats();
+            _categoryLabel.PrintStats();
+            _amountLabel.PrintStats();
         }
 
         private void AddViews()

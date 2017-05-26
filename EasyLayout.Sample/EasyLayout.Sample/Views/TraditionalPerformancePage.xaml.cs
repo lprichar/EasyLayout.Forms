@@ -17,20 +17,23 @@ namespace EasyLayout.Sample.Views
 		    ProductsList.ItemsSource = Data.GetProducts();
 		}
 
-	    private void Button_OnClicked(object sender, EventArgs e)
+	    private void PrintStatsClicked(object sender, EventArgs e)
 	    {
-	        MainTitle.PrintStats();
 	        ProductView.PrintStats();
 	        var it = ProductsList as ITemplatedItemsView<Cell>;
 	        var items = it.TemplatedItems;
 	        foreach (var item in items)
 	        {
-	            var findByName = item.FindByName<PerfLabel>("Title");
-	            findByName.PrintStats();
+	            var title = item.FindByName<PerfLabel>("Title");
+	            title.PrintStats();
+	            var category = item.FindByName<PerfLabel>("Category");
+	            category.PrintStats();
+	            var amount = item.FindByName<PerfLabel>("Amount");
+	            amount.PrintStats();
             }
         }
 
-	    private void AggregateStats_OnClicked(object sender, EventArgs e)
+	    private void AggregateStatsClicked(object sender, EventArgs e)
 	    {
             StringBuilder sb = new StringBuilder();
 
@@ -45,7 +48,7 @@ namespace EasyLayout.Sample.Views
 	            var findByName = firstRowTitle.FindByName<PerfLabel>("Title");
 	            sb.Append($"List[0].Title: {findByName.Measures}, {findByName.Layouts}; ");
 	        }
-	        MainTitle.Text = sb.ToString();
+	        StatsLabel.Text = sb.ToString();
 	    }
 
 	    private void ProductsList_OnItemSelected(object sender, SelectedItemChangedEventArgs e)

@@ -22,10 +22,34 @@ namespace EasyLayout.Sample.Controls
             SetPageProperties();
         }
 
+        public int TitleMeasures => _titleLabel.Measures;
+        public int TitleLayouts => _titleLabel.Layouts;
+
+        public void SetProduct(Product product)
+        {
+            Product = product;
+        }
+
+        public void PrintStats()
+        {
+            _titleLabel.PrintStats();
+            _categoryLabel.PrintStats();
+        }
+
         private void SetPageProperties()
         {
             Content = _relativeLayout;
             BindingContext = this;
+        }
+
+        protected Product Product
+        {
+            get { return _product; }
+            set
+            {
+                _product = value;
+                OnPropertyChanged();
+            }
         }
 
         private void AddViews()
@@ -70,21 +94,6 @@ namespace EasyLayout.Sample.Controls
                 && _categoryLabel.Bounds.Left == _titleLabel.Bounds.Left
                 && _categoryLabel.Bounds.Top == _titleLabel.Bounds.Bottom + 5
             );
-        }
-
-        public Product Product
-        {
-            get { return _product; }
-            set
-            {
-                _product = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public void SetProduct(Product product)
-        {
-            Product = product;
         }
     }
 }
