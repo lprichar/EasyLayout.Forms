@@ -21,6 +21,7 @@ namespace EasyLayout.Sample.Views
         private ListView _productsListView;
         private Button _showStatsButton;
         private Button _aggregateButton;
+        private ElfxProductView _productView;
 
         public ElxfPerformancePage()
         {
@@ -44,6 +45,13 @@ namespace EasyLayout.Sample.Views
             _productsListView = GetProductsListView();
             _showStatsButton = AddButton(_relativeLayout, "", "Default", "calculator.png");
             _aggregateButton = AddButton(_relativeLayout, "", "Primary", "text_sum.png");
+            _productView = AddProductView(_relativeLayout);
+        }
+
+        private ElfxProductView AddProductView(RelativeLayout relativeLayout)
+        {
+            var elfxProductView = new ElfxProductView();
+            return elfxProductView;
         }
 
         private Button AddButton(RelativeLayout relativeLayout, string title, string style, string image)
@@ -73,6 +81,10 @@ namespace EasyLayout.Sample.Views
                 && _topFrame.Bounds.Right == _relativeLayout.Bounds.Right
                 && _topFrame.Bounds.Height == 200
 
+                && _productView.Bounds.Top == _relativeLayout.Bounds.Top + 10
+                && _productView.Bounds.Left == _relativeLayout.Bounds.Left + 50
+                && _productView.Bounds.Right == _relativeLayout.Bounds.Right
+
                 && _perfLabel.Bounds.Top == _relativeLayout.Bounds.Top + 100
                 && _perfLabel.Bounds.Right == _relativeLayout.Bounds.Right - 10
 
@@ -94,6 +106,7 @@ namespace EasyLayout.Sample.Views
             base.OnAppearing();
             _showStatsButton.Clicked += ShowStatsButtonOnClicked;
             _aggregateButton.Clicked += AggregateButtonOnClicked;
+            _productsListView.ItemSelected += ProductsListViewOnItemSelected;
         }
 
         protected override void OnDisappearing()
@@ -101,6 +114,13 @@ namespace EasyLayout.Sample.Views
             base.OnDisappearing();
             _showStatsButton.Clicked -= ShowStatsButtonOnClicked;
             _aggregateButton.Clicked -= AggregateButtonOnClicked;
+            _productsListView.ItemSelected -= ProductsListViewOnItemSelected;
+        }
+
+        private void ProductsListViewOnItemSelected(object sender, SelectedItemChangedEventArgs selectedItemChangedEventArgs)
+        {
+            var product = (Product)selectedItemChangedEventArgs.SelectedItem;
+            _productView.SetProduct(product);
         }
 
         private void AggregateButtonOnClicked(object sender, EventArgs eventArgs)

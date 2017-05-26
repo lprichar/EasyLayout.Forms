@@ -6,10 +6,10 @@
 
     <ContentView.Content>
         <StackLayout Orientation="Horizontal">
-            <controls:PerfLabel x:Name="ProductId" TextColor="White" Text="" FontSize="Large" />
+            <Image x:Name="Image" />
             <StackLayout Orientation="Vertical">
-                <controls:PerfLabel x:Name="Title" TextColor="White" Text="Select A Product" FontAttributes="Bold" FontSize="Medium" />
-                <controls:PerfLabel x:Name="Category" TextColor="White" Text="" FontSize="Micro" />
+                <controls:PerfLabel x:Name="Title" Text="Select A Product" FontSize="Medium" />
+                <controls:PerfLabel x:Name="Category" Text="" FontSize="Micro" />
             </StackLayout>
         </StackLayout>
     </ContentView.Content>

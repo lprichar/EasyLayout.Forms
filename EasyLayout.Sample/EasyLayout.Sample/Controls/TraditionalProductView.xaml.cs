@@ -16,12 +16,11 @@ namespace EasyLayout.Sample.Controls
 	    {
 	        Title.PrintStats();
 	        Category.PrintStats();
-            ProductId.PrintStats();
         }
 
 	    public void SetProduct(Product product)
 	    {
-	        ProductId.Text = product.Id.ToString();
+	        Image.Source = product.Image;
             Title.Text = product.Title;
 	        Category.Text = product.Category;
 	    }

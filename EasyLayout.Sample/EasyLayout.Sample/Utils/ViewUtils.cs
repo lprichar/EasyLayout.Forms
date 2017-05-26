@@ -33,7 +33,7 @@ namespace EasyLayout.Forms.Sample
             return button;
         }
 
-        public static Label AddLabel(this RelativeLayout parent, string text, Color textColor, Color? background = null)
+        public static Label AddLabel(this RelativeLayout parent, string text, Color? textColor = null, Color? background = null)
         {
             var textView = parent.Add<Label>();
             textView.Text = text;
@@ -41,7 +41,10 @@ namespace EasyLayout.Forms.Sample
             {
                 textView.BackgroundColor = background.Value;
             }
-            textView.TextColor = textColor;
+            if (textColor != null)
+            {
+                textView.TextColor = textColor.Value;
+            }
             textView.FontSize = 15f;
             textView.HorizontalTextAlignment = TextAlignment.Center;
             return textView;

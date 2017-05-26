@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ElfxProductView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TraditionalProductView.xaml.cs">
       <DependentUpon>TraditionalProductView.xaml</DependentUpon>
       <SubType>Code</SubType>
