@@ -41,7 +41,7 @@ namespace EasyLayout.Sample.Views
         {
             _relativeLayout = ViewUtils.AddRelativeLayout();
             _topFrame = _relativeLayout.AddBoxView(Color.Transparent);
-            _perfLabel = _relativeLayout.AddPerfLabel("Click The Buttons To View Perf Stats", Color.White);
+            _perfLabel = _relativeLayout.AddPerfLabel("Click To View Perf Stats", Color.Gray);
             _productsListView = GetProductsListView();
             _showStatsButton = AddButton(_relativeLayout, "", "Default", "calculator.png");
             _aggregateButton = AddButton(_relativeLayout, "", "Primary", "text_sum.png");
@@ -79,13 +79,13 @@ namespace EasyLayout.Sample.Views
                 _topFrame.Bounds.Top == _relativeLayout.Bounds.Top
                 && _topFrame.Bounds.Left == _relativeLayout.Bounds.Left
                 && _topFrame.Bounds.Right == _relativeLayout.Bounds.Right
-                && _topFrame.Bounds.Height == 200
+                && _topFrame.Bounds.Height == 130
 
                 && _productView.Bounds.Top == _relativeLayout.Bounds.Top + 10
                 && _productView.Bounds.Left == _relativeLayout.Bounds.Left + 50
                 && _productView.Bounds.Right == _relativeLayout.Bounds.Right
 
-                && _perfLabel.Bounds.Top == _relativeLayout.Bounds.Top + 100
+                && _perfLabel.Bounds.Bottom == _showStatsButton.Bounds.Top - 5
                 && _perfLabel.Bounds.Right == _relativeLayout.Bounds.Right - 10
 
                 && _productsListView.Bounds.Top == _topFrame.Bounds.Bottom
