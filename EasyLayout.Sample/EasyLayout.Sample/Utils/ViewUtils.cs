@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using EasyLayout.Sample.Controls;
 using Xamarin.Forms;
 
@@ -24,10 +25,11 @@ namespace EasyLayout.Forms.Sample
             return frame;
         }
 
-        public static Button AddButton(this RelativeLayout parent, string text)
+        public static Button AddButton(this RelativeLayout parent, string text, string styleClass = "Default")
         {
             var button = parent.Add<Button>();
             button.Text = text;
+            button.StyleClass = new List<string> { styleClass };
             return button;
         }
 

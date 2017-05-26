@@ -322,6 +322,24 @@
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
         }
       },
+      "modernhttpclient/2.4.2": {
+        "type": "package",
+        "compile": {
+          "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll": {}
+        },
+        "runtime": {
+          "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll": {}
+        }
+      },
+      "Newtonsoft.Json/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netcore45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netcore45/Newtonsoft.Json.dll": {}
+        }
+      },
       "runtime.native.System.IO.Compression/4.1.0": {
         "type": "package",
         "dependencies": {
@@ -2221,6 +2239,45 @@
           "build/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20/Xamarin.Forms.targets": {}
         }
       },
+      "Xamarin.Forms.Pages/2.3.0.38-pre2": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.4",
+          "Xamarin.Forms": "2.3.0.38-pre2",
+          "modernhttpclient": "2.4.2"
+        },
+        "compile": {
+          "lib/uap10.0/Xamarin.Forms.Pages.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Xamarin.Forms.Pages.dll": {}
+        }
+      },
+      "Xamarin.Forms.Theme.Base/1.0.0.43-pre1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms.Pages": "2.3.0.34-pre1"
+        },
+        "compile": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll": {}
+        }
+      },
+      "Xamarin.Forms.Theme.Dark/1.0.0.43-pre1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms.Pages": "2.3.0.38-pre2",
+          "Xamarin.Forms.Theme.Base": "1.0.0.43-pre1"
+        },
+        "compile": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll": {}
+        }
+      },
       "EasyLayout.Forms/1.0.0": {
         "type": "project"
       }
@@ -2492,6 +2549,24 @@
         },
         "compile": {
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
+        }
+      },
+      "modernhttpclient/2.4.2": {
+        "type": "package",
+        "compile": {
+          "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll": {}
+        },
+        "runtime": {
+          "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll": {}
+        }
+      },
+      "Newtonsoft.Json/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netcore45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
       "runtime.any.System.Collections/4.0.11": {
@@ -4528,6 +4603,45 @@
           "build/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20/Xamarin.Forms.targets": {}
         }
       },
+      "Xamarin.Forms.Pages/2.3.0.38-pre2": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.4",
+          "Xamarin.Forms": "2.3.0.38-pre2",
+          "modernhttpclient": "2.4.2"
+        },
+        "compile": {
+          "lib/uap10.0/Xamarin.Forms.Pages.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Xamarin.Forms.Pages.dll": {}
+        }
+      },
+      "Xamarin.Forms.Theme.Base/1.0.0.43-pre1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms.Pages": "2.3.0.34-pre1"
+        },
+        "compile": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll": {}
+        }
+      },
+      "Xamarin.Forms.Theme.Dark/1.0.0.43-pre1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms.Pages": "2.3.0.38-pre2",
+          "Xamarin.Forms.Theme.Base": "1.0.0.43-pre1"
+        },
+        "compile": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll": {}
+        }
+      },
       "EasyLayout.Forms/1.0.0": {
         "type": "project"
       }
@@ -4800,6 +4914,24 @@
         },
         "compile": {
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
+        }
+      },
+      "modernhttpclient/2.4.2": {
+        "type": "package",
+        "compile": {
+          "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll": {}
+        },
+        "runtime": {
+          "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll": {}
+        }
+      },
+      "Newtonsoft.Json/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netcore45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
       "runtime.aot.System.Collections/4.0.10": {
@@ -6874,6 +7006,45 @@
           "build/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20/Xamarin.Forms.targets": {}
         }
       },
+      "Xamarin.Forms.Pages/2.3.0.38-pre2": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.4",
+          "Xamarin.Forms": "2.3.0.38-pre2",
+          "modernhttpclient": "2.4.2"
+        },
+        "compile": {
+          "lib/uap10.0/Xamarin.Forms.Pages.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Xamarin.Forms.Pages.dll": {}
+        }
+      },
+      "Xamarin.Forms.Theme.Base/1.0.0.43-pre1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms.Pages": "2.3.0.34-pre1"
+        },
+        "compile": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll": {}
+        }
+      },
+      "Xamarin.Forms.Theme.Dark/1.0.0.43-pre1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms.Pages": "2.3.0.38-pre2",
+          "Xamarin.Forms.Theme.Base": "1.0.0.43-pre1"
+        },
+        "compile": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll": {}
+        }
+      },
       "EasyLayout.Forms/1.0.0": {
         "type": "project"
       }
@@ -7148,6 +7319,24 @@
         },
         "compile": {
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
+        }
+      },
+      "modernhttpclient/2.4.2": {
+        "type": "package",
+        "compile": {
+          "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll": {}
+        },
+        "runtime": {
+          "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll": {}
+        }
+      },
+      "Newtonsoft.Json/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netcore45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
       "runtime.any.System.Collections/4.0.11": {
@@ -9190,6 +9379,45 @@
           "build/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20/Xamarin.Forms.targets": {}
         }
       },
+      "Xamarin.Forms.Pages/2.3.0.38-pre2": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.4",
+          "Xamarin.Forms": "2.3.0.38-pre2",
+          "modernhttpclient": "2.4.2"
+        },
+        "compile": {
+          "lib/uap10.0/Xamarin.Forms.Pages.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Xamarin.Forms.Pages.dll": {}
+        }
+      },
+      "Xamarin.Forms.Theme.Base/1.0.0.43-pre1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms.Pages": "2.3.0.34-pre1"
+        },
+        "compile": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll": {}
+        }
+      },
+      "Xamarin.Forms.Theme.Dark/1.0.0.43-pre1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms.Pages": "2.3.0.38-pre2",
+          "Xamarin.Forms.Theme.Base": "1.0.0.43-pre1"
+        },
+        "compile": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll": {}
+        }
+      },
       "EasyLayout.Forms/1.0.0": {
         "type": "project"
       }
@@ -9465,6 +9693,24 @@
         },
         "compile": {
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
+        }
+      },
+      "modernhttpclient/2.4.2": {
+        "type": "package",
+        "compile": {
+          "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll": {}
+        },
+        "runtime": {
+          "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll": {}
+        }
+      },
+      "Newtonsoft.Json/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netcore45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
       "runtime.aot.System.Collections/4.0.10": {
@@ -11545,6 +11791,45 @@
           "build/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20/Xamarin.Forms.targets": {}
         }
       },
+      "Xamarin.Forms.Pages/2.3.0.38-pre2": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.4",
+          "Xamarin.Forms": "2.3.0.38-pre2",
+          "modernhttpclient": "2.4.2"
+        },
+        "compile": {
+          "lib/uap10.0/Xamarin.Forms.Pages.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Xamarin.Forms.Pages.dll": {}
+        }
+      },
+      "Xamarin.Forms.Theme.Base/1.0.0.43-pre1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms.Pages": "2.3.0.34-pre1"
+        },
+        "compile": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll": {}
+        }
+      },
+      "Xamarin.Forms.Theme.Dark/1.0.0.43-pre1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms.Pages": "2.3.0.38-pre2",
+          "Xamarin.Forms.Theme.Base": "1.0.0.43-pre1"
+        },
+        "compile": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll": {}
+        }
+      },
       "EasyLayout.Forms/1.0.0": {
         "type": "project"
       }
@@ -11819,6 +12104,24 @@
         },
         "compile": {
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
+        }
+      },
+      "modernhttpclient/2.4.2": {
+        "type": "package",
+        "compile": {
+          "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll": {}
+        },
+        "runtime": {
+          "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll": {}
+        }
+      },
+      "Newtonsoft.Json/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netcore45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
       "runtime.any.System.Collections/4.0.11": {
@@ -13861,6 +14164,45 @@
           "build/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20/Xamarin.Forms.targets": {}
         }
       },
+      "Xamarin.Forms.Pages/2.3.0.38-pre2": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.4",
+          "Xamarin.Forms": "2.3.0.38-pre2",
+          "modernhttpclient": "2.4.2"
+        },
+        "compile": {
+          "lib/uap10.0/Xamarin.Forms.Pages.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Xamarin.Forms.Pages.dll": {}
+        }
+      },
+      "Xamarin.Forms.Theme.Base/1.0.0.43-pre1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms.Pages": "2.3.0.34-pre1"
+        },
+        "compile": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll": {}
+        }
+      },
+      "Xamarin.Forms.Theme.Dark/1.0.0.43-pre1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms.Pages": "2.3.0.38-pre2",
+          "Xamarin.Forms.Theme.Base": "1.0.0.43-pre1"
+        },
+        "compile": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll": {}
+        }
+      },
       "EasyLayout.Forms/1.0.0": {
         "type": "project"
       }
@@ -14136,6 +14478,24 @@
         },
         "compile": {
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
+        }
+      },
+      "modernhttpclient/2.4.2": {
+        "type": "package",
+        "compile": {
+          "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll": {}
+        },
+        "runtime": {
+          "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll": {}
+        }
+      },
+      "Newtonsoft.Json/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netcore45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
       "runtime.aot.System.Collections/4.0.10": {
@@ -16214,6 +16574,45 @@
         },
         "build": {
           "build/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20/Xamarin.Forms.targets": {}
+        }
+      },
+      "Xamarin.Forms.Pages/2.3.0.38-pre2": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.4",
+          "Xamarin.Forms": "2.3.0.38-pre2",
+          "modernhttpclient": "2.4.2"
+        },
+        "compile": {
+          "lib/uap10.0/Xamarin.Forms.Pages.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Xamarin.Forms.Pages.dll": {}
+        }
+      },
+      "Xamarin.Forms.Theme.Base/1.0.0.43-pre1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms.Pages": "2.3.0.34-pre1"
+        },
+        "compile": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll": {}
+        }
+      },
+      "Xamarin.Forms.Theme.Dark/1.0.0.43-pre1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms.Pages": "2.3.0.38-pre2",
+          "Xamarin.Forms.Theme.Base": "1.0.0.43-pre1"
+        },
+        "compile": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll": {}
         }
       },
       "EasyLayout.Forms/1.0.0": {
@@ -18616,6 +19015,50 @@
         "ref/xamarinmac20/_._",
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._"
+      ]
+    },
+    "modernhttpclient/2.4.2": {
+      "sha512": "Srkrjz2wBCh7af+AGqpPkJ3FSSFSruzg9mHVwwXiklf9gx2L1Ss2M+p2Mf4Fw17AOe6yPuJwdu4AAoslc6zP+w==",
+      "type": "package",
+      "path": "modernhttpclient/2.4.2",
+      "files": [
+        "lib/ModernHttpClient-2.4.1.zip",
+        "lib/MonoAndroid/ModernHttpClient.dll",
+        "lib/MonoAndroid/ModernHttpClient.dll.mdb",
+        "lib/MonoAndroid/OkHttp.dll",
+        "lib/MonoTouch/ModernHttpClient.dll",
+        "lib/MonoTouch/ModernHttpClient.dll.mdb",
+        "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll",
+        "lib/Portable-Net45+WinRT45+WP8+WPA81/ModernHttpClient.dll.mdb",
+        "lib/Xamarin.iOS10/ModernHttpClient.dll",
+        "lib/Xamarin.iOS10/ModernHttpClient.dll.mdb",
+        "lib/modernhttpclient.2.4.1.nupkg",
+        "modernhttpclient.2.4.2.nupkg.sha512",
+        "modernhttpclient.nuspec"
+      ]
+    },
+    "Newtonsoft.Json/6.0.4": {
+      "sha512": "FyQLmEpjsCrEP+znauLDGAi+h6i9YnaMkITlfIoiM4RYyX3nki306bTHsr/0okiIvIc7BJhQTbOAIZVocccFUw==",
+      "type": "package",
+      "path": "newtonsoft.json/6.0.4",
+      "files": [
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netcore45/Newtonsoft.Json.dll",
+        "lib/netcore45/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.6.0.4.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "tools/install.ps1"
       ]
     },
     "runtime.any.System.Collections/4.0.11": {
@@ -24640,6 +25083,49 @@
         "xamarin.forms.nuspec"
       ]
     },
+    "Xamarin.Forms.Pages/2.3.0.38-pre2": {
+      "sha512": "LKWntv0PZDWzAYT35JI83EIRj1I4M9y1q2fU8hyV67EF12TNDNHheH18s0NllWixgg/bcJOu80XpQPNQ3F8kSg==",
+      "type": "package",
+      "path": "xamarin.forms.pages/2.3.0.38-pre2",
+      "files": [
+        "lib/MonoAndroid10/Xamarin.Forms.Pages.dll",
+        "lib/MonoTouch10/Xamarin.Forms.Pages.dll",
+        "lib/WP80/Xamarin.Forms.Pages.dll",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Pages.dll",
+        "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Pages.dll",
+        "lib/uap10.0/Xamarin.Forms.Pages.dll",
+        "lib/win81/Xamarin.Forms.Pages.dll",
+        "lib/wpa81/Xamarin.Forms.Pages.dll",
+        "xamarin.forms.pages.2.3.0.38-pre2.nupkg.sha512",
+        "xamarin.forms.pages.nuspec"
+      ]
+    },
+    "Xamarin.Forms.Theme.Base/1.0.0.43-pre1": {
+      "sha512": "nmklKhIbXkKn0dY6VjXFCCacOBIgwgVTXS/DDch9R4im3AUOgRYwoetuFwJOh1iXGw4cwLh2bkxNbfTbAihghA==",
+      "type": "package",
+      "path": "xamarin.forms.theme.base/1.0.0.43-pre1",
+      "files": [
+        "lib/MonoAndroid10/Xamarin.Forms.Theme.Android.dll",
+        "lib/MonoAndroid10/Xamarin.Forms.Theme.Base.dll",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Theme.iOS.dll",
+        "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Base.dll",
+        "xamarin.forms.theme.base.1.0.0.43-pre1.nupkg.sha512",
+        "xamarin.forms.theme.base.nuspec"
+      ]
+    },
+    "Xamarin.Forms.Theme.Dark/1.0.0.43-pre1": {
+      "sha512": "QVCx7d+A7VdfUBJwNOpLWquaXzxiP7ZdDVHMiv0FViqWx6Sp38XMLbFI36rZR8LularQSvmrXymA0d142HbD3g==",
+      "type": "package",
+      "path": "xamarin.forms.theme.dark/1.0.0.43-pre1",
+      "files": [
+        "lib/MonoAndroid10/Xamarin.Forms.Theme.Dark.dll",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll",
+        "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamarin.Forms.Theme.Dark.dll",
+        "xamarin.forms.theme.dark.1.0.0.43-pre1.nupkg.sha512",
+        "xamarin.forms.theme.dark.nuspec"
+      ]
+    },
     "EasyLayout.Forms/1.0.0": {
       "type": "project",
       "path": "../../EasyLayout.Forms/EasyLayout.Forms.csproj",
@@ -24649,7 +25135,8 @@
   "projectFileDependencyGroups": {
     "": [
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.3.3",
-      "Xamarin.Forms >= 2.3.4.247"
+      "Xamarin.Forms >= 2.3.4.247",
+      "Xamarin.Forms.Theme.Dark >= 1.0.0.43-pre1"
     ],
     "UAP,Version=v10.0": []
   },
@@ -24675,7 +25162,8 @@
     },
     "dependencies": {
       "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.3",
-      "Xamarin.Forms": "2.3.4.247"
+      "Xamarin.Forms": "2.3.4.247",
+      "Xamarin.Forms.Theme.Dark": "1.0.0.43-pre1"
     },
     "frameworks": {
       "uap10.0": {}

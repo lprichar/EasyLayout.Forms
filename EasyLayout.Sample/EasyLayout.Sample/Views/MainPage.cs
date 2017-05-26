@@ -27,6 +27,7 @@ namespace EasyLayout.Sample
         {
             Title = "EasyLayout.Forms";
             Content = _relativeLayout;
+            NavigationPage.SetBackButtonTitle(this, "");
         }
 
         protected override void OnAppearing()
@@ -117,7 +118,7 @@ namespace EasyLayout.Sample
     {
         public MainPage() : base(new RootPage())
         {
-            BarBackgroundColor = Colors.Background;
+            BarTextColor = Color.White;
         }
     }
 }

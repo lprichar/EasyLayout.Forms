@@ -1,6 +1,7 @@
 ﻿// ReSharper disable CompareOfFloatsByEqualityOperator
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,16 +33,26 @@ namespace EasyLayout.Sample.Views
         {
             Title = "EasyLayout.Forms Performance";
             Content = _relativeLayout;
+            //NavigationPage.BarBackgroundColor
         }
 
         private void AddViews()
         {
             _relativeLayout = ViewUtils.AddRelativeLayout();
-            _topFrame = _relativeLayout.AddBoxView(Colors.Background);
+            _topFrame = _relativeLayout.AddBoxView(Color.Transparent);
             _perfLabel = _relativeLayout.AddPerfLabel("Click The Buttons To View Perf Stats", Color.White);
             _productsListView = GetProductsListView();
-            _showStatsButton = _relativeLayout.AddButton("Show Stats In Views");
-            _aggregateButton = _relativeLayout.AddButton("Aggregate Stats");
+            _showStatsButton = AddButton(_relativeLayout, "", "Default", "calculator.png");
+            _aggregateButton = AddButton(_relativeLayout, "", "Primary", "text_sum.png");
+        }
+
+        private Button AddButton(RelativeLayout relativeLayout, string title, string style, string image)
+        {
+            var button = relativeLayout.AddButton(title, style);
+            var fileImageSource = new FileImageSource();
+            fileImageSource.File = image;
+            button.Image = fileImageSource;
+            return button;
         }
 
         private static ListView GetProductsListView()
@@ -149,29 +160,30 @@ namespace EasyLayout.Sample.Views
         private void AddViews()
         {
             _relativeLayout = ViewUtils.AddRelativeLayout();
-            _titleLabel = AddLabel("Title", true);
-            _categoryLabel = AddLabel("Category", false);
-            _amountLabel = AddLabel("Amount", false);
+            _titleLabel = AddLabel("Title", true, "Header");
+            _categoryLabel = AddLabel("Category", false, "Subheader");
+            _amountLabel = AddLabel("Amount", false, "Inverse");
             _image = AddImage("Image");
         }
 
         private Image AddImage(string sourceBinding)
         {
-            var image = new Image
-            {
-                BackgroundColor = Color.FromRgb(245, 95, 95)
-            };
+            var image = new Image();
             image.SetBinding(Image.SourceProperty, sourceBinding);
             return image;
         }
 
-        private static PerfLabel AddLabel(string textBinding, bool bold)
+        private static PerfLabel AddLabel(string textBinding, bool bold, string style = null)
         {
             var label = new PerfLabel();
             label.SetBinding(Label.TextProperty, textBinding);
             if (bold)
             {
                 label.FontAttributes = FontAttributes.Bold;
+            }
+            if (style != null)
+            {
+                label.StyleClass = new List<string> { style };
             }
             return label;
         }

@@ -25,7 +25,22 @@ namespace EasyLayout.Sample.iOS
 			global::Xamarin.Forms.Forms.Init ();
 			LoadApplication (new EasyLayout.Sample.App ());
 
-			return base.FinishedLaunching (app, options);
+		    UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.LightContent, false);
+
+            XamarinFormsThemesWorkaround();
+
+		    return base.FinishedLaunching (app, options);
 		}
+
+        /// <summary>
+        /// See: https://developer.xamarin.com/guides/xamarin-forms/user-interface/themes/#Troubleshooting
+        /// can eventually delete
+        /// </summary>
+        private static void XamarinFormsThemesWorkaround()
+	    {
+	        var x = typeof(Xamarin.Forms.Themes.DarkThemeResources);
+	        x = typeof(Xamarin.Forms.Themes.DarkThemeResources);
+	        x = typeof(Xamarin.Forms.Themes.iOS.UnderlineEffect);
+	    }
 	}
 }
