@@ -7,7 +7,7 @@
         <authors>Lee P Richardson</authors>
         <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
         <projectUrl>https://github.com/lprichar/EasyLayout.Forms</projectUrl>
-        <iconUrl>https://github.com/lprichar/EasyLayout.Forms/blob/master/EasyLayout.Forms/ElxfLogo.png</iconUrl>
+        <iconUrl>https://raw.githubusercontent.com/lprichar/EasyLayout.Forms/master/EasyLayout.Forms/ElxfLogo.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Simplifies working with RelativeLayout Programatically in Xamarin.Forms. It's a port of EasyLayout.Droid which is a port of Frank Krueger's EasyLayout for iOS.</description>
         <summary />
