@@ -11,7 +11,7 @@
             RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Y, Constant=10}"
             RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
             RelativeLayout.HeightConstraint="{ConstraintExpression Type=Constant, Constant=40}"
-             />
+            />
         <Label BackgroundColor="OrangeRed"
             RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToView, Property=X, ElementName=MainLabel, Constant=110}"
             RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, Property=Y, ElementName=MainLabel, Constant=50}"

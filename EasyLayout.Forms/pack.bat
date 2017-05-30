@@ -1,1 +1,1 @@
-nuget pack -Prop Platform=AnyCPU EasyLayout.Forms.csproj
+nuget pack -Prop Configuration=Release -Prop Platform=AnyCPU EasyLayout.Forms.csproj
