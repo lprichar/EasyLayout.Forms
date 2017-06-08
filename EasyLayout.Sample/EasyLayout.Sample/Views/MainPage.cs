@@ -81,25 +81,21 @@ namespace EasyLayout.Sample
         private void ConstrainLayout()
         {
             _relativeLayout.ConstrainLayout(() =>
-                _layoutExampleButton.Bounds.Top == _relativeLayout.Bounds.Top + 20
-                && _layoutExampleButton.Bounds.Left == _relativeLayout.Bounds.Left + 10
-                && _layoutExampleButton.Bounds.Right == _relativeLayout.Bounds.Right - 10
-
-                && _traditionalXamlRelativeLayout.Bounds.Top == _layoutExampleButton.Bounds.Bottom + 10
-                && _traditionalXamlRelativeLayout.Bounds.Left == _layoutExampleButton.Bounds.Left
-                && _traditionalXamlRelativeLayout.Bounds.Width == _layoutExampleButton.Bounds.Width
-
-                && _traditionalPerformance.Bounds.Top == _traditionalXamlRelativeLayout.Bounds.Bottom + 10
-                && _traditionalPerformance.Bounds.Left == _layoutExampleButton.Bounds.Left
-                && _traditionalPerformance.Bounds.Width == _layoutExampleButton.Bounds.Width
-
-                && _elxfPerformance.Bounds.Top == _traditionalPerformance.Bounds.Bottom + 10
-                && _elxfPerformance.Bounds.Left == _layoutExampleButton.Bounds.Left
-                && _elxfPerformance.Bounds.Width == _layoutExampleButton.Bounds.Width
-
-                && _playground.Bounds.Top == _elxfPerformance.Bounds.Bottom + 10
-                && _playground.Bounds.Left == _layoutExampleButton.Bounds.Left
-                && _playground.Bounds.Width == _layoutExampleButton.Bounds.Width
+                    _layoutExampleButton.Top() == _relativeLayout.Top() + 20
+                && _layoutExampleButton.Left() == _relativeLayout.Left() + 10
+                && _layoutExampleButton.Right() == _relativeLayout.Right() - 10
+                && _traditionalXamlRelativeLayout.Top() == _layoutExampleButton.Bottom() + 10
+                && _traditionalXamlRelativeLayout.Left() == _layoutExampleButton.Left()
+                && _traditionalXamlRelativeLayout.Width() == _layoutExampleButton.Width()
+                && _traditionalPerformance.Top() == _traditionalXamlRelativeLayout.Bottom() + 10
+                && _traditionalPerformance.Left() == _layoutExampleButton.Left()
+                && _traditionalPerformance.Width() == _layoutExampleButton.Width()
+                && _elxfPerformance.Top() == _traditionalPerformance.Bottom() + 10
+                && _elxfPerformance.Left() == _layoutExampleButton.Left()
+                && _elxfPerformance.Width() == _layoutExampleButton.Width()
+                && _playground.Top() == _elxfPerformance.Bottom() + 10
+                && _playground.Left() == _layoutExampleButton.Left()
+                && _playground.Width() == _layoutExampleButton.Width()
             );
         }
 

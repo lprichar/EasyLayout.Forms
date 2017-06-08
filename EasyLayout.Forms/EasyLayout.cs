@@ -1,4 +1,4 @@
-﻿﻿//
+﻿//
 // Copyright (c) 2017 Lee P. Richardson
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -52,25 +52,26 @@ namespace EasyLayout.Forms
                 RightExpression = rightExpression;
             }
 
-            public Constraint GetSizeConstraint(Position position) {
-				if (RightExpression.IsConstant && RightExpression.Constant.HasValue)
-				{
-					return Constraint.Constant(RightExpression.Constant.Value);
-				}
-				View sibling = RightExpression.View;
+            public Constraint GetSizeConstraint(Position position)
+            {
+                if (RightExpression.IsConstant && RightExpression.Constant.HasValue)
+                {
+                    return Constraint.Constant(RightExpression.Constant.Value);
+                }
+                View sibling = RightExpression.View;
                 var margin = GetMargin();
 
                 var isParent = RightExpression.IsParent;
                 if (isParent && position == Position.Width)
                     return Constraint.RelativeToParent(rl => rl.Width + margin);
-				if (isParent && position == Position.Height)
-					return Constraint.RelativeToParent(rl => rl.Height + margin);
-				if (position == Position.Width)
+                if (isParent && position == Position.Height)
+                    return Constraint.RelativeToParent(rl => rl.Height + margin);
+                if (position == Position.Width)
                     return Constraint.RelativeToView(sibling, (rv, v) => v.Width);
                 if (position == Position.Height)
-					return Constraint.RelativeToView(sibling, (rv, v) => v.Height);
+                    return Constraint.RelativeToView(sibling, (rv, v) => v.Height);
                 throw new ArgumentException("Unsupported position in size constraint: " + position);
-			}
+            }
 
             public Constraint GetPositionConstraint(Assertion widthHeightAssertion = null)
             {
@@ -204,7 +205,7 @@ namespace EasyLayout.Forms
                 // aka LayoutRules.AlignBottom
                 if (leftPosition == Position.Bottom && rightPosition == Position.Bottom)
                     return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Bottom - GetHeight(rl, childId, heightWidthConstant) + margin);
-                
+
                 // aka LayoutRules.Below
                 if (leftPosition == Position.Top && rightPosition == Position.Bottom)
                     return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Bottom + margin);
@@ -214,7 +215,7 @@ namespace EasyLayout.Forms
                     return Constraint.RelativeToView(sibling, (rl, v) => v.Bounds.Top - GetHeight(rl, childId, heightWidthConstant) + margin);
 
                 if (leftPosition == Position.CenterX && rightPosition == Position.CenterX)
-                    return Constraint.RelativeToView(sibling, (rl, v) => v.X  + (v.Bounds.Width * .5f) - (GetWidth(rl, childId, false, heightWidthConstant) * .5f) + margin);
+                    return Constraint.RelativeToView(sibling, (rl, v) => v.X + (v.Bounds.Width * .5f) - (GetWidth(rl, childId, false, heightWidthConstant) * .5f) + margin);
 
                 // todo: constrain width's & height's
                 //if (leftPosition == Position.Width && rightPosition == Position.Width)
@@ -351,24 +352,24 @@ namespace EasyLayout.Forms
 
                 var widthAssertion = GetExplicitWidthConstraint(viewAndRules);
                 var heightAssertion = GetExplicitHeightConstraint(viewAndRules);
-				var xConstraint = GetXConstraint(viewAndRules, widthAssertion);
-				var yConstraint = GetYConstraint(viewAndRules, heightAssertion);
+                var xConstraint = GetXConstraint(viewAndRules, widthAssertion);
+                var yConstraint = GetYConstraint(viewAndRules, heightAssertion);
                 widthAssertion = widthAssertion ?? GetRelativeWidthConstraint(viewAndRules);
                 heightAssertion = heightAssertion ?? GetRelativeHeightConstraint(viewAndRules);
-				var widthConstraint = widthAssertion?.GetSizeConstraint(Position.Width);
+                var widthConstraint = widthAssertion?.GetSizeConstraint(Position.Width);
                 var heightConstraint = heightAssertion?.GetSizeConstraint(Position.Height);
 
                 relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
             }
         }
 
-		private static Constraint GetXConstraint(IGrouping<View, Assertion> assertions, Assertion widthAssertion)
+        private static Constraint GetXConstraint(IGrouping<View, Assertion> assertions, Assertion widthAssertion)
         {
             return GetXorYConstraint(assertions, widthAssertion, "X", i => i.IsXConstraint());
         }
 
 
-        private static Constraint GetXorYConstraint(IGrouping<View, Assertion> assertions, 
+        private static Constraint GetXorYConstraint(IGrouping<View, Assertion> assertions,
                                                     Assertion sizeAssertion, string xorY,
                                                     Func<Assertion, bool> positionConstraintFunc)
         {
@@ -396,8 +397,8 @@ namespace EasyLayout.Forms
 
         private static Constraint GetYConstraint(IGrouping<View, Assertion> assertions, Assertion heightAssertion)
         {
-			return GetXorYConstraint(assertions, heightAssertion, "Y", i => i.IsYConstraint());
-		}
+            return GetXorYConstraint(assertions, heightAssertion, "Y", i => i.IsYConstraint());
+        }
 
         private static Assertion GetExplicitHeightConstraint(IGrouping<View, Assertion> assertions)
         {
@@ -413,18 +414,18 @@ namespace EasyLayout.Forms
         {
             var top = GetSingleAssertionOrDefault(assertions, i => i.Position == Position.Top, "Only one top assertion allowed");
             var bottom = GetSingleAssertionOrDefault(assertions, i => i.Position == Position.Bottom, "Only one bottom assertion allowed");
-			if (top == null || bottom == null) return null;
-			return bottom;
-		}
+            if (top == null || bottom == null) return null;
+            return bottom;
+        }
 
-        private static Assertion GetRelativeWidthConstraint(IGrouping<View, Assertion> assertions) 
+        private static Assertion GetRelativeWidthConstraint(IGrouping<View, Assertion> assertions)
         {
             var left = GetSingleAssertionOrDefault(assertions, i => i.Position == Position.Left, "Only one left assertion allowed");
-			var right = GetSingleAssertionOrDefault(assertions, i => i.Position == Position.Right, "Only one left assertion allowed");
+            var right = GetSingleAssertionOrDefault(assertions, i => i.Position == Position.Right, "Only one left assertion allowed");
             if (left == null || right == null) return null;
             right.UpdateMarginFromRelativeWidthConstraint(left);
             return right;
-		}
+        }
 
         private static Assertion GetSingleAssertionOrDefault(IGrouping<View, Assertion> viewsGroupedByRule, Func<Assertion, bool> func, string errorMessage)
         {
@@ -682,6 +683,16 @@ namespace EasyLayout.Forms
         {
             switch (fExpr.Method.Name)
             {
+                case nameof(Top):
+                    return Position.Top;
+                case nameof(Left):
+                    return Position.Left;
+                case nameof(Right):
+                    return Position.Right;
+                case nameof(Bottom):
+                    return Position.Bottom;
+                case nameof(Width):
+                    return Position.Width;
                 case nameof(GetCenterX):
                     return Position.CenterX;
                 case nameof(GetCenterY):
@@ -742,6 +753,31 @@ namespace EasyLayout.Forms
             {
                 constraintExprs.Add(b);
             }
+        }
+
+        public static int Top(this VisualElement visualElement)
+        {
+            return 0;
+        }
+
+        public static int Left(this VisualElement visualElement)
+        {
+            return 0;
+        }
+
+        public static int Right(this VisualElement visualElement)
+        {
+            return 0;
+        }
+
+        public static int Bottom(this VisualElement visualElement)
+        {
+            return 0;
+        }
+
+        public static int Width(this VisualElement visualElement)
+        {
+            return 0;
         }
     }
 }
