@@ -298,7 +298,6 @@ namespace EasyLayout.Forms
             Bottom,
             CenterX,
             CenterY,
-            Center,
             Constant,
             Width,
             Height
@@ -319,16 +318,6 @@ namespace EasyLayout.Forms
             public Position Position { get; set; }
             public double? Constant { get; set; }
             public bool IsConstant => !IsParent && View == null && Constant != null;
-        }
-
-        public static double GetCenterX(this Rectangle rectangle)
-        {
-            return rectangle.Left + rectangle.Width / 2;
-        }
-
-        public static double GetCenterY(this Rectangle rectangle)
-        {
-            return rectangle.Top + rectangle.Height / 2;
         }
 
         public static int ToConst(this int i)
@@ -630,8 +619,6 @@ namespace EasyLayout.Forms
                     return Position.Height;
                 case nameof(Width):
                     return Position.Width;
-                case nameof(Center):
-                    return Position.Center;
                 case nameof(CenterX):
                     return Position.CenterX;
                 case nameof(CenterY):
@@ -691,11 +678,6 @@ namespace EasyLayout.Forms
         }
 
         public static int Bottom(this VisualElement visualElement)
-        {
-            return 0;
-        }
-
-        public static int Center(this VisualElement visualElement)
         {
             return 0;
         }
