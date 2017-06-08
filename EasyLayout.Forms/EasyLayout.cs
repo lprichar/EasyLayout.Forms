@@ -685,7 +685,11 @@ namespace EasyLayout.Forms
             {
                 case nameof(Top):
                     return Position.Top;
+                case nameof(Y):
+                    return Position.Top;
                 case nameof(Left):
+                    return Position.Left;
+                case nameof(X):
                     return Position.Left;
                 case nameof(Right):
                     return Position.Right;
@@ -759,8 +763,18 @@ namespace EasyLayout.Forms
         {
             return 0;
         }
+        
+        public static int Y(this VisualElement visualElement)
+        {
+            return 0;
+        }
 
         public static int Left(this VisualElement visualElement)
+        {
+            return 0;
+        }
+        
+        public static int X(this VisualElement visualElement)
         {
             return 0;
         }
