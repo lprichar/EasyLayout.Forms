@@ -162,7 +162,7 @@ namespace EasyLayout.Forms
                 //    return null;
                 //if (childPosition == Position.Height && parentPosition == Position.Height)
                 //    return null;
-                throw new Exception($"Unsupported parent positioning combination: {childName}.{childPosition} with parent.{parentPosition}");
+                throw new ArgumentException($"Unsupported parent positioning combination: {childName}.{childPosition} with parent.{parentPosition}");
             }
 
             private Constraint GetLayoutRuleForSibling(Assertion widthHeightAssertion)
