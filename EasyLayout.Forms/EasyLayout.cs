@@ -767,52 +767,52 @@ namespace EasyLayout.Forms
         // Helper extension methods to make it easier to do the relative layout
         public static int Top(this VisualElement visualElement)
         {
-            return 0;
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
         }
 
         public static int Y(this VisualElement visualElement)
         {
-            return 0;
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
         }
 
         public static int Left(this VisualElement visualElement)
         {
-            return 0;
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
         }
 
         public static int X(this VisualElement visualElement)
         {
-            return 0;
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
         }
 
         public static int Right(this VisualElement visualElement)
         {
-            return 0;
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
         }
 
         public static int Bottom(this VisualElement visualElement)
         {
-            return 0;
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
         }
 
         public static int CenterX(this VisualElement visualElement)
         {
-            return 0;
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
         }
 
         public static int CenterY(this VisualElement visualElement)
         {
-            return 0;
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
         }
 
         public static int Height(this VisualElement visualElement)
         {
-            return 0;
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
         }
 
         public static int Width(this VisualElement visualElement)
         {
-            return 0;
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
         }
     }
 }
