@@ -682,6 +682,26 @@ namespace EasyLayout.Forms
         {
             switch (fExpr.Method.Name)
             {
+                case nameof(Top):
+                    return Position.Top;
+                case nameof(Y):
+                    return Position.Top;
+                case nameof(Left):
+                    return Position.Left;
+                case nameof(X):
+                    return Position.Left;
+                case nameof(Right):
+                    return Position.Right;
+                case nameof(Bottom):
+                    return Position.Bottom;
+                case nameof(Height):
+                    return Position.Height;
+                case nameof(Width):
+                    return Position.Width;
+                case nameof(CenterX):
+                    return Position.CenterX;
+                case nameof(CenterY):
+                    return Position.CenterY;
                 case nameof(GetCenterX):
                     return Position.CenterX;
                 case nameof(GetCenterY):
@@ -742,6 +762,57 @@ namespace EasyLayout.Forms
             {
                 constraintExprs.Add(b);
             }
+        }
+        
+        // Helper extension methods to make it easier to do the relative layout
+        public static int Top(this VisualElement visualElement)
+        {
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
+        }
+
+        public static int Y(this VisualElement visualElement)
+        {
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
+        }
+
+        public static int Left(this VisualElement visualElement)
+        {
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
+        }
+
+        public static int X(this VisualElement visualElement)
+        {
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
+        }
+
+        public static int Right(this VisualElement visualElement)
+        {
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
+        }
+
+        public static int Bottom(this VisualElement visualElement)
+        {
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
+        }
+
+        public static int CenterX(this VisualElement visualElement)
+        {
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
+        }
+
+        public static int CenterY(this VisualElement visualElement)
+        {
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
+        }
+
+        public static int Height(this VisualElement visualElement)
+        {
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
+        }
+
+        public static int Width(this VisualElement visualElement)
+        {
+            throw new NotImplementedException("This method should only be used in a ConstrainLayout() call");
         }
     }
 }
