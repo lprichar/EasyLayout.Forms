@@ -84,15 +84,19 @@ namespace EasyLayout.Sample
                     _layoutExampleButton.Top() == _relativeLayout.Top() + 20
                 && _layoutExampleButton.Left() == _relativeLayout.Left() + 10
                 && _layoutExampleButton.Right() == _relativeLayout.Right() - 10
+
                 && _traditionalXamlRelativeLayout.Top() == _layoutExampleButton.Bottom() + 10
                 && _traditionalXamlRelativeLayout.Left() == _layoutExampleButton.Left()
                 && _traditionalXamlRelativeLayout.Width() == _layoutExampleButton.Width()
+
                 && _traditionalPerformance.Top() == _traditionalXamlRelativeLayout.Bottom() + 10
                 && _traditionalPerformance.Left() == _layoutExampleButton.Left()
                 && _traditionalPerformance.Width() == _layoutExampleButton.Width()
+                
                 && _elxfPerformance.Top() == _traditionalPerformance.Bottom() + 10
                 && _elxfPerformance.Left() == _layoutExampleButton.Left()
                 && _elxfPerformance.Width() == _layoutExampleButton.Width()
+                
                 && _playground.Top() == _elxfPerformance.Bottom() + 10
                 && _playground.Left() == _layoutExampleButton.Left()
                 && _playground.Width() == _layoutExampleButton.Width()
