@@ -621,12 +621,15 @@ namespace EasyLayout.Forms
                 position = GetPosition(memExpr);
 
                 viewExpr = memExpr.Expression as MemberExpression;
-                viewExpr = viewExpr?.Expression as MemberExpression;
+                if (viewExpr?.Member.Name == nameof(View.Bounds))
+                {
+                    viewExpr = viewExpr?.Expression as MemberExpression;
+                }
             }
 
             if (viewExpr == null)
             {
-                throw new NotSupportedException("Constraints should use views's Top, Bottom, etc properties, or extension methods like GetCenter().  Did you forget to include '.Bounds' in your clause?");
+                throw new NotSupportedException("Constraints should use the supplied extension methods like Top(), Bottom(), etc.");
             }
 
             var view = GetView(viewExpr);
