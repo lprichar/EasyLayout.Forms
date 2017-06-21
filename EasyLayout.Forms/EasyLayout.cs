@@ -324,6 +324,36 @@ namespace EasyLayout.Forms
             return rectangle.Top + (rectangle.Height / 2);
         }
 
+		public static double GetWidth(this Rectangle rectangle)
+		{
+			return rectangle.Width;
+		}
+
+		public static double GetHeight(this Rectangle rectangle)
+		{
+			return rectangle.Height;
+		}
+
+		public static double GetLeft(this Rectangle rectangle)
+		{
+			return rectangle.Left;
+		}
+
+		public static double GetTop(this Rectangle rectangle)
+		{
+			return rectangle.Top;
+		}
+
+		public static double GetRight(this Rectangle rectangle)
+		{
+			return rectangle.Right;
+		}
+
+		public static double GetBottom(this Rectangle rectangle)
+		{
+			return rectangle.Bottom;
+		}
+
         public static int ToConst(this int i)
         {
             return i;
@@ -709,6 +739,18 @@ namespace EasyLayout.Forms
                     return Position.CenterX;
                 case nameof(GetCenterY):
                     return Position.CenterY;
+				case nameof(GetHeight):
+					return Position.Height;
+				case nameof(GetWidth):
+					return Position.Width;
+				case nameof(GetLeft):
+					return Position.Left;
+				case nameof(GetTop):
+					return Position.Top;
+				case nameof(GetRight):
+					return Position.Right;
+				case nameof(GetBottom):
+					return Position.Bottom;
                 default:
                     throw new NotSupportedException("Method " + fExpr.Method.Name + " is not recognized.");
             }
