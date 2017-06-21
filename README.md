@@ -31,14 +31,14 @@ Instead, now you can do this:
 
 ````
 relativeLayout.ConstrainLayout(() =>
-    label.Frame.Top == relativeLayout.Frame.Top + 10
-    && _image.Frame.GetCenterX() == relativeLayout.Frame.GetCenterX()
+    label.Top() == relativeLayout.Top() + 10
+    && _image.CenterX() == relativeLayout.CenterX()
     );
 ````
 
 You no longer need to do any math or worry about how to get the size of a non-rendered view.
 
-Incidentally, GetCenterX() a new extension method, along with GetCenterY() and ToConst().
+Incidentally, Top(), Bottom(), Right(), Left(), CenterX(), and CenterY(), are new extension methods, along with ToConst() for variables.
 
 ## Example 2 - Relative Alignment and Constants
 
@@ -63,15 +63,23 @@ EasyLayout.Forms replaces the code above with:
 
 ````
 relativeLayout.ConstrainLayout(() =>
-    label1.Top == relativeLayout.Top + 10 &&
-	label1.Right == relativeLayout.Right - 10
+    label1.Top() == relativeLayout.Top() + 10 &&
+	label1.Right() == relativeLayout.Right() - 10
 
-    label2.Top == label1.Bottom + 10 &&
-    label2.Right == label1.Right
+    label2.Top() == label1.Bottom() + 10 &&
+    label2.Right() == label1.Right()
     );
 ````
 
 That's less code and easier to read plus there's some other small benefits.  
+
+## Release Notes
+
+### 1.1
+
+Replaces the syntax label1.Bounds.Left with an extension method based syntax label1.Left().  This fixes compiler warnings
+about "Equality comparison of floating point numbers" and makes the syntax more concise.  The old syntax is still supported
+but should be considered deprecated.  The .Bounds syntax will be removed in subsequent versions.
 
 ## Installation
 
