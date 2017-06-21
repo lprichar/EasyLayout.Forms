@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using EasyLayout.Droid.Sample.Models;
 using EasyLayout.Forms;
 using EasyLayout.Forms.Sample;
@@ -45,10 +44,10 @@ namespace EasyLayout.Sample.Views
             _productsListView = GetProductsListView();
             _printStatsButton = AddButton(_relativeLayout, "", "Default", "calculator.png");
             _aggregateButton = AddButton(_relativeLayout, "", "Default", "text_sum.png");
-            _productView = AddProductView(_relativeLayout);
+            _productView = AddProductView();
         }
 
-        private ElfxProductView AddProductView(RelativeLayout relativeLayout)
+        private ElfxProductView AddProductView()
         {
             var elfxProductView = new ElfxProductView();
             return elfxProductView;
@@ -57,8 +56,10 @@ namespace EasyLayout.Sample.Views
         private Button AddButton(RelativeLayout relativeLayout, string title, string style, string image)
         {
             var button = relativeLayout.AddButton(title, style);
-            var fileImageSource = new FileImageSource();
-            fileImageSource.File = image;
+            var fileImageSource = new FileImageSource
+            {
+                File = image
+            };
             button.Image = fileImageSource;
             return button;
         }
@@ -78,29 +79,29 @@ namespace EasyLayout.Sample.Views
             const int topHeight = 140;
 
             _relativeLayout.ConstrainLayout(() =>
-                _topFrame.Bounds.Top == _relativeLayout.Bounds.Top
-                && _topFrame.Bounds.Left == _relativeLayout.Bounds.Left
-                && _topFrame.Bounds.Right == _relativeLayout.Bounds.Right
-                && _topFrame.Bounds.Height == topHeight
+                _topFrame.Top() == _relativeLayout.Top()
+                && _topFrame.Left() == _relativeLayout.Left()
+                && _topFrame.Right() == _relativeLayout.Right()
+                && _topFrame.Height == topHeight
 
-                && _productView.Bounds.Top == _relativeLayout.Bounds.Top + 10
-                && _productView.Bounds.Left == _relativeLayout.Bounds.Left
-                && _productView.Bounds.Right == _relativeLayout.Bounds.Right
-                && _productView.Bounds.Height == 68
+                && _productView.Top() == _relativeLayout.Top() + 10
+                && _productView.Left() == _relativeLayout.Left()
+                && _productView.Right() == _relativeLayout.Right()
+                && _productView.Height == 68
 
-                && _perfLabel.Bounds.Bottom == _topFrame.Bounds.Bottom - 10
-                && _perfLabel.Bounds.Left == _relativeLayout.Bounds.Left + 10
+                && _perfLabel.Bottom() == _topFrame.Bottom() - 10
+                && _perfLabel.Left() == _relativeLayout.Left() + 10
 
-                && _productsListView.Bounds.Top == _topFrame.Bounds.Bottom
-                && _productsListView.Bounds.Left == _relativeLayout.Bounds.Left
-                && _productsListView.Bounds.Right == _relativeLayout.Bounds.Right
-                && _productsListView.Bounds.Height == _relativeLayout.Bounds.Height - topHeight
+                && _productsListView.Top() == _topFrame.Bottom()
+                && _productsListView.Left() == _relativeLayout.Left()
+                && _productsListView.Right() == _relativeLayout.Right()
+                && _productsListView.Height == _relativeLayout.Height - topHeight
 
-                && _printStatsButton.Bounds.Bottom == _topFrame.Bounds.Bottom - 10
-                && _printStatsButton.Bounds.Right == _topFrame.Bounds.Right - 10
+                && _printStatsButton.Bottom() == _topFrame.Bottom() - 10
+                && _printStatsButton.Right() == _topFrame.Right() - 10
 
-                && _aggregateButton.Bounds.Right == _printStatsButton.Bounds.Left - 10
-                && _aggregateButton.Bounds.Bottom == _printStatsButton.Bounds.Bottom
+                && _aggregateButton.Right() == _printStatsButton.Left() - 10
+                && _aggregateButton.Bottom() == _printStatsButton.Bottom()
             );
         }
 
@@ -150,7 +151,7 @@ namespace EasyLayout.Sample.Views
         /// to redraw itself.  This is a problem with RelativeLayout's since they don't know to take 
         /// the width of their controls into account when determining whether to redraw themselves
         /// </summary>
-        private void ForceLayout()
+        private new void ForceLayout()
         {
             _relativeLayout.ForceLayout();
             _relativeLayout.ForceLayout();
@@ -239,24 +240,24 @@ namespace EasyLayout.Sample.Views
         private void ConstrainLayout()
         {
             _relativeLayout.ConstrainLayout(() =>
-                _image.Bounds.Left == _relativeLayout.Bounds.Left + 5
-                && _image.Bounds.GetCenterY() == _relativeLayout.Bounds.GetCenterY()
-                && _image.Bounds.Height == 36
-                && _image.Bounds.Width == 36
+                _image.Left() == _relativeLayout.Left() + 5
+                && _image.CenterY() == _relativeLayout.CenterY()
+                && _image.Height == 36
+                && _image.Width == 36
 
-                && _titleLabel.Bounds.Left == _image.Bounds.Right + 10
-                && _titleLabel.Bounds.Top == _relativeLayout.Bounds.Top + 2
-                && _titleLabel.Bounds.Width == _relativeLayout.Bounds.Width
-                && _titleLabel.Bounds.Height == 15
+                && _titleLabel.Left() == _image.Right() + 10
+                && _titleLabel.Top() == _relativeLayout.Top() + 2
+                && _titleLabel.Width == _relativeLayout.Width
+                && _titleLabel.Height == 15
 
-                && _categoryLabel.Bounds.Bottom == _relativeLayout.Bounds.Bottom - 2
-                && _categoryLabel.Bounds.Left == _image.Bounds.Right + 10
-                && _categoryLabel.Bounds.Width == _relativeLayout.Bounds.Width
-                && _categoryLabel.Bounds.Height == 15
+                && _categoryLabel.Bottom() == _relativeLayout.Bottom() - 2
+                && _categoryLabel.Left() == _image.Right() + 10
+                && _categoryLabel.Width == _relativeLayout.Width
+                && _categoryLabel.Height == 15
 
-                && _amountLabel.Bounds.Right == _relativeLayout.Bounds.Right - 5
-                && _amountLabel.Bounds.Top == _relativeLayout.Bounds.Top
-                && _amountLabel.Bounds.Bottom == _relativeLayout.Bounds.Bottom
+                && _amountLabel.Right() == _relativeLayout.Right() - 5
+                && _amountLabel.Top() == _relativeLayout.Top()
+                && _amountLabel.Bottom() == _relativeLayout.Bottom()
                 );
         }
     }

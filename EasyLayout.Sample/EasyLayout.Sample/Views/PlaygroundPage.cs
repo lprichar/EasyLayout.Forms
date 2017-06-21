@@ -20,8 +20,8 @@ namespace EasyLayout.Sample.Views
         private void ConstrainLayout()
         {
             _relativeLayout.ConstrainLayout(() =>
-                _helloLabel.Bounds.GetCenterX() == _relativeLayout.Bounds.GetCenterX()
-                && _helloLabel.Bounds.Top == _relativeLayout.Bounds.Top + 10
+                _helloLabel.CenterX() == _relativeLayout.CenterX()
+                && _helloLabel.Top() == _relativeLayout.Top() + 10
             );
         }
 

@@ -72,8 +72,8 @@ namespace EasyLayout.Sample
 
                 _upperLeft.Right() == _center.Left() - 20 &&
                 _upperLeft.Bottom() == _center.Top() - 20 &&
-                _upperLeft.Height == 40 &&
-                _upperLeft.Width == 200 &&
+                _upperLeft.Height() == 40 &&
+                _upperLeft.Width() == 200 &&
 
                 _lowerLeft.Right() == _left.Right() &&
                 _lowerLeft.Bottom() == _bottom.Bottom() &&
