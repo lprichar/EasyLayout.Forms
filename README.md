@@ -79,7 +79,9 @@ That's less code and easier to read plus there's some other small benefits.
 
 Replaces the syntax label1.Bounds.Left with an extension method based syntax label1.Left().  This fixes compiler warnings
 about "Equality comparison of floating point numbers" and makes the syntax more concise.  The old syntax is still supported
-but should be considered deprecated.  The .Bounds syntax will be removed in subsequent versions.
+but should be considered deprecated.  The .Bounds syntax will be removed in subsequent versions.  
+
+You can also now use the Height and Width properties directly off of views or the new Height and Width extension methods, e.g. label1.Height == label2.Height().
 
 ## Installation
 
