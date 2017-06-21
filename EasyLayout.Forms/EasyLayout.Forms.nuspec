@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>EasyLayout.Forms</id>
-        <version>1.0.2</version>
+        <version>1.1.0</version>
         <title>EasyLayout.Forms</title>
         <authors>Lee P Richardson</authors>
         <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
@@ -15,7 +15,9 @@
         <language />
         <tags>Xamarin Forms RelativeLayout EasyLayout</tags>
         <releaseNotes>
-          Fixed a bug where height constraints relative to parents weren't taking margins into account
+          Replaces the syntax label1.Bounds.Left with an extension method based syntax label1.Left().  This fixes compiler warnings
+          about "Equality comparison of floating point numbers" and makes the syntax more concise.  The old syntax is still supported
+          but should be considered deprecated.  The .Bounds syntax will be removed in subsequent versions.
         </releaseNotes>
     </metadata>
     <files>
