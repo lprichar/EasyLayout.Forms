@@ -281,6 +281,28 @@ namespace EasyLayout.Forms
             {
                 _relativeSizeDelta = leftOrTopAssertion?.RightExpression.Constant ?? 0;
             }
+
+            public void UpdateMarginFromRelativeHeightConstraint(Assertion leftOrTopAssertion, IEnumerable<Assertion> assertions)
+            {
+                _relativeSizeDelta = GetRelativeSizeDelta(leftOrTopAssertion, assertions) ?? 0;
+            }
+
+            private double? GetRelativeSizeDelta(Assertion leftOrTopAssertion, IEnumerable<Assertion> assertions)
+            {
+                if (leftOrTopAssertion== null) return null;
+                var leftOrTopAssertionConstant = leftOrTopAssertion.RightExpression.Constant;
+                if (leftOrTopAssertionConstant != null) return leftOrTopAssertionConstant;
+                if (!leftOrTopAssertion.RightExpression.IsParent)
+                {
+                    var other = assertions.FirstOrDefault(
+                        i => i.View == leftOrTopAssertion.RightExpression.View && i.Position == Position.Height);
+                    if (other != null)
+                    {
+                        return other.RightExpression.Constant;
+                    }
+                }
+                return null;
+            }
         }
 
         private enum Position
@@ -341,9 +363,9 @@ namespace EasyLayout.Forms
             UpdateLayoutParamsWithRules(relativeLayout, viewAndRule);
         }
 
-        private static void UpdateLayoutParamsWithRules(RelativeLayout relativeLayout, IEnumerable<Assertion> viewAndRule)
+        private static void UpdateLayoutParamsWithRules(RelativeLayout relativeLayout, IEnumerable<Assertion> allAssertions)
         {
-            var assertionsGroupedByView = viewAndRule.GroupBy(i => i.View);
+            var assertionsGroupedByView = allAssertions.GroupBy(i => i.View);
 
             foreach (var viewAndRules in assertionsGroupedByView)
             {
@@ -354,7 +376,7 @@ namespace EasyLayout.Forms
 				var xConstraint = GetXConstraint(viewAndRules, widthAssertion);
 				var yConstraint = GetYConstraint(viewAndRules, heightAssertion);
                 widthAssertion = widthAssertion ?? GetRelativeWidthConstraint(viewAndRules);
-                heightAssertion = heightAssertion ?? GetRelativeHeightConstraint(viewAndRules);
+                heightAssertion = heightAssertion ?? GetRelativeHeightConstraint(viewAndRules, allAssertions);
 				var widthConstraint = widthAssertion?.GetSizeConstraint(Position.Width);
                 var heightConstraint = heightAssertion?.GetSizeConstraint(Position.Height);
 
@@ -409,11 +431,12 @@ namespace EasyLayout.Forms
             return GetSingleAssertionOrDefault(assertions, i => i.IsExplicitWidthAssertion(), "Multiple width assertions found");
         }
 
-        private static Assertion GetRelativeHeightConstraint(IGrouping<View, Assertion> assertions)
+        private static Assertion GetRelativeHeightConstraint(IGrouping<View, Assertion> assertions, IEnumerable<Assertion> allAssertions)
         {
             var top = GetSingleAssertionOrDefault(assertions, i => i.Position == Position.Top, "Only one top assertion allowed");
             var bottom = GetSingleAssertionOrDefault(assertions, i => i.Position == Position.Bottom, "Only one bottom assertion allowed");
 			if (top == null || bottom == null) return null;
+            bottom.UpdateMarginFromRelativeHeightConstraint(top, allAssertions);
 			return bottom;
 		}
 

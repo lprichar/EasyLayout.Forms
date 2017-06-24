@@ -24,6 +24,7 @@ namespace EasyLayout.Sample.Views
                 _topLabel.Top() == _relativeLayout.Top()
                 && _topLabel.Left() == _relativeLayout.Left()
                 && _topLabel.Right() == _relativeLayout.Right()
+                && _topLabel.Height == 40
                 
                 && _bottomLabel.Top() == _topLabel.Bottom()
                 && _bottomLabel.Left() == _relativeLayout.Left()
