@@ -8,7 +8,8 @@ namespace EasyLayout.Sample.Views
     public class PlaygroundPage : ContentPage
     {
         private RelativeLayout _relativeLayout;
-        private Label _helloLabel;
+        private Label _topLabel;
+        private Label _bottomLabel;
 
         public PlaygroundPage()
         {
@@ -20,15 +21,24 @@ namespace EasyLayout.Sample.Views
         private void ConstrainLayout()
         {
             _relativeLayout.ConstrainLayout(() =>
-                _helloLabel.CenterX() == _relativeLayout.CenterX()
-                && _helloLabel.Top() == _relativeLayout.Top() + 10
+                _topLabel.Top() == _relativeLayout.Top()
+                && _topLabel.Left() == _relativeLayout.Left()
+                && _topLabel.Right() == _relativeLayout.Right()
+                
+                && _bottomLabel.Top() == _topLabel.Bottom()
+                && _bottomLabel.Left() == _relativeLayout.Left()
+                && _bottomLabel.Right() == _relativeLayout.Right()
+                && _bottomLabel.Bottom() == _relativeLayout.Bottom()
             );
         }
 
         private void AddViews()
         {
             _relativeLayout = ViewUtils.AddRelativeLayout();
-            _helloLabel = _relativeLayout.AddLabel("Hello World");
+            _relativeLayout.BackgroundColor = Color.Red;
+            _topLabel = _relativeLayout.AddLabel("Top Label", Colors.White, Colors.DarkerBlue);
+            _bottomLabel = _relativeLayout.AddLabel("Bottom Label", Colors.White, Colors.BluePurple);
+            _bottomLabel.VerticalTextAlignment = TextAlignment.End;
         }
 
         private void SetPageProperties()
