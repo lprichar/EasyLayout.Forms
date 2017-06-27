@@ -43,7 +43,7 @@ namespace EasyLayout.Forms
 
             public View View { get; }
             private LeftExpression LeftExpression { get; set; }
-            private RightExpression RightExpression { get; set; }
+            public RightExpression RightExpression { get; private set; }
             public string LeftName => LeftExpression.Name;
 
             public void Initialize(LeftExpression leftExpression, RightExpression rightExpression)
@@ -52,23 +52,35 @@ namespace EasyLayout.Forms
                 RightExpression = rightExpression;
             }
 
-            public Constraint GetSizeConstraint(Position position) {
+            public Constraint GetSizeConstraint(Position position, View dependentView = null) {
 				if (RightExpression.IsConstant && RightExpression.Constant.HasValue)
 				{
 					return Constraint.Constant(RightExpression.Constant.Value);
 				}
-				View sibling = RightExpression.View;
-                var margin = GetMargin();
+                
+                if (dependentView != null)
+                {
+                    var sibling = dependentView;
+                    if (position == Position.Width)
+                        return Constraint.RelativeToView(sibling, (rv, v) => rv.Width - v.Width);
+                    if (position == Position.Height)
+                        return Constraint.RelativeToView(sibling, (rv, v) => rv.Height - v.Height);
+                }
+                else
+                {
+                    var sibling = RightExpression.View;
+                    var margin = GetMargin();
 
-                var isParent = RightExpression.IsParent;
-                if (isParent && position == Position.Width)
-                    return Constraint.RelativeToParent(rl => rl.Width + margin);
-				if (isParent && position == Position.Height)
-					return Constraint.RelativeToParent(rl => rl.Height + margin);
-				if (position == Position.Width)
-                    return Constraint.RelativeToView(sibling, (rv, v) => v.Width);
-                if (position == Position.Height)
-					return Constraint.RelativeToView(sibling, (rv, v) => v.Height);
+                    var isParent = RightExpression.IsParent;
+                    if (isParent && position == Position.Width)
+                        return Constraint.RelativeToParent(rl => rl.Width + margin);
+                    if (isParent && position == Position.Height)
+                        return Constraint.RelativeToParent(rl => rl.Height + margin);
+                    if (position == Position.Width)
+                        return Constraint.RelativeToView(sibling, (rv, v) => v.Width);
+                    if (position == Position.Height)
+                        return Constraint.RelativeToView(sibling, (rv, v) => v.Height);                    
+                }
                 throw new ArgumentException("Unsupported position in size constraint: " + position);
 			}
 
@@ -355,14 +367,31 @@ namespace EasyLayout.Forms
 				var yConstraint = GetYConstraint(viewAndRules, heightAssertion);
                 widthAssertion = widthAssertion ?? GetRelativeWidthConstraint(viewAndRules);
                 heightAssertion = heightAssertion ?? GetRelativeHeightConstraint(viewAndRules);
-				var widthConstraint = widthAssertion?.GetSizeConstraint(Position.Width);
-                var heightConstraint = heightAssertion?.GetSizeConstraint(Position.Height);
+				var widthConstraint = widthAssertion?.GetSizeConstraint(Position.Width, GetDependentView(viewAndRules, Position.Left));
+                var heightConstraint = heightAssertion?.GetSizeConstraint(Position.Height, GetDependentView(viewAndRules, Position.Top));
 
                 relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
             }
         }
 
-		private static Constraint GetXConstraint(IGrouping<View, Assertion> assertions, Assertion widthAssertion)
+        private static View GetDependentView(IEnumerable<Assertion> viewAndRules, Position position)
+        {
+            var assertions = viewAndRules.ToList();
+
+            var oppositePosition = position == Position.Top ? Position.Bottom: Position.Right;
+            var fullyConstrained =
+                assertions.Any(assertion => assertion.Position == position)
+                && assertions.Any(assertion => assertion.Position == oppositePosition);
+
+            if (!fullyConstrained) return null;
+            
+            var dependentViews = assertions
+                .Where(assertion => assertion.Position == position && !assertion.RightExpression.IsParent)
+                .Select(assertion => assertion.RightExpression.View).ToList();
+            return !dependentViews.Any() ? null : dependentViews.First();
+        }
+
+        private static Constraint GetXConstraint(IGrouping<View, Assertion> assertions, Assertion widthAssertion)
         {
             return GetXorYConstraint(assertions, widthAssertion, "X", i => i.IsXConstraint());
         }
