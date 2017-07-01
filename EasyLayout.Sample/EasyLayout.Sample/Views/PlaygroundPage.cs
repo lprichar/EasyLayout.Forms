@@ -1,7 +1,5 @@
 ﻿// ReSharper disable CompareOfFloatsByEqualityOperator
 
-using System;
-using System.Linq;
 using EasyLayout.Forms;
 using EasyLayout.Forms.Sample;
 using Xamarin.Forms;
