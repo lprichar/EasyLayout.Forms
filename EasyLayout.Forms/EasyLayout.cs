@@ -35,6 +35,7 @@ namespace EasyLayout.Forms
         private class Assertion
         {
             private double _relativeSizeDelta = 0;
+            private bool _heightIsRelativeToParent = false;
 
             public Assertion(View view)
             {
@@ -65,6 +66,8 @@ namespace EasyLayout.Forms
                     return Constraint.RelativeToParent(rl => rl.Width + margin);
 				if (isParent && position == Position.Height)
 					return Constraint.RelativeToParent(rl => rl.Height + margin);
+                if (_heightIsRelativeToParent)
+                    return Constraint.RelativeToView(sibling, (rv, v) => (rv.Height - v.Height));
 				if (position == Position.Width)
                     return Constraint.RelativeToView(sibling, (rv, v) => v.Width);
                 if (position == Position.Height)
@@ -276,10 +279,16 @@ namespace EasyLayout.Forms
             }
 
             public Position Position => LeftExpression.Position;
+            public bool IsParent => RightExpression.IsParent;
 
             public void UpdateMarginFromRelativeWidthConstraint(Assertion leftOrTopAssertion)
             {
                 _relativeSizeDelta = leftOrTopAssertion?.RightExpression.Constant ?? 0;
+            }
+
+            public void HeightIsRelativeToParent()
+            {
+                _heightIsRelativeToParent = true;
             }
         }
 
@@ -413,6 +422,13 @@ namespace EasyLayout.Forms
         {
             var top = GetSingleAssertionOrDefault(assertions, i => i.Position == Position.Top, "Only one top assertion allowed");
             var bottom = GetSingleAssertionOrDefault(assertions, i => i.Position == Position.Bottom, "Only one bottom assertion allowed");
+
+            if (bottom != null && bottom.IsParent && top != null && !top.IsParent)
+            {
+                top.HeightIsRelativeToParent();
+                return top;
+            }
+
 			if (top == null || bottom == null) return null;
 			return bottom;
 		}
