@@ -358,7 +358,8 @@ namespace EasyLayout.Forms
 
         private static void UpdateLayoutParamsWithRules(RelativeLayout relativeLayout, IEnumerable<Assertion> viewAndRule)
         {
-            var assertionsGroupedByView = viewAndRule.GroupBy(i => i.View);
+            var assertions = viewAndRule.ToList();
+            var assertionsGroupedByView = assertions.GroupBy(i => i.View);
 
             foreach (var viewAndRules in assertionsGroupedByView)
             {
@@ -370,14 +371,15 @@ namespace EasyLayout.Forms
 				var yConstraint = GetYConstraint(viewAndRules, heightAssertion);
                 widthAssertion = widthAssertion ?? GetRelativeWidthConstraint(viewAndRules);
                 heightAssertion = heightAssertion ?? GetRelativeHeightConstraint(viewAndRules);
-				var widthConstraint = widthAssertion?.GetSizeConstraint(Position.Width, GetDependentViews(viewAndRules, Position.Left));
-                var heightConstraint = heightAssertion?.GetSizeConstraint(Position.Height, GetDependentViews(viewAndRules, Position.Top));
+				var widthConstraint =
+				    widthAssertion?.GetSizeConstraint(Position.Width, GetDependentViews(viewAndRules, Position.Left, assertions));
+                var heightConstraint = heightAssertion?.GetSizeConstraint(Position.Height, GetDependentViews(viewAndRules, Position.Top, assertions));
 
                 relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
             }
         }
 
-        private static List<View> GetDependentViews(IEnumerable<Assertion> viewAndRules, Position position)
+        private static List<View> GetDependentViews(IEnumerable<Assertion> viewAndRules, Position position, List<Assertion> allAssertions)
         {
             var assertions = viewAndRules.ToList();
 
@@ -392,6 +394,18 @@ namespace EasyLayout.Forms
                 .Where(assertion => (assertion.Position == position || assertion.Position == oppositePosition)
                                     && !assertion.RightExpression.IsParent)
                 .Select(assertion => assertion.RightExpression.View).ToList();
+
+            // Run through all the dependent views in the direction we are looking for and gather all views that are not the parent
+            var extraDependantViews = new List<View>();
+            foreach (var view in dependentViews)
+                extraDependantViews.AddRange(
+                    from assertion in allAssertions.Where(a => a.View.Equals(view))
+                    where assertion.Position == position
+                          && !assertion.RightExpression.IsParent
+                    select assertion.RightExpression.View);
+            
+            dependentViews.AddRange(extraDependantViews);
+
             return !dependentViews.Any() ? null : dependentViews;
         }
 
