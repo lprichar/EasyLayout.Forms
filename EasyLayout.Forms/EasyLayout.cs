@@ -372,41 +372,55 @@ namespace EasyLayout.Forms
                 widthAssertion = widthAssertion ?? GetRelativeWidthConstraint(viewAndRules);
                 heightAssertion = heightAssertion ?? GetRelativeHeightConstraint(viewAndRules);
 				var widthConstraint =
-				    widthAssertion?.GetSizeConstraint(Position.Width, GetDependentViews(viewAndRules, Position.Left, assertions));
-                var heightConstraint = heightAssertion?.GetSizeConstraint(Position.Height, GetDependentViews(viewAndRules, Position.Top, assertions));
+				    widthAssertion?.GetSizeConstraint(Position.Width, GetDependentViews(view, assertions, Position.Left));
+                var heightConstraint = heightAssertion?.GetSizeConstraint(Position.Height, GetDependentViews(view, assertions, Position.Top));
 
                 relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
             }
         }
 
-        private static List<View> GetDependentViews(IEnumerable<Assertion> viewAndRules, Position position, List<Assertion> allAssertions)
+        private static List<View> GetDependentViews(View view, List<Assertion> allAssertions, Position position)
         {
-            var assertions = viewAndRules.ToList();
-
+            /*
+            First we must check if the view is fully constrained.
+            If a view has both a top and bottom constraint it is fully constrained.
+            Or if a view has both a left and right constraint it is also fully constrained.
+            */
             var oppositePosition = position == Position.Top ? Position.Bottom: Position.Right;
+            var viewAssertions = allAssertions.Where(assertion => assertion.View.Equals(view)).ToList();
             var fullyConstrained =
-                assertions.Any(assertion => assertion.Position == position)
-                && assertions.Any(assertion => assertion.Position == oppositePosition);
-
+                viewAssertions.Any(assertion => assertion.Position == position)
+                && viewAssertions.Any(assertion => assertion.Position == oppositePosition);
             if (!fullyConstrained) return null;
             
-            var dependentViews = assertions
-                .Where(assertion => (assertion.Position == position || assertion.Position == oppositePosition)
+            var directlyDependentViews = viewAssertions
+                .Where(assertion => (assertion.Position == position
+                                     || assertion.Position == oppositePosition)
                                     && !assertion.RightExpression.IsParent)
                 .Select(assertion => assertion.RightExpression.View).ToList();
 
             // Run through all the dependent views in the direction we are looking for and gather all views that are not the parent
             var extraDependantViews = new List<View>();
-            foreach (var view in dependentViews)
-                extraDependantViews.AddRange(
-                    from assertion in allAssertions.Where(a => a.View.Equals(view))
-                    where assertion.Position == position
-                          && !assertion.RightExpression.IsParent
-                    select assertion.RightExpression.View);
+            foreach (var directlyDependentView in directlyDependentViews)
+                GetDependentViewsRecursively(directlyDependentView, allAssertions, position, extraDependantViews);
             
-            dependentViews.AddRange(extraDependantViews);
+            directlyDependentViews.AddRange(extraDependantViews);
+            return !directlyDependentViews.Any() ? null : directlyDependentViews;
+        }
 
-            return !dependentViews.Any() ? null : dependentViews;
+        private static void GetDependentViewsRecursively(View view, List<Assertion> allAssertions, Position position, List<View> result)
+        {
+            var assertions = allAssertions.Where(assertion => assertion.View.Equals(view)).ToList();
+            if (assertions.Count == 0)
+                result.Add(view);
+            
+            var dependentViews = from assertion in allAssertions.Where(a => a.View.Equals(view))
+                where assertion.Position == position
+                      && !assertion.RightExpression.IsParent
+                select assertion.RightExpression.View;
+            
+            foreach (var dependentView in dependentViews)
+                GetDependentViewsRecursively(dependentView, allAssertions, position, result);
         }
 
         private static Constraint GetXConstraint(IGrouping<View, Assertion> assertions, Assertion widthAssertion)
