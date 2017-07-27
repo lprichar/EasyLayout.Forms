@@ -58,6 +58,15 @@ namespace EasyLayout.Forms
 					return Constraint.Constant(RightExpression.Constant.Value);
 				}
                 
+                if (dependentViews != null && dependentViews.Count == 1 && RightExpression.IsParent)
+                {
+                    var v1 = dependentViews.ElementAt(0);
+                    if (position == Position.Width)
+                        return Constraint.RelativeToParent(rl => rl.Width - (v1.Bounds.X + v1.Width));
+                    if (position == Position.Height)
+                        return Constraint.RelativeToParent(rl => rl.Height - (v1.Bounds.Y + v1.Height));
+                }
+                
                 if (dependentViews != null && dependentViews.Count == 2)
                 {
                     var v1 = dependentViews.ElementAt(0);
