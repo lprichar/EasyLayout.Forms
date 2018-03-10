@@ -83,7 +83,7 @@ namespace EasyLayout.Sample
 
                 _bottomBottom.Bottom() == _relativeLayout.Bottom() &&
                 _bottomBottom.Left() == _topTop.Left() &&
-                _bottomBottom.Height == ViewModel.Height.ToConst() &&
+                _bottomBottom.Height == _upperLeft.Height + 20 &&
                 _bottomBottom.Width == _topTop.Width
             );
         }

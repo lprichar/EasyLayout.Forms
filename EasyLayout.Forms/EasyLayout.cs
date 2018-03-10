@@ -87,9 +87,9 @@ namespace EasyLayout.Forms
                     if (isParent && position == Position.Height)
                         return Constraint.RelativeToParent(rl => rl.Height + margin);
                     if (position == Position.Width)
-                        return Constraint.RelativeToView(sibling, (rv, v) => v.Width);
+                        return Constraint.RelativeToView(sibling, (rv, v) => v.Width + margin);
                     if (position == Position.Height)
-                        return Constraint.RelativeToView(sibling, (rv, v) => v.Height);                    
+                        return Constraint.RelativeToView(sibling, (rv, v) => v.Height + margin);                    
                 }
                 throw new ArgumentException("Unsupported position in size constraint: " + position);
 			}
