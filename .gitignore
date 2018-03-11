@@ -116,3 +116,4 @@ EasyLayout.Sample/EasyLayout.Sample.Android/Resources/Resource.Designer.cs
 
 # Ignore Rider files
 .idea
+.vs/

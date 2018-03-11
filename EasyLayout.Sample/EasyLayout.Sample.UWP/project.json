@@ -1,11 +1,11 @@
 ﻿{
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.3",
-    "Xamarin.Forms": "2.3.4.247",
+    "Xamarin.Forms": "2.5.0.280555",
     "Xamarin.Forms.Theme.Dark": "1.0.0.43-pre1"
   },
   "frameworks": {
-    "uap10.0": {}
+    "uap10.0.10586": {}
   },
   "runtimes": {
     "win10-arm": {},

@@ -47,7 +47,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\TraditionalRelativeLayout.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Controls\TraditionalProductView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -59,7 +59,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Controls\TraditionalProductView.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\TraditionalRelativeLayout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
