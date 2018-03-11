@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>EasyLayout.Forms</id>
-        <version>1.1.1</version>
+        <version>1.2.0</version>
         <title>EasyLayout.Forms</title>
         <authors>Lee P Richardson</authors>
         <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
@@ -15,11 +15,12 @@
         <language />
         <tags>Xamarin Forms RelativeLayout EasyLayout</tags>
         <releaseNotes>
-          Solves the bug where views that are intended to fill up all 
-          remaining space fail to subtract out the space of their siblings (Issue #1).
+          Support for .Net Standard!
+          Also fixes a bug where when you do v2.Height() == v1.Height() + 10 it was ignoring the 10
         </releaseNotes>
     </metadata>
     <files>
-      <file src="bin\Release\*.dll" target="lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10" />
+      <file src="bin\Release\netstandard1.0\EasyLayout.Forms.dll" target="lib\netstandard1.0\EasyLayout.Forms.dll" />
+      <file src="bin\Release\netstandard1.0\EasyLayout.Forms.xml" target="lib\netstandard1.0\EasyLayout.Forms.xml" />
     </files>
 </package>

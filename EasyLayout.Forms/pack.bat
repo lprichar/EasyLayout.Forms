@@ -1,1 +1,1 @@
-nuget pack -Prop Configuration=Release -Prop Platform=AnyCPU EasyLayout.Forms.csproj
+msbuild /t:pack EasyLayout.Forms.csproj /p:Configuration=Release /p:NuspecFile=EasyLayout.Forms.nuspec
